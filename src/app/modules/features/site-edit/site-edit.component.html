@@ -1,0 +1,563 @@
+<div class="margin-top-16 member-info-section">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h4 class="m-0">{{'allTypeContent.tenant' |
+                        translate}}: {{'singleBinding.tenantName' | translate : {tenantName:tenantName} }}
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        Site: {{siteName}}
+                    </h4>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <form [formGroup]="siteForm" #siteRegistration="ngForm" class="margin-bottom-40 ucg-container"
+                autocomplete="off">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12 left-section">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.name' | translate}}</mat-label>
+                                    <input matInput autocomplete="off" placeholder="{{'formFields.name' | translate}}"
+                                        tabindex="1" maxlength="150" min="3" max="150" formControlName="name" required
+                                        [readonly]="isTransferred">
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('name')?.valid && !siteForm.get('name')?.errors?.serverError) && !name">
+                                            {{'requiredFields.name' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('name')?.errors?.serverError && (name || (siteForm.get('name')?.valid && !name))">
+                                            {{'requiredFields.nameLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('name')?.errors?.serverError">
+                                            {{siteForm.get('name')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.address' | translate}}</mat-label>
+                                    <input matInput autocomplete="off"
+                                        placeholder="{{'formFields.address' | translate}}" tabindex="9"
+                                        formControlName="street" required [readonly]="isTransferred">
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('street')?.errors?.serverError && !siteForm.get('street')?.valid) && !street">
+                                            {{'requiredFields.street' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('street')?.errors?.serverError && (address || (siteForm.get('street')?.valid && !address))">
+                                            {{'requiredFields.streetLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('street')?.errors?.serverError">
+                                            {{siteForm.get('street')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.status' | translate }}</mat-label>
+                                    <mat-select formControlName="status" tabindex="2" [disabled]="isTransferred">
+                                        <mat-option>{{'formFields.status' | translate }}</mat-option>
+                                        <mat-option value="{{'formFields.active' | translate }}">{{'formFields.active' |
+                                            translate }}</mat-option>
+                                        <mat-option
+                                            value="{{'formFields.inactive' | translate }}">{{'formFields.inactive' |
+                                            translate }}</mat-option>
+                                    </mat-select>
+
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('status')?.errors?.serverError">
+                                            {{siteForm.get('status')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.city' | translate }}</mat-label>
+                                    <input matInput autocomplete="off" placeholder="{{'formFields.city' | translate }}"
+                                        tabindex="10" maxlength="100" min="2" max="100" formControlName="city" required
+                                        [readonly]="isTransferred">
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('city')?.errors?.serverError && !siteForm.get('city')?.valid) && !city">
+                                            {{'requiredFields.city' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('city')?.errors?.serverError && (city || (siteForm.get('city')?.valid && !city))">
+                                            {{'requiredFields.cityLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('city')?.errors?.serverError">
+                                            {{siteForm.get('city')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-2 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.level2Rate' | translate }}</mat-label>
+                                    <input matInput autocomplete="off" tabindex="3" type="text" ThreeDigitDecimalNumber
+                                        formControlName="level2Rate" required [readonly]="isTransferred"
+                                        placeholder="{{'formFields.level2Rate' | translate }}" onkeyup="
+                                var date = this.value;
+                                if (event.keyCode !== 8 && date.match(/^\d{3}$/) !== null) {
+                                   this.value = date + '.';
+                                }" max="7" maxlength="7"
+                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+
+                                    <mat-error>
+                                        <span *ngIf="(!siteForm.get('level2Rate')?.valid)">
+                                            {{'requiredFields.level2Rate' | translate }}</span>
+                                        <span *ngIf="siteForm.get('level2Rate')?.errors?.serverError">
+                                            {{siteForm.get('level2Rate')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="canModifyMarkupCharge" class="form-group col-md-2 ucg-input">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.markupCharge' | translate}}</mat-label>
+                                    <input matInput autocomplete="off" type="text" tabindex="14"
+                                        formControlName="markupCharge" [readonly]="isTransferred"
+                                        placeholder="{{'formFields.markupCharge' | translate}}" ThreeDigitDecimalNumber
+                                        (change)="validateMarkupThreshold($event)" onkeyup="
+                                var date = this.value;
+                                if (event.keyCode !== 8 && date.match(/^\d{3}$/) !== null) {
+                                   this.value = date + '.';
+                                }" max="6" maxlength="6"
+                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+                                    <mat-error>
+                                        <span *ngIf="markupError">Markup must be less than {{markupThreshold}}%</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-2 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.RateUnit' | translate }}</mat-label>
+                                    <mat-select autocomplete="off" formControlName="level2RateUnit" tabindex="4"
+                                        required [disabled]="isTransferred">
+                                        <mat-option disabled>{{'formFields.RateUnit' | translate }}</mat-option>
+                                        <mat-option value="{{'formFields.KWH' | translate }}">{{'formFields.KWH' |
+                                            translate }}
+                                        </mat-option>
+                                        <mat-option value="{{'formFields.min' | translate }}">{{'formFields.min' |
+                                            translate }}
+                                        </mat-option>
+                                        <mat-option value="{{'formFields.hr' | translate }}">{{'formFields.hr' |
+                                            translate }}
+                                        </mat-option>
+                                    </mat-select>
+
+                                    <mat-error>
+                                        <span *ngIf="(!siteForm.get('level2RateUnit')?.valid)">
+                                            {{'requiredFields.level2RateUnit' | translate }}</span>
+                                        <span *ngIf="siteForm.get('level2RateUnit')?.errors?.serverError">
+                                            {{siteForm.get('level2RateUnit')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="!canModifyMarkupCharge" class="form-group col-md-2 ucg-input"></div>
+
+                            <div class="form-group col-md-6">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.state' | translate}}</mat-label>
+                                    <input matInput autocomplete="off" placeholder="{{'formFields.state' | translate}}"
+                                        tabindex="11" maxlength="100" min="2" max="100" formControlName="state" required
+                                        [readonly]="isTransferred">
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('state')?.errors?.serverError && !siteForm.get('state')?.valid) && !state">
+                                            {{'requiredFields.state' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('state')?.errors?.serverError && (state || (siteForm.get('state')?.valid && !state))">
+                                            {{'requiredFields.stateLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('state')?.errors?.serverError">
+                                            {{siteForm.get('state')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-2 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.dcFastRate' | translate }}</mat-label>
+                                    <input matInput autocomplete="off" type="text" tabindex="5" ThreeDigitDecimalNumber
+                                        formControlName="dcFastRate" required [readonly]="isTransferred"
+                                        placeholder="{{'formFields.dcFastRate' | translate }}" onkeyup="
+                                var date = this.value;
+                                if (event.keyCode !== 8 && date.match(/^\d{3}$/) !== null) {
+                                   this.value = date + '.';
+                                }" max="7" maxlength="7"
+                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+
+                                    <mat-error>
+                                        <span *ngIf="(!siteForm.get('dcFastRate')?.valid)">
+                                            {{'requiredFields.dcFastRate' | translate }}</span>
+                                        <span *ngIf="siteForm.get('dcFastRate')?.errors?.serverError">
+                                            {{siteForm.get('dcFastRate')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="canModifyMarkupCharge" class="form-group col-md-2 ucg-input">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.markupCharge' | translate}}</mat-label>
+                                    <input matInput autocomplete="off" type="text" tabindex="14"
+                                        formControlName="markupPercentForDC" [readonly]="isTransferred"
+                                        placeholder="{{'formFields.markupCharge' | translate}}" ThreeDigitDecimalNumber
+                                        (change)="validateDCMarkupThreshold($event)" onkeyup="
+                                var date = this.value;
+                                if (event.keyCode !== 8 && date.match(/^\d{3}$/) !== null) {
+                                   this.value = date + '.';
+                                }" max="6" maxlength="6"
+                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+                                    <mat-error>
+                                        <span *ngIf="markupError">Markup must be less than {{markupThreshold}}%</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-2 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.RateUnit' | translate }}</mat-label>
+                                    <mat-select autocomplete="off" formControlName="dcFastRateUnit" tabindex="6"
+                                        required [disabled]="isTransferred">
+                                        <mat-option disabled>{{'formFields.RateUnit' | translate }}</mat-option>
+                                        <mat-option value="{{'formFields.KWH' | translate }}">{{'formFields.KWH' |
+                                            translate }}
+                                        </mat-option>
+                                        <mat-option value="{{'formFields.min' | translate }}">{{'formFields.min' |
+                                            translate }}
+                                        </mat-option>
+                                        <mat-option value="{{'formFields.hr' | translate }}">{{'formFields.hr' |
+                                            translate }}
+                                        </mat-option>
+                                    </mat-select>
+
+                                    <mat-error>
+                                        <span *ngIf="(!siteForm.get('dcFastRateUnit')?.valid)">
+                                            {{'requiredFields.dcRateUnit' | translate }}</span>
+                                        <span *ngIf="siteForm.get('dcFastRateUnit')?.errors?.serverError">
+                                            {{siteForm.get('dcFastRateUnit')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="!canModifyMarkupCharge" class="form-group col-md-2 ucg-input"></div>
+
+                            <div class="form-group col-md-6 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.country' | translate }}</mat-label>
+                                    <mat-select autocomplete="off" formControlName="country" tabindex="12" required
+                                        [disabled]="isTransferred">
+                                        <mat-option *ngFor="let countryName of countryList"
+                                            [value]="countryName.country">
+                                            {{countryName.country}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('country')?.errors?.serverError && !siteForm.get('country')?.valid) && !country">
+                                            {{'requiredFields.country' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('country')?.errors?.serverError && (country || (siteForm.get('country')?.valid && !country))">
+                                            {{'requiredFields.countryLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('country')?.errors?.serverError">
+                                            {{siteForm.get('country')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.utilityProvider' | translate}}</mat-label>
+                                    <input matInput autocomplete="off"
+                                        placeholder="{{'formFields.utilityProvider' | translate}}" tabindex="7"
+                                        type="text" formControlName="utilityProvider" [readonly]="isTransferred">
+
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('utilityProvider')?.errors?.serverError && !siteForm.get('utilityProvider')?.valid) && !provider">
+                                            {{'requiredFields.utilityProvider' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('utilityProvider')?.errors?.serverError && (provider || (siteForm.get('provider')?.valid && !provider))">
+                                            {{'requiredFields.utilityProviderLength' | translate }}</span>
+                                        <span *ngIf="siteForm.get('utilityProvider')?.errors?.serverError">
+                                            {{siteForm.get('utilityProvider')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.utilityTDU' | translate}}</mat-label>
+                                    <input matInput autocomplete="off"
+                                        placeholder="{{'formFields.utilityTDU' | translate}}" tabindex="7" type="text"
+                                        formControlName="utilitytdu" [readonly]="isTransferred">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>{{'formFields.zipCode' | translate}}</mat-label>
+                                    <input matInput autocomplete="off"
+                                        placeholder="{{'formFields.zipCode' | translate}}" tabindex="13" type="text"
+                                        (keypress)="onKeyPress($event)" minlength="5" maxlength="6"
+                                        formControlName="zipCode" required [readonly]="isTransferred">
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('zipCode')?.errors?.serverError && !siteForm.get('zipCode')?.valid) && !zip">
+                                            {{'requiredFields.zipCode' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('zipCode')?.errors?.serverError && (zip || (siteForm.get('zipCode')?.valid && !zip))">
+                                            {{'requiredFields.zipCodeLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('zipCode')?.errors?.serverError">
+                                            {{siteForm.get('zipCode')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6 ucg-input">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <!-- <mat-label>{{'formFields.utilityBill' | translate}}</mat-label> -->
+                                    <br />
+                                    <div style="margin-top: -30px;">
+                                        <input hidden="true" matInput class="w-100 ucg-input" appearance="outline"
+                                            formControlName="utilityBill" />
+                                        <input type="file" id="fileUpload" tabindex="8" name="utilityBill" class="btn"
+                                            #myUpload (change)="onFileChange($event)" accept="{{supportedFileTypes}}" />
+                                        <br>
+                                        <a *ngIf="hasBillUrl" target="_blank" href="{{imageSource}}">{{fileName}}</a>
+                                    </div>
+                                    <mat-error>
+                                        <span *ngIf="!siteForm.get('utilityBill')?.valid">
+                                            {{'requiredFields.utilityBill' | translate }}</span>
+                                        <span *ngIf="siteForm.get('utilityBill')?.errors?.serverError">
+                                            {{siteForm.get('utilityBill')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.phone' | translate}}</mat-label>
+                                    <input matInput autocomplete="off" placeholder="{{'formFields.phone' | translate}}"
+                                        type="text" (keypress)="onKeyPress($event)" tabindex="14" maxlength="10"
+                                        min="10" max="10" formControlName="phone" required [readonly]="isTransferred">
+                                    <mat-error>
+                                        <span
+                                            *ngIf="(!siteForm.get('phone')?.errors?.serverError && !siteForm.get('phone')?.valid) && !phone">
+                                            {{'requiredFields.phone' | translate }}</span>
+                                        <span
+                                            *ngIf="!siteForm.get('phone')?.errors?.serverError && (phone || siteForm.get('phone')?.valid && !phone)">
+                                            {{'requiredFields.phoneLength' | translate }}</span>
+                                    </mat-error>
+                                    <mat-error>
+                                        <span *ngIf="siteForm.get('phone')?.errors?.serverError">
+                                            {{siteForm.get('phone')?.errors?.serverError | translate }}</span>
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="canModifyPreAuth" class="form-group col-md-6">
+                                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <mat-label>{{'formFields.preAuthAmount' | translate}}</mat-label>
+                                    <input matInput autocomplete="off" type="text" tabindex="14"
+                                        formControlName="preAuthAmount" [readonly]="isTransferred"
+                                        placeholder="{{'formFields.preAuthAmount' | translate}}" ThreeDigitDecimalNumber
+                                        onkeyup="
+                                var date = this.value;
+                                if (event.keyCode !== 8 && date.match(/^\d{3}$/) !== null) {
+                                   this.value = date + '.';
+                                }" max="6" maxlength="6"
+                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))">
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-group d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button *ngIf="!isTransferred && canUpdateSite" mat-raised-button
+                        [ngClass]="{'img-disable': parentSiteRequest}" color="primary" class="btn-primary mx-3"
+                        (click)="updateSite();">
+                        {{'button.update' | translate }}
+                    </button>
+                    <button mat-raised-button color="secondary" class="btn-secondary" (click)="cancel();">
+                        {{'button.cancel' | translate }}
+                    </button>
+                </div>
+
+            </form>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="tenantListContainer ucg-container">
+
+        <div class="tenantFilterSection container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="title-section">
+                        <h4>{{'allTypeContent.chargerList' | translate }}</h4>
+                    </span>
+                </div>
+                <div *ngIf="canCreateChargepoint" class="col-md-6">
+                    <span class="creation-button">
+                        <button mat-raised-button [ngClass]="{'img-disable': parentSiteRequest}" color="primary"
+                            class="btn-primary" (click)="navigateCharger();">{{'button.newCharger' | translate
+                            }}</button>
+                    </span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by ChargePointId</mat-label>
+                        <input type="text" matInput [formControl]="chargePointIdControl"
+                            [matAutocomplete]="autoChargePointId" (change)="filterChange(filterSelectObj[0], $event)">
+                        <mat-autocomplete autoActiveFirstOption #autoChargePointId="matAutocomplete"
+                            (optionSelected)="filterChange(filterSelectObj[0], $event)">
+                            <mat-option *ngFor="let option of filteredByChargePointId | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by ChargeType</mat-label>
+                        <input type="text" matInput [formControl]="chargeTypeControl" [matAutocomplete]="autoChargeType"
+                            (change)="filterChange(filterSelectObj[1], $event)">
+                        <mat-autocomplete autoActiveFirstOption #autoChargeType="matAutocomplete"
+                            (optionSelected)="filterChange(filterSelectObj[1], $event)">
+                            <mat-option *ngFor="let option of filteredByChargeType | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by Status</mat-label>
+                        <input type="text" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus"
+                            (change)="filterChange(filterSelectObj[2], $event)">
+                        <mat-autocomplete autoActiveFirstOption #autoStatus="matAutocomplete"
+                            (optionSelected)="filterChange(filterSelectObj[2], $event)">
+                            <mat-option *ngFor="let option of filteredByStatus | async" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
+                            class="reset-icon"></i>Reset</button>
+                </div>
+                <div class="col-md-4 flex-end">
+                    <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
+                        Deleted Records</mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="mat-elevation-z8 ucg-table">
+                <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate"
+                    matSortDirection="desc">
+
+                    <ng-container matColumnDef="registrationDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.registrationDate |
+                            date:"MM-dd-yyyy h:mm a"}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="chargePointId">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.chargePointId' | translate}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" [ngClass]="{'disable-link': deletedRecords}"
+                            (click)="chargeEdit(element);" style="cursor:pointer;">
+                            {{element.chargePointId}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="chargerType">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.chargerType' | translate}}
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.chargerType}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="availabilityStatus">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Availability Status </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.availabilityStatus}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="numberOfConnectors">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
+                            {{'table.header.noOfConnectors' | translate}} </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="alignCenter"> {{element.numberOfConnectors}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="connectortype1">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
+                            {{'table.header.connectortype1' | translate}} </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="alignCenter"> {{element.connectortype1}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="connectortype2">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
+                            {{'table.header.connectortype2' | translate}} </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="alignCenter"> {{element.connectortype2}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
+                        <mat-header-cell *matHeaderCellDef class="spc-action"
+                            [ngClass]="{'disable-link hide': deletedRecords}"> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="spc-even"
+                            [ngClass]="{'disable-link hide': deletedRecords}">
+                            <img matTooltip="Chargepoint Details" src="/assets/zoom-in.svg"
+                                (click)="chargeEdit(element);" />
+                            <img [ngClass]="{'img-disable': parentSiteRequest}"
+                                *ngIf="!element.isrequestraised && !isTransferred && canDeleteChargepoint"
+                                matTooltip="Delete Chargepoint" width="24" src="/assets/delete.png"
+                                (click)="deleteChargePoint(element)" />
+                            <img [ngClass]="{'img-disable': parentSiteRequest}" matTooltip="Undo Delete Chargepoint"
+                                width="24"
+                                *ngIf="element.isrequestraised && !isTransferred && canDeleteChargepoint && !deletedRecords"
+                                (click)="unDeleteChargePoint(element)"
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEWElEQVRoge2YS2hcVRjH/985k8dkklJRS6OWKpUa0RYh0SSV4NyZWrpIyBQ7ulAURERwIbh0Y5Z1IxZEVFyIYMHYmIYExTSZCYgm03QQ6ys+ikmNSfMyNkkd28y5n4s4YZjcmXNflRbmvzyP7/v973ncez+grLLKKqussmxqLdq8fy3avP96ii+cBAd4GMxDawdb9znHsxmfeOSy0dxodx45Cg7cAgBgLEDIaO3Q6LfucDXxCcuk6NFQMpXWzdUa2BI8J59MFI0PLLI0jbrBs9+Vmq/dQky0DiC7pYNwK0w1vHqo6X4nwPkqAQ8wLdJVWtTFsLWFVg+23EtsJgDstOieZ2lGdU+qUBr4CZimUTsyflEXx5YBAFg51NgglEzCBxN+wQMODACbJhIA6i2659nkSF1y/PtSMUrCAz9RQBmhz9OzdpkcGQC8mfAbHnDwHshp22B6wjRNA4BVoh0kKLFqPHhfYYcG/mcSFRGn8ICLFchpxWi6RwhKAHSbRfccgyJ1w6kfAC38LyQqwqHTX8644XBtALBngoBAKXjB0qhJjP7hlsGTAUBrYglEAsw3bUlM+JVMGfYCD/hgAABWog/tFeBkERNWmpRKGMGRsUmvuX0xADgyMSWVCPsBD/hoAMiZwBcAdlhn4xmZlQ/7BQ+4uEZLB6NqJqooOoBJXAUF/M3pk3JXJVkc2DztlFIlL4Vb7/Yrry9bSHPPW2k6yyq8PZE+7zW35xXQwM8CmLZovyNAMvlXpHGP1/yeDGjgp7Os2qQSbQCsDu0uP0y4NqCDV0oa2xPp88GRsUnJgTCsTAixq6bzqa8zx1+LgkEdnxw55pTD1RnQwF80pTK2DaYn8hszkQO7FWWTAO4CAKqqQtWTL0A27IN56U/17MKbp5cqs4cHjpxyxOR4BTTwc0wiUggPAMHEV1OSAwaA36imFtXPvbwBn7mMt2c+lkuV2cNOWQCHBrTwoEjd0NiPxebnTFQ/82JG7N6D9eUFvDr1Dj4Luf8csr1ctuD/+3zWaf34sQOr9bcPvcKfBqcrM7rhioB5Zhon4g8bv3ngZFdXl+nIgAbe1q9kvjp6YzEwTjAhaHdOns5QQMX7O/ovAF7qQhtyDN/eG3sJwOvwcAMSMIuAaunv6L/gvi7EWGBpRp3Ab2TnZQDafVOSCahnJT4Cg9zVhTxW5TpOPtYAqboZ8FRjZabHbR/iTRMM6UdJMd4dD/5Tsf4GA8/ntxe+B+Ld8cpMxXobA+8RcGdBGGcvjVzpu3Y4dc4VtYXaT3U+Daa3AISArQY2x/XGogCGCppnHB2k2uHUOT/hAWAg1vcBKdlEQMkVFcI8Y9F8s68/NG7Vf7Rn4krN360MvF9sjGJq3tLItOjrL+W1ULw7XnklkH1EEb/r+Qz832rvjXHJAcTx62ILudToQGdfz41qYEYSPwEC33gGiMckcUtfrO93APC1xHGNpADMgSkFYZ4Y6OzrAWHzbPwLcyQRDfJSCAYAAAAASUVORK5CYII=">
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <div *ngIf="process" class="text-center norecord">
+                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                </div>
+                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                    {{'table.noRecordFound' | translate}}</div>
+                <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,296 @@
+<div class="mt-4 site-dashboard">
+  <div class="container-fluid">
+    <form [formGroup]="siteDashboardForm" #siteDashboard="ngForm" class="margin-bottom-40 ucg-container">
+      <div class="ucgHeader-1">
+        <div class="row">
+          <!-- <div class="col-lg-2 col-md-4 col-sm-5">
+            <h4 class="margin-top-16 ">Organization Name</h4>
+          </div> -->
+          <div class="col-lg-4 col-md-6 col-sm-7">
+            <mat-form-field *ngIf="!hasTenantAdmin" class="w-100" appearance="outline">
+              <mat-label>Organization</mat-label>
+              <mat-select formControlName="tenantName" [(ngModel)]="selectedTenant" tabindex="1"
+                [disabled]="hasTenantAdmin">
+                <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                  {{tenant.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf="hasTenantAdmin" class="w-100 ucg-input" appearance="outline">
+              <input matInput readonly [value]="tenantName">
+          </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="siteDashboardCard">
+        <div class="row">
+          <div class="col-lg-2 col-md-6">
+            <mat-card class="ucg-card green-card">
+              <mat-card-title>Sites</mat-card-title>
+              <mat-card-content class="ucg-card-content">
+                <p class="pointer" (click)="goToSite()">{{siteCards.sites}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <mat-card class="ucg-card blue-card">
+              <mat-card-title>Chargers</mat-card-title>
+              <mat-card-content class="ucg-card-content">
+                <p>{{siteCards.chargePoints}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="col-lg-2 col-md-6">
+            <mat-card class="ucg-card green-card">
+              <mat-card-title>KWH Consumed</mat-card-title>
+              <mat-card-content class="ucg-card-content">
+                <p style="width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 24px;">
+                  {{ (siteCards.kwh)?.toFixed(2) }}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="col-lg-6 col-md-6">
+            <mat-card class="ucg-card blue-card">
+              <mat-card-title>Connectors</mat-card-title>
+              <mat-card-content class="ucg-card-content">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                      <div class="sites-content">
+                        <span>
+                          <i>{{ siteCards.connectors_Available }}</i>
+                          Available
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                      <div class="sites-content">
+                        <span>
+                          <i>{{ siteCards.connectors_InUse }}</i>
+                          Occupied
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                      <div class="sites-content last-child">
+                        <span>
+                          <i>{{ siteCards.connectors_Offline }}</i>
+                          Offline
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+        </div>
+      </div>
+
+    </form>
+
+    <div class="tenantListContainer ucg-container">
+
+      <div class="tenantFilterSection container-fluid">
+        <div class="row">
+          <div class="col-md-5">
+            <span class="title-section">
+              <h4 *ngIf="!isMapViewEnabled">ChargePoint List</h4>
+              <h4 *ngIf="isMapViewEnabled">Site Map View</h4>
+            </span>
+          </div>
+          <div class="col-md-7">
+            <span *ngIf="tenantId != undefined && canCreateSite" class="creation-button">
+              <button mat-raised-button color="primary" class="btn-primary float-right" (click)="newSite()">Add New
+                Site</button>
+                <mat-button-toggle-group #group="matButtonToggleGroup" [value]="selectedVal" (change)="onValChange(group.value)"
+                *ngIf="dataSource.data.length != 0 && dataSource.filteredData.length != 0" name="fontStyle" aria-label="Font Style" style="margin-right: 10px;">
+                  <mat-button-toggle value="mapView" (click)="mapView()" class="toggleBtn"> <i class="mapviewico"></i> Map View</mat-button-toggle>
+                  <mat-button-toggle value="listView" (click)="listView()" class="toggleBtn"><i class="listviewico"></i> List View</mat-button-toggle>
+                </mat-button-toggle-group>
+
+            </span>
+          </div>
+        </div>
+            <div class="row">
+              <div class="col-md-2">
+                <mat-form-field *ngIf="!isMapViewEnabled && dataSource.data.length > 0" appearance="outline" class="w-100">
+                  <mat-label>Filter by ChargePoint</mat-label>
+                  <input type="text" matInput [formControl]="chargePointControl" [matAutocomplete]="autoChargePoint" (change)="filterChange(filterSelectObj[2], $event)">
+                  <mat-autocomplete autoActiveFirstOption #autoChargePoint="matAutocomplete"
+                    (optionSelected)="filterChange(filterSelectObj[2], $event)">
+                    <mat-option *ngFor="let option of filteredByChargePoint | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-2">
+                <mat-form-field *ngIf="!isMapViewEnabled && dataSource.data.length > 0" appearance="outline" class="w-100">
+                  <mat-label>Filter by Sitename</mat-label>
+                  <input type="text" matInput [formControl]="siteNameControl" [matAutocomplete]="autoSiteName" (change)="filterChange(filterSelectObj[0], $event)">
+                  <mat-autocomplete autoActiveFirstOption #autoSiteName="matAutocomplete"
+                    (optionSelected)="filterChange(filterSelectObj[0], $event)">
+                    <mat-option *ngFor="let option of filteredBySiteName | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field *ngIf="!isMapViewEnabled && dataSource.data.length > 0" appearance="outline" class="w-100">
+                  <mat-label>Filter by Location</mat-label>
+                  <input type="text" matInput [formControl]="locationControl" [matAutocomplete]="autoLocation" (change)="filterChange(filterSelectObj[1], $event)">
+                  <mat-autocomplete autoActiveFirstOption #autoLocation="matAutocomplete"
+                    (optionSelected)="filterChange(filterSelectObj[1], $event)">
+                    <mat-option *ngFor="let option of filteredByLocation | async" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+              </div>
+
+              <div class="col-md-2">
+                <button *ngIf="!isMapViewEnabled && dataSource.data.length > 0" mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i class="reset-icon"></i>Reset</button>
+              </div>
+              <div *ngIf="selectedTenant" class="col-md-4 flex-end">
+                <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
+                    Deleted Records</mat-slide-toggle>
+              </div>
+          </div>
+
+      <div class="mat-elevation-z8 ucg-table" *ngIf="!isMapViewEnabled">
+        <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate" matSortDirection="desc">
+
+          <ng-container matColumnDef="registrationDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.registrationDate |
+              date:"MM-dd-yyyy h:mm a"}} </mat-cell>
+          </ng-container> 
+      
+          <ng-container matColumnDef="chargePointId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <a *ngIf="element.chargePointId!=null && element.chargePointId!='Not Available'" [ngClass]="{'disable-link': deletedRecords}" [routerLink]="['/charger-edit']" (click)="chargerEdit(element)">
+                {{element.chargePointId}}
+              </a>
+              <label *ngIf="element.chargePointId=='Not Available'" class="form-label">Not Available</label>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Site Name </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <a *ngIf="element.siteId!=null" [routerLink]="['/site-edit']" [ngClass]="{'disable-link': deletedRecords}" (click)="siteUpdate(element)">
+                {{element.name}}
+              </a>
+              <label *ngIf="element.siteId==null" class="form-label">Not Available</label>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="location">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.location}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <i [ngClass]= "{'connect-online':element.chargePointStatus == 'Online' ,
+              'status-offline':element.chargePointStatus == 'Unavailable',
+              'connect-offline':element.chargePointStatus === 'Offline'} "></i>
+              <label *ngIf="element.chargePointStatus!=null">{{element.chargePointStatus}}</label>
+              <label *ngIf="element.chargePointStatus==null"><i class="status-offline"></i>Not Available</label>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="connector">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Connector 1 </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <i *ngIf="element.connector1Status!=null" [ngClass]="{'connect-online':element.connector1Status === 'Available',
+                    'connect-faulted':element.connector1Status === 'Faulted',
+                    'connect-offline':element.connector1Status === 'Offline',
+                    'connect-occupied':element.connector1Status === 'Occupied',
+                    'connect-connected':element.connector1Status !== ('Available' || 'Offline' || 'Faulted' || 'Occupied')} "></i>
+                    <label *ngIf="element.connector1Status!=null" class="form-label">{{element.connector1Status}}</label>
+                    <i *ngIf="element.connector1Status==null" class="connect-notapplicable"></i><label *ngIf="element.connector1Status==null" class="form-label">Not Available</label>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="connector1">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Connector 2 </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <i *ngIf="element.connector2Status!=null" [ngClass]="{'connect-online':element.connector2Status === 'Available',
+                    'connect-faulted':element.connector2Status === 'Faulted',
+                    'connect-offline':element.connector2Status === 'Offline',
+                    'connect-occupied':element.connector2Status === 'Occupied',
+                    'connect-connected':element.connector2Status !== ('Available' || 'Offline' || 'Faulted' || 'Occupied')} "></i>
+                    <label *ngIf="element.connector2Status!=null" class="form-label">{{element.connector2Status}}</label>
+                    <i *ngIf="element.connector2Status==null" class="connect-notapplicable"></i><label *ngIf="element.connector2Status==null" class="form-label">Not Available</label>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+
+        <div *ngIf="process" class="text-center norecord">
+          <img class="rotate" width="35" src="assets/greenprocess.png" />
+        </div>
+
+        <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">{{'table.noRecordFound' | translate}}</div>
+
+        <mat-paginator #paginator [pageSize]="5" [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+      </div>
+
+
+      <div *ngIf="isMapViewEnabled">
+        <agm-map [latitude]="lat" [longitude]="long" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false">
+          <agm-marker-cluster
+            imagePath="https://raw.githubusercontent.com/googlearchive/js-marker-clusterer/gh-pages/images/m">
+            <agm-marker *ngFor="let map of mapList; let i = index" [latitude]="map.lat" [longitude]="map.long" [label]="map.label"
+            [markerDraggable]="map.draggable">
+
+              <agm-snazzy-info-window [isOpen]="true">
+                <ng-template>
+                  <strong>
+                    <label ngClass="bluelabel"> {{map.name}} </label>
+                    <label ngClass="bluelabel"> No of Chargers : {{map.noOfChargePoints}} </label><br>
+
+                    <label ngClass="bluelabel"> Address: {{map.address.street}} - {{map.address.city}} - {{map.address.state}} - {{map.address.country}}</label><br>
+
+                    <label ngClass="greenlabel"><i class="status-online"></i> <span>Available: {{map.Available}}/{{map.noOfChargePoints}}</span></label><br>
+
+                    <label ngClass="faultedlabel"><i class="status-faulted"></i> <span>Faulted: {{map.Faulted}}/{{map.noOfChargePoints}}</span></label><br>
+
+                    <label ngClass="occupiedlabel"><i class="status-occupied"></i> <span>Occupied: {{map.Occupied}}/{{map.noOfChargePoints}}</span></label><br>
+
+                    <label ngClass="offlinelabel"><i class="status-offline"></i> <span>Offline: {{map.Offline}}/{{map.noOfChargePoints}}</span></label><br>
+                    <label ngClass="occupiedlabel"><i class="status-occupied"></i> <span>Others: {{map.OtherStatus}}/{{map.noOfChargePoints}}</span></label><br>
+
+                    <!-- <label>{{site.connector1Status}}</label><br> -->
+
+                    <a (click)="siteEdit($event,tenantId,map.siteId)" class="bluelabel">
+                      View Detail
+                    </a>
+                  </strong>
+                </ng-template>
+              </agm-snazzy-info-window>
+
+            </agm-marker>
+          </agm-marker-cluster>
+
+        </agm-map>
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="margin-top-16 member-info-section">
+    <div class="tenantListContainer ucg-container">
+        <div class="tenantFilterSection container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <h3 class="card-title stat-text">ChargePoint Uptime Report</h3>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" [max]="maxDate" required
+                            readonly (dateChange)="getReport()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select End Date</mat-label>
+                        <input matInput [matDatepicker]="enddatepicker" [(ngModel)]="endDate" [disabled]="!startDate"
+                            [max]="maxDate" (dateChange)="getReport()" [min]="startDate" required readonly>
+                        <mat-datepicker-toggle matSuffix [for]="enddatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #enddatepicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <button mat-raised-button color="primary" class="btn-primary mt-02 w-100"
+                        [disabled]="dataSource.data.length === 0" (click)="downloadReport()">
+                        <img class="download-btn"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAABoklEQVR4nO3aQU5bMRhFYU/KGug2YBCW1JZ9AkJsBWS1nR+ExIAB0kuQnfvMf74xkXn3xIMEWpMkSZKknQAugD/APfCf07295g74DfxIP89SgJ/AE+M8Apfp51rpnf80cPyPEbwJRwS4ZZ5fZ3kXrQx4mBjgLv18uwf8mxjgb/r5do/J0s+3exhg3wHa5NeXhwGyMIABSsMbYIDS8AYYoDS8AQYoDW+AAUrDG2CA0vAGGKA0vAEGKA1vgAFKwxtggNLwBhhgScAV8Jz+xyrm68ChVY3Qtn+HmuOfK0LbPr/u+OeI0LbPrj3+7Aht+9zR1ht/ZoS2feZI644/K0LbPm+U9cefEaFtnzXC9xn/ixE6cDPw7Gvgpez4yQg4fi4Cjp+LgOPnIuD4uQg4fi4Cjp+LgOPnIuD4uQg4/ljA4X3cYyOc8rPf8xPuAt+idsfPReiOn7sJ3fFzEbrj5yJ0x89F6I6fi9AdPxehO34uQnf8XITu+NmvLQ6p8yVJkiRJ0nAn/BFEnzBAmAHCDBBmgDADhBkgzABh4z8YSJIkSWqLewVojZyQB8ZauAAAAABJRU5ErkJggg==">
+                        Download</button>
+                </div>
+            </div>
+            <div class="mat-elevation-z8 ucg-table">
+                <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                    <!-- matSortActive="name" -->
+                    <ng-container matColumnDef="chargePointId">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.chargePointId }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="upTimeHours">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Uptime (Hr) </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.upTimeHours.toFixed(2) }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="downTimeHours">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Downtime (Hr) </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.downTimeHours.toFixed(2) }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="totalHours">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Total (Hr) </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.totalHours.toFixed(2) }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="upTimePercentage">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Uptime (%) </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.upTimePercentage.toFixed(2) }} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <div *ngIf="process" class="text-center norecord">
+                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                </div>
+                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                    {{'table.noRecordFound' | translate}}</div>
+                <mat-paginator *ngIf="dataSource.data.length !== 0" #paginator [pageSize]="5"
+                    [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

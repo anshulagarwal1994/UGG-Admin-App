@@ -1,0 +1,42 @@
+<mat-toolbar class="main-header">
+  <a [routerLink]="['/']" class="ucg-logo">
+    <img class="logo-img" src="/assets/EV-Chargers-Logo.png" alt="">
+  </a>
+
+  <div class="right-nav">
+    <h2>{{ 'navbar.title'| translate }}</h2>
+
+    <form [formGroup]="hearderForm">
+      <div class="profile row mt-4">
+        <div class="profile-menu col-md-6">
+          <button mat-button [matMenuTriggerFor]="menu" aria-label="profile menu">
+            <img src="" alt=""
+              class="img-fluid rounded-circle z-depth-0">
+            {{currentUsername}} <mat-icon aria-hidden="false" aria-label="expand_more icon">expand_more</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item (click)="profile()">
+              <mat-icon>person</mat-icon>
+              <span>Profile</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              <span>Log-out</span>
+            </button>
+          </mat-menu>
+        </div>
+        <div class="ucg-form col-md-5">
+          <mat-form-field appearance="outline" class="ucg-form-control">
+            <mat-label>Language</mat-label>
+            <mat-select formControlName="language" [(ngModel)]="lang" name="language" (selectionChange)="useLanguage($event.value)" placeholder="Language">
+              <mat-option *ngFor="let language of languages" [value]="language.value">
+                {{language.text}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</mat-toolbar>

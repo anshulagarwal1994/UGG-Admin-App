@@ -1,0 +1,106 @@
+<div class="margin-top-16 member-info-section">
+    <div class="ucgHeader">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 *ngIf="!isMasterAdmin" class="margin-top-16">{{'sidebar.raiseQuery' | translate }}</h4>
+                    <h4 *ngIf="isMasterAdmin" class="margin-top-16">{{'sidebar.answerQuery' | translate }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tenantListContainer ucg-container">
+        <div class="tenantFilterSection container-fluid">
+            <div class="row">
+                <div class="col-md-5">
+                    <span class="title-section">
+                        <h4>Queries</h4>
+                    </span>
+                </div>
+                <div *ngIf="!isMasterAdmin" class="col-md-7 text-end">
+                    <button mat-raised-button color="primary" class="btn-primary mt-02"
+                        (click)="sendQueryDetails({}, 'new')">New Query</button>
+                </div>
+                <div *ngIf="isMasterAdmin" class="col-md-3">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by User</mat-label>
+                        <input type="text" matInput [formControl]="userControl">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="isMasterAdmin" class="col-md-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by Status</mat-label>
+                        <input type="text" matInput [formControl]="userStatusControl">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="isMasterAdmin" class="col-md-2 text-end">
+                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
+                            class="reset-icon"></i>Reset</button>
+                </div>
+            </div>
+            <br *ngIf="!isMasterAdmin" />
+            <div class="mat-elevation-z8 ucg-table">
+                <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                    <!-- matSortActive="userName" -->
+                    <ng-container matColumnDef="userName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.userName }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tenantName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Organization </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.tenantName }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="siteName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Site </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.siteName }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="chargePointName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.chargePointName }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdon">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Created On </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.createdon }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> <span class="truncate-text">{{ element.description }}</span> </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
+                        <mat-header-cell *matHeaderCellDef class="spc-even"> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="spc-even">
+                            <i *ngIf="isMasterAdmin || element?.reply?.length" matTooltip="Reply Query"
+                                class="editIcon pointer" (click)="sendQueryDetails(element, 'edit')"></i>
+                            <i *ngIf="!isMasterAdmin && !element?.reply?.length" matTooltip="Edit Query Details"
+                                class="editIcon pointer" (click)="sendQueryDetails(element, 'edit')"></i>
+                            <img *ngIf="!isMasterAdmin" matTooltip="Delete Query" width="24" src="/assets/delete.png"
+                                (click)="deleteQuery(element.id)" />
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <div *ngIf="process" class="text-center norecord">
+                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                </div>
+                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                    {{'table.noRecordFound' | translate}}</div>
+                <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

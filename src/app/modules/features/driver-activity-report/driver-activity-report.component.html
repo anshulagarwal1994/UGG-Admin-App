@@ -1,0 +1,91 @@
+<div class="margin-top-16 member-info-section">
+    <div class="tenantListContainer ucg-container">
+        <div class="tenantFilterSection container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <h3 class="card-title stat-text">Driver Activity Report</h3>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Start Date</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" [max]="maxDate" required
+                            readonly (dateChange)="getReport()">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select End Date</mat-label>
+                        <input matInput [matDatepicker]="enddatepicker" [(ngModel)]="endDate" [disabled]="!startDate"
+                            [max]="maxDate" (dateChange)="getReport()" [min]="startDate" required readonly>
+                        <mat-datepicker-toggle matSuffix [for]="enddatepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #enddatepicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <button mat-raised-button color="primary" class="btn-primary mt-02 w-100"
+                        [disabled]="dataSource.data.length === 0" (click)="downloadReport()">
+                        <img class="download-btn"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAABoklEQVR4nO3aQU5bMRhFYU/KGug2YBCW1JZ9AkJsBWS1nR+ExIAB0kuQnfvMf74xkXn3xIMEWpMkSZKknQAugD/APfCf07295g74DfxIP89SgJ/AE+M8Apfp51rpnf80cPyPEbwJRwS4ZZ5fZ3kXrQx4mBjgLv18uwf8mxjgb/r5do/J0s+3exhg3wHa5NeXhwGyMIABSsMbYIDS8AYYoDS8AQYoDW+AAUrDG2CA0vAGGKA0vAEGKA1vgAFKwxtggNLwBhhgScAV8Jz+xyrm68ChVY3Qtn+HmuOfK0LbPr/u+OeI0LbPrj3+7Aht+9zR1ht/ZoS2feZI644/K0LbPm+U9cefEaFtnzXC9xn/ixE6cDPw7Gvgpez4yQg4fi4Cjp+LgOPnIuD4uQg4fi4Cjp+LgOPnIuD4uQg4/ljA4X3cYyOc8rPf8xPuAt+idsfPReiOn7sJ3fFzEbrj5yJ0x89F6I6fi9AdPxehO34uQnf8XITu+NmvLQ6p8yVJkiRJ0nAn/BFEnzBAmAHCDBBmgDADhBkgzABh4z8YSJIkSWqLewVojZyQB8ZauAAAAABJRU5ErkJggg==">
+                        Download</button>
+                </div>
+            </div>
+            <div class="mat-elevation-z8 ucg-table">
+                <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                    <!-- matSortActive="name" -->
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="mobile">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Contact </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.mobile }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tenant">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Organization </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.tenant }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="site">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Site </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.site }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="chargePoint">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.chargePoint }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="chargingTime">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Charging Time </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.chargingTime }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="kwhConsumed">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Units Consumed (KwH) </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="just-cent"> {{ element.kwhConsumed.toFixed(2) }} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <div *ngIf="process" class="text-center norecord">
+                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                </div>
+                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                    {{'table.noRecordFound' | translate}}</div>
+                <mat-paginator *ngIf="dataSource.data.length" #paginator [pageSize]="5"
+                    [length]="dataSource.data.length" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

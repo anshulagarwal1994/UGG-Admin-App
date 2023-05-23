@@ -1,0 +1,15 @@
+.flex {
+  display: flex;
+}
+.m-20 {
+  margin-top: 20px;
+}
+.form-row {
+  max-height: 300px;
+  overflow: scroll;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: #f5f5f7 !important;
+  color: #545a6d;
+}

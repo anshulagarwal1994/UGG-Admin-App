@@ -1,0 +1,69 @@
+<div class="margin-top-16 member-info-section">
+    <div class="ucgHeader">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="margin-top-16">{{'sidebar.transferSite' | translate }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tenantListContainer ucg-container">
+        <div class="tenantFilterSection container-fluid">
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    <h4 class="font-18">From Organization</h4>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Organization</mat-label>
+                        <mat-select [(ngModel)]="selectedFromTenant" tabindex="1"
+                            (selectionChange)="tenantFromSelection($event.value)">
+                            <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                                {{tenant.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Site will be transfered from selected organization.</mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 text-center">
+                    <img class="arrow-img"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAACXBIWXMAAAsTAAALEwEAmpwYAAABfklEQVR4nO3b3U7CMBiA4d0oxSvQcNDOf0+9AklsOdDoTTTZKcpd7ErEDAGZKNm+b7q4vk/SQxry0oWylSwDAAAAAAAAAAAKY++ONa9PnvHuzQR7knwIKRPcshojn5+KJ0mZWQckotAm3jjkHyG9nUjnSjrgdP6wNLP1avTurO/39e8CxrIgojbgXsRgz0WTphwwriI+ElET8GvEkXcXjSdMjfkhIBE7CFiN+9en7RaHlSgIuIq4eP7cJwZ7+d08yTINAhKxg4CbiEez7eV8dWjeZJgWATuNuPsjfAgjNgxYDV+LaK8JGNoF7CSi5JOLAxuqiAQs9iKa4G4IWP5RRFZgceBydrcELH95FbICCy7h2Oc3MSuw6GYbM5QR+9pID2XEFvG4qbCjbUDiKQJyY1URkHiKgNMXntCJA/J4UxGQB+yKgBzxUAQkniIgx9wUAYmnCHhXO0zEeenWATniK1S/qWBz6TzJMlU4/isiRzwl/uoFAAAAAAAAAMgG5R3BsN+KGAJkYAAAAABJRU5ErkJggg==">
+                </div>
+                <div class="col-md-2">
+                    <h4 class="font-18">To Organization</h4>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Organization</mat-label>
+                        <mat-select [(ngModel)]="selectedToTenant" tabindex="3" [disabled]="!selectedFromTenant">
+                            <mat-option *ngFor="let tenant of tenantsTo" [value]="tenant">
+                                {{tenant.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Site will be transfered to selected organization.</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    <h4 class="font-18">Select Site</h4>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Site</mat-label>
+                        <mat-select [(ngModel)]="selectedSite" tabindex="2" [disabled]="!selectedFromTenant">
+                            <mat-option *ngFor="let site of sites" [value]="site">
+                                {{site.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <button mat-raised-button [disabled]="!selectedFromTenant || !selectedToTenant || !selectedSite"
+                color="primary" class="btn-primary btn-popup" (click)="transfer()">Transfer</button>
+        </div>
+    </div>
+</div>

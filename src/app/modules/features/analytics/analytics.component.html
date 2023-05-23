@@ -1,0 +1,315 @@
+<div class="mt-4 site-dashboard">
+    <div class="container-fluid">
+        <div class="ucg-container">
+            <div class="ucgHeader-1">
+                <div class="row" style="margin-left: 5px;">
+                    <div class="col-lg-4 col-md-7 col-sm-7">
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Organization</mat-label>
+                            <mat-select (selectionChange)="tenantSelection($event.value)" [(ngModel)]="selectedTenant"
+                                tabindex="1">
+                                <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                                    {{tenant.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="siteDashboardCard">
+                    <div class="row">
+                        <!-- <div class="col-lg-2 col-md-6">
+                            <mat-card class="ucg-card green-card">
+                                <mat-card-title>{{'cards.tenant' | translate }}</mat-card-title>
+                                <mat-card-content class="ucg-card-content">
+                                    <img *ngIf="countprocess" class="rotate" width="30" src="assets/process.png" />
+                                    <p *ngIf="!countprocess">{{tenantCount}}</p>
+                                </mat-card-content>
+                            </mat-card>
+                        </div> -->
+                        <div class="col-lg-3 col-md-3">
+                            <mat-card class="ucg-card blue-card">
+                                <mat-card-title>{{'cards.sites' | translate }}</mat-card-title>
+                                <mat-card-content class="ucg-card-content">
+                                    <img *ngIf="countprocess" class="rotate" width="30" src="assets/process.png" />
+                                    <p *ngIf="!countprocess" class="pointer" (click)="goToSite()">{{sitesCount}}</p>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                            <mat-card class="ucg-card green-card">
+                                <mat-card-title>{{'cards.chargePoints' | translate }}</mat-card-title>
+                                <mat-card-content class="ucg-card-content">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="sites-content">
+                                                    <img *ngIf="countprocess" class="rotate" width="30"
+                                                        src="assets/process.png" />
+                                                    <span *ngIf="!countprocess" routerLink="/connectors/All"
+                                                        class="pointer">
+                                                        <i>{{chargePointsCount}}</i>
+                                                        Total
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="sites-content last-child">
+                                                    <img *ngIf="countprocess" class="rotate" width="30"
+                                                        src="assets/process.png" />
+                                                    <span *ngIf="!countprocess" routerLink="/connectors/Offline"
+                                                        class="pointer">
+                                                        <i>{{connectorsOfflineCount}}</i>
+                                                        Offline
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-lg-5 col-md-5">
+                            <mat-card class="ucg-card blue-card">
+                                <mat-card-title>Connectors</mat-card-title>
+                                <mat-card-content class="ucg-card-content">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="sites-content">
+                                                    <img *ngIf="countprocess" class="rotate" width="30"
+                                                        src="assets/process.png" />
+                                                    <span *ngIf="!countprocess" routerLink="/connectors/Online"
+                                                        class="pointer">
+                                                        <i>{{connectorsAvailableCount}}</i>
+                                                        Available
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="sites-content">
+                                                    <img *ngIf="countprocess" class="rotate" width="30"
+                                                        src="assets/process.png" />
+                                                    <span *ngIf="!countprocess" routerLink="/connectors/Occupied"
+                                                        class="pointer">
+                                                        <i>{{connectorsInUseCount}}</i>
+                                                        Occupied
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="sites-content last-child">
+                                                    <img *ngIf="countprocess" class="rotate" width="30"
+                                                        src="assets/process.png" />
+                                                    <span *ngIf="!countprocess" routerLink="/connectors/Unavailable"
+                                                        class="pointer">
+                                                        <i>{{connectorsUnavailableCount}}</i>
+                                                        Unavailable
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div *ngIf="selectedTenant" class="container-fluid">
+                <div *ngIf="sites.length" class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Sites : {{ sites.length }}</h3>
+                                <div class="site-container">
+                                    <ul class="list-group">
+                                        <li class="list-group-item pointer" *ngFor="let site of sites"
+                                            (click)="siteSelection(site)"
+                                            [ngClass]="{'active': site.name === selectedSite.name}">
+                                            {{site.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="chargePoints.length" class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">ChargePoints : {{ chargePoints.length }}</h3>
+                                <div class="site-container">
+                                    <ul class="list-group">
+                                        <li class="list-group-item pointer" *ngFor="let chargePoint of chargePoints"
+                                            (click)="chargePointSelection(chargePoint)"
+                                            [ngClass]="{'active': chargePoint.chargePointId === selectedChargePoint.chargePointId}">
+                                            {{chargePoint.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="onlineChargers.length || offlineChargers.length" class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Insights</h3>
+                                <h4>Organization -</h4>
+                                <div>{{ onlineChargers.length }} - Chargers operational</div>
+                                <div>{{ offlineChargers.length }} - Chargers having problem</div>
+                                <br />
+                                <h4 *ngIf="selectedSite">Site -</h4>
+                                <div *ngIf="selectedSite">{{ onlineSiteChargers.length }} - Chargers operational</div>
+                                <div *ngIf="selectedSite">{{ offlineSiteChargers.length }} - Chargers having problem
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="container-fluid">
+                <div class="mat-elevation-z8 ucg-table">
+                    <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                        <!-- matSortActive="siteName" -->
+                        <ng-container matColumnDef="siteName">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Site Name </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{ element.siteName }} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="siteAddress">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header> Site Address </mat-header-cell>
+                            <mat-cell *matCellDef="let element"> {{ element.siteAddress }} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="chargers">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Chargers
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-center"> {{ element.chargers }} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="connectors">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Connectors
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-center"> {{ element.connectors }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="energryUsed">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Energry Used
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-center"> {{ element.energryUsed.toFixed(2)
+                                }} </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="revenue">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Revenue
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="text-center"> $ {{ element.revenue.toFixed(2) }}
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    </mat-table>
+                    <div *ngIf="greenprocess || tableProcess" class="text-center norecord">
+                        <img class="rotate" width="35" src="assets/greenprocess.png" />
+                    </div>
+                    <div *ngIf="!tableProcess && !greenprocess && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)"
+                        class="norecord">
+                        {{'table.noRecordFound' | translate}}</div>
+                    <mat-paginator *ngIf="dataSource.data.length" #paginator [length]="totalCount"
+                        [pageIndex]="pageNumber" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+                        [showFirstLastButtons]="true" (page)="pageChanged($event)">
+                    </mat-paginator>
+                </div>
+            </div>
+            <br *ngIf="selectedTenant && !greenprocess" />
+            <div *ngIf="selectedTenant && !greenprocess" class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-5">
+                                <h3 class="card-title stat-text">Statistics</h3>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Select Start Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" [max]="maxDate"
+                                        required readonly (dateChange)="getStatistics()">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field class="w-100" appearance="outline">
+                                    <mat-label>Select End Date</mat-label>
+                                    <input matInput [matDatepicker]="enddatepicker" [(ngModel)]="endDate"
+                                        [disabled]="!startDate" [max]="maxDate" (dateChange)="getStatistics()"
+                                        [min]="startDate" required readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="enddatepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #enddatepicker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="card-counter primary">
+                                        <img
+                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAEzElEQVR4nO2cW6hWRRTHx8w0shNFZSERlFaKvRgWkQXpg90gStGiECICISKsNCqDEDpBN/GCVoQlBFFReO2ePQTB6Uml4lSkRVlqN7tglpdfDGc9SBTfmu/bs2fvNfOD7/Xb/zVrz56ZtdYs5wqFQqFQaBF0ILU+81AcUByQNZQZUByQNZQZUByQNZQZUByQNZQZUOtgDwPOBWYD/cDGTg4A3gFWALcC59Uo1w7AFOBx4Gt65yvgCeD81HY1GmAEcAswSDzeAy5JbWvjAC4DPqY+XgROdrkDDAceBg5RP99nPRuAUcCrpGU/MMvlBnA0sI5m8DdwrcsJYHmXg7UXeBtYCiwG7gbuAh4Fnu9hAf8DmORywL9tgYPzO/AUMNmfCxT/fxawSJwVwifAMc4ywHGBe/t1wKldPusUYHWgExY5ywDzAwbjgYqeeR9wWPnMX4ETnUWAo4AdyoF4suJnLwxw/P3OIsClygH4supvscSUNHEkz3bNWtM6JJim4YZIzz8d2KfUMMVZA3hfYfg+4NiIGp6uc/1pFMAuheFvRNYwQemAqDpShR00O5GlNWj5QqHjO2cJ2ZM3Yh8OPKfUcoKzAjBWafQ9NWiZp9Qy0VkBOElp9GMNCoVc7oxFPw8ojH6lQeeRq50l5ICjCQWMjKxjktIBM50lApIvs1JrNQlwp9IB22MexrIFOCMg97vaZDwmNf6EiZ5VPmmfWrPF8pMQPgTGpdZtCuClLvK1/f4skVq7CYAxwE7C2Ss1RGemtqH1+IIo9LH5f+MX8k3A9WW31JsTrgL+pDd8xcTLwBzg+OpekUwApgI/Ug3emRukLL3UfQaeDz6gWg4Cr8u9glFR3yJDRbq3Abupnp99lUVZvHWO6JMyQ180WzUHpCx9QvxXysZnqR/YE8kRK32WLrWdjQcYCcwFBiI44ge/lU1tY2sAzgYWSHiiygsdvvB3RGr7WgVDRVbz5Eak3/H0ylvlHNElfs8vO6h3A4pw/4vNsbNx5gHGy5bzly6d8EJqG0wAjAYelBxzKDem1m+tIGxNoAN8aKQvtXZTADdJ4E7LwtSazQFMC4i+flNy0vFmgpaLYmjIHob2/Boeyn6wIuYgNLzm2o5cjru3w29agsuC3yocMOjajjLv+2wCXZo2CXtc21GmG9cm0OWLvjrxl2s7wDaFoQMNdcB+13YkSd7xTQNGN/AT9JNrO1JIpeHKmnV9qtC0zbWdgOtAa2rUNDGnbWifMsF+EDinJk0+6Z9PPEi5DnjWxo6/+NaVsuZomOwsAFyDnsWRb2puUer4zFlBTp6+G5WGw9KGbFiEiuytAS/CHc4SfpdDGOurqO+UNjVzlX0qjgxF27ujJlVpIfwGLOvmhoxvMyCJ+o8I5zpnERmUz7sYkEPSVfcZqXyeAVwoCfhxwAXAdOBm6RG9uYey91XOMtLR0HesbSJvmu+a6JF29DtoFhtNfvf/D+A06WSeGv95eyTL67AMbU/nd1m7UwU+HjTV5Q5Ds2GJXEetg0FZzPN76xUn1dsjVD8jpYq+QOsKP/NS29qWgts5R2wrdwYO9oAMuM9JX+z7FaW2yUrjv06MSa3TNHQgtT7zUBxQHJA1lBlQHJA1lBlQHJA1lBlQKBQKBWeDfwCj76PqPxL6owAAAABJRU5ErkJggg==">
+                                        <span class="count-numbers">$ {{ totalAmount }}</span>
+                                        <span class="count-name">Total Revenue</span>
+                                    </div>
+                                </div>
+                                <div *ngIf="isMasterAdmin" class="col-md-4">
+                                    <div class="card-counter danger">
+                                        <img
+                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAB8klEQVR4nO2cwU7DMBAFXeDf4Ubbk3sEeuErH6rKCgSlJHFgd+2ZL3Bn7DSRpS0FAAAAAAAAAAAAAACgAUm3kjZZJUraSLopieU/SzpkjKCz/J2kV0l3Jal8I1UEfcg38kS4ID9VBH2XnyfCFfkpIuhn+fEjTJAfOoJ+lx83wgz5ISNouvx4Ed7lHzWffYQIC+QbL6ffXiIg6V7LOHhGaJB/okbYQGkjqCf52SKoR/lZIqhn+dEjaAT5USNoJPmGpIcIETSi/CgRNLJ87whCvl8EId/vJAj5fhGEfL8IQr5fBCH/XyPUzxGQ7xhB7Hz3CLuWgCssv4weYQnId4xQ2fl+J6Ei3+9xVJHv959QkT8TnV8vt8jPHaGy89sD7AiQU77BKXCUbxDBUb5BBEf5BhEc5RtEcJRvEGEl+bXhO4EIWuEypfFjbdwIa95kiQh+8g2uJifyl6LE/bCffIMIAcSIk+AvRETwF6HRI0QQoLY1bNNGiCB/2AiR5K+0psc0ESLKHyZCZPndR8ggv9sImeR3FyGj/K4idDKwab9g/cdIA5vmjiwL9ZWpzCPLFkQIJb+LoX1fIjxlk9/F2MoJEULLnxAhvvwrEVLIvxIhj/wLEVLJvxAhn3zjNPo9o/wvEWK8agIAAAAAAAAAAAAAQMnKGxmrKzrutL4FAAAAAElFTkSuQmCC">
+                                        <span class="count-numbers">{{ failedTransactionCount }}</span>
+                                        <span class="count-name">Failed Transactions</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-counter success">
+                                        <img
+                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEUElEQVR4nO3dW4hVVRzH8a2jWY2S1pQIXlMUphIlSUXzQTFExVJfNCFoJAiakgQRhLQIelAxFAUDr6AmCEbKgJMXxBctIxJj7EHL6GpoNzW8Nd9YzB4YRuec/znus/9nrfX/vLvPb5/fnLP3Xvu/j0lijDHGGGOMMcYYY4wxxhhjjPEL0AtoBD4BPgWWAr21c0UJ6A18wd1agDrtfNEBttG1Hdr5ogK8ALQWKOQ60E07ZxSAPsBFCnNlPaidNQrARoo7q50zCsDzwH+CQl7WzhrLKW6LoIwjdvzIAbBGUMbfwOA88kQNeA64Iyjkde2swQMecAdpQRnH7asqB8B7gjLcdceIPPJEDRgN3BQU8rZ21uABPYDTgjJOATXaeYMHLBeUcQN4Sjtr8ICRwL+CQlZoZw0e0B04ISjja6Cndt7gAW8KyrgNPKudNXjAEOAfQSHva2cNHtANaBaUcc6W1nMALBaU4VZ6J+WRJ2rAAOAPQSFrtbNGgbapkWK+A2q1swYPWCgow92SnaadNXhAHXBJUMgm7axRAPYKyvjBDTZoZw0eMBuZGdpZgwc8AvwoKGObdtYoUHjqsN0vQD/trMEDphaZOmw3Vztr8IBa4IKgjI+1s0YB2dThZeAJ7azBAyYKpw4XamcNHvKpw4PaWaMArBaU8RcwUDtr8ICxwC1BIQ3aWWMZ5flKUMZRL6cO07HKRcA64B2gPqliwCpBGVeBoYlv3Pcr8E2nnXEDyMuTKgQ8I5w6bEx8BHxWYKe2VtNIDFDTxROynblxn+6Jb4BBgp077BbtkioALBPkdYNwIxMfAeORcV9pQzyZOlyW+Ap4VHiV6/wKjKvyqcPPvR+QTo8TUteAFxUyviHI5g70Tye+Ax4CmkooxZ2BLanCqcOVSSjSsxfJimlHH7kLtByyHRJkOVNNZ4OZcX/5JRxTSN+sig0KAA3CAWmVY1sugHnCs5mOf50DFacOP0hCB0wQzjW1+wkYk3GG/YLX/TaaAWngyXQiXMqtHc3M6LUXCF7PfbVOTmKSXqe457Slbt/vQ/bAY8JP54dJxHfldlGa9eWuJQF7BNv/Puqf3Esfenm3xFL2uWucEl9nlmC7btRneuX21iPAq8K7dO1OAo9nPHW4ufJ76hE3vp/ep5Y6D4wSbHeLYFs/A33z2VOPuIfqBT+H19EVYEoGU4dz8t1Tj6QXbl8id8PdJr7Hdh5OP0XF7NTZU/9GOA+UUEqrOznotI0Ngn/3u/RYFL10YVLypnbkptR7ljB1OD/6N7qMT8vSEhcmm9Olj2L2WRllAl5Kf/QrK5eB/lbI/f+O4W8ZFbLIysgAMEw4BF1Ik5WRIffYGHCM8rifZR1khVRmRHVnGYW8ZmVUfmGyVVjGMS8HpH0DvCKYyXVnaMO1s0aDtjWrPwsU8pZ2xugA9V2sXW23ryrd/+dpCbA7nZycrZXFGGOMMcYYY4wxxhhjkmr0PzeHWP8QvLk8AAAAAElFTkSuQmCC">
+                                        <span class="count-numbers">{{ successfulTransactionCount }}</span>
+                                        <span class="count-name">Successful Transactions</span>
+                                    </div>
+                                </div>
+                                <div *ngIf="isMasterAdmin" class="col-md-4">
+                                    <div class="card-counter usr">
+                                        <img
+                                            src="data:image/png;base64,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">
+                                        <span class="count-numbers">{{ registeredUser }}</span>
+                                        <span class="count-name">Registered Users</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card-counter info">
+                                        <img
+                                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAACI0lEQVR4nO2Xu20DQQwFN3BowDW4BiVyH+rhYvWhBq4EFaLsilALVixgnMiGYei3a+6Hu2/yIx5vwOMxBCGEEEIIIYQQ4huM+Cko4kAC6oIESMDQoAmQAPfgnOAdnBO8g3OCd3BO8A7OCd7BOcE7XhrDSc5uG8NJzm4bw0nObhvDSc5uG8NJzm4bw0nOphoDVhZ1LrUkIBZgjn7odi0JiAF4BT6jHrpfTwJiACbLb7QERAIsElBptIGV9V+KJiBy+UpApQngsnwloJ6AKcehpE9Q5PKVgAoTwK/lKwF1BMwSUEkAf5avJqC8gMlqknLm7FnAIgGVBHBl+WoCygqYJSCR/744bixfTUA5AdOtGrGTlDNnzwIWCagkgDvLVxNQRsCMLYccOZsmtTEeLN9ENtY5exYwGb/8I/BinbNnAYuxgG2OnM2T0hhPLN9ITsCbdc6eBczGAnY5crogtjHsl+8ZeLfO2bOACVv2OXL2LGAxFrDOkdMNuRsj8fAqnXNUAZtWco4o4Hjv8Cqdc0QB25Zyjibg9OjwKp1zNAG71nKOJOD8zOFVOudIAvYt5hxJwLrFnKMIOLSacxQBm1ZzjiDgGHN4lc45goBtyzl7F3CKPbxK5+xdwM6ojgTEknp4XakjASmkHl5X6khACsCHUR0JqIkEVEYCKiMBlZGAykhAZYYT4IXgHZwTvINzgndwTvAOzgnewTlBCCGEEEIIIUToii/V/ZnaZwssOgAAAABJRU5ErkJggg==">
+                                        <span class="count-numbers">{{ totalUnitsConsumed }}</span>
+                                        <span class="count-name">Units Consumed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="chartData.length" class="chartjs-container">
+                            <canvas id="ChartJs" baseChart [datasets]="chartData" [labels]="chartLabel"
+                                [options]="chartOptions" [colors]="chartColors" [legend]="chartLegend"
+                                [chartType]="'bar'" [plugins]="chartPlugins">
+                                <!-- (chartHover)="chartHovered($event)" 
+                                (chartClick)="chartClicked($event)" -->
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

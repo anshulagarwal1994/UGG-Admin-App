@@ -1,0 +1,115 @@
+<div class="margin-top-16 member-info-section">
+    <div class="ucg-container">
+        <div class="tenantFilterSection container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="title-section">
+                        <h4>Promo Code List</h4>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <span class="creation-button">
+                        <button mat-raised-button color="primary" class="btn-primary"
+                            (click)="sendDetails({}, 'new')">{{'button.newPromoCode' |
+                            translate }}</button>
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Filter by PromoCode</mat-label>
+                        <input type="text" matInput [formControl]="promoCodeControl">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-1">
+                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
+                            class="reset-icon"></i>Reset</button>
+                </div>
+                <div class="col-md-9 flex-end">
+                    <mat-slide-toggle [color]="'primary'" [(ngModel)]="showDeleted" (change)="getPromoCodes()">Show
+                        Deleted Records</mat-slide-toggle>
+                </div>
+            </div>
+            <div class="mat-elevation-z8 ucg-table">
+                <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                    <!-- matSortActive="promocode" -->
+                    <ng-container matColumnDef="promoCode">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> PromoCode </mat-header-cell>
+                        <mat-cell *matCellDef="let element" (click)="sendDetails(element, 'view')" style="cursor:pointer;"> {{ element.promoCode }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="discountPercentage">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Discount&nbsp;(%) </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.discountPercentage }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="flatDiscount">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Flat&nbsp;Discount </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.flatDiscount }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="validityStartDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Start&nbsp;Date </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.validityStartDate }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="validityEndDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Stop&nbsp;Date </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <label *ngIf="element.validityEndDate != null" class="form-label">{{ element.validityEndDate
+                                }}</label>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="maxUsage">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Max&nbsp;Usage </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.maxUsage }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="used">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Used </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{ element.used }} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                        <mat-cell *matCellDef="let element" style="pointer-events: none;">
+                            <label class="form-label">
+                                <mat-slide-toggle [color]="'primary'" [checked]="element.isActive">
+                                </mat-slide-toggle>
+                            </label>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
+                        <mat-header-cell *matHeaderCellDef class="actions"> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <i matTooltip="Edit Promo Code Details" *ngIf="!showDeleted && (element.used === 0)" class="editIcon pointer"
+                                (click)="sendDetails(element, 'edit')"></i>
+                            &nbsp; &nbsp; &nbsp;
+                            <img matTooltip="Delete Promo Code" *ngIf="!showDeleted && (element.used === 0)" width="24" src="/assets/delete.png"
+                                (click)="deletePromocode(element.promoCodeID)" />
+                            <img matTooltip="Undo Delete Promo Code" *ngIf="showDeleted" width="24" src="/assets/undelete.png"
+                                (click)="undeletePromocode(element.promoCodeID)" />
+                            <!-- <img *ngIf="element.used !== 0" src="/assets/zoom-in.svg" (click)="edit(element); viewRecord = true;"/> -->
+                            <img matTooltip="Promo Code Details" *ngIf="element.used !== 0" src="/assets/zoom-in.svg"
+                                (click)="sendDetails(element, 'view')" />
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+                <div *ngIf="process" class="text-center norecord">
+                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                </div>
+                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                    {{'table.noRecordFound' | translate}}</div>
+                <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

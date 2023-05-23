@@ -1,0 +1,33 @@
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.disable-link {
+  pointer-events: none;
+}
+.hide {
+  display: none;
+}
+.m-0 {
+  margin: 0;
+}
+.spc-even {
+  justify-content: space-around;
+}
+.sub-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  padding: 1rem;
+}
+.ucg-container {
+  border: none;
+}
+::ng-deep .mat-expansion-indicator::after {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+::ng-deep .mat-expansion-panel-header {
+  padding-left: 15px !important;
+}

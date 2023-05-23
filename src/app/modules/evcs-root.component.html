@@ -1,0 +1,21 @@
+
+<div id="main" class="theme-wrapper" [ngClass]="{'toggle' : toggleClass}"  [class]="'theme-wrapper '" >
+  <div class="mat-app-background">
+    <div class="wrapper navHeader">
+      <!-- NavBar -->
+      <app-navbar></app-navbar>
+    </div>
+    <app-sidenav (sidenavClass)="receiveMessage($event)">
+      <app-content-wrapper>
+      <router-outlet>
+        <!-- registered user layout -->
+      </router-outlet>
+      </app-content-wrapper>
+      <app-loader></app-loader>
+    </app-sidenav>
+    <!-- <app-footer></app-footer> -->
+  </div>
+  </div>
+
+  <!-- <p class="initial-validation" *ngIf="!loggedIn">Validating your Login... Please wait...</p> -->
+
