@@ -1,198 +1,76 @@
 <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 fixed-start ugg-side-bar-color"
-id="sidenav-main">
-<div class="sidenav-header">
-  <a class="navbar-brand m-0">
-    <img src="../assets/img/UGG-logo.svg" class="navbar-brand-img h-100" alt="main_logo">
-  </a>
-</div>
-<hr class="horizontal light">
-<div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
-  <ul class="navbar-nav">
-    <li>
-      <mat-icon>
-        <i class="hamburger-menu" (click)="toggle()"></i>
-      </mat-icon>
-    </li>
-    <li class="nav-item">
-
-      <a class="nav-link text-dark " mat-list-item routerLink="/dashboard" routerLinkActive="active">
-        <div class="nev-icon dashboard"></div>
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.dashboard' | translate }}</span>
+    id="sidenav-main">
+    <div class="sidenav-header">
+      <a class="navbar-brand m-0"
+        href=" https://demos.creative-tim.com/material-dashboard-pro/pages/dashboards/analytics.html " target="_blank">
+        <img src="./assets/img/UGG-logo.svg" class="navbar-brand-img h-100" alt="main_logo">
       </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link text-dark " mat-list-item routerLink="/tenants" routerLinkActive="active">
-        <div class="nev-icon tenants"></div>
-        <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.tenants' | translate }}</span>
-      </a>
-
-    </li>
-
-    <li class="nav-item" *ngIf="showTransfer">
-      <a class="nav-link text-dark " mat-list-item routerLink="/transfer" routerLinkActive="active">
-        <div class="nev-icon transfer-site"></div>
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.transferSite' | translate }}</span>
-      </a>
-    </li>
-    <li class="nav-item" *ngIf="showRegisterChargePoint">
-      <a class="nav-link text-dark " mat-list-item routerLink="/register-chargepoint" routerLinkActive="active">
-        <div class="nev-icon register-charge-point"></div>
-        <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.register-chargepoint' | translate }}</span>
-      </a>
-    </li>
-
-
-    <li class="nav-item">
-      <a class="nav-link text-dark " mat-list-item routerLink="/site-dashboard" routerLinkActive="active">
-        <div class="nev-icon charge-points"></div> <span class="sidenav-normal  ms-2  ps-1">{{
-          'sidebar.chargePoints' | translate }}</span>
-      </a>
-
-    </li>
-    <li class="nav-item" *ngIf="showPromocode">
-      <a class="nav-link text-dark " mat-list-item routerLink="/promo-code" routerLinkActive="active">
-        <div class="nev-icon promo-codes"></div>
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.promoCode' | translate }}</span>
-      </a>
-    </li>
-    <li class="nav-item" *ngIf="showTransaction">
-      <a mat-list-item routerLink="/transaction-list" routerLinkActive="active" class="nav-link text-dark ">
-        <div class="nev-icon transactions"></div>
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.transactions' | translate }}</span>
-      </a>
-    </li>
-
-    <li class="nav-item"
-      *ngIf="showDRReport || showNDRReport || showDAReport || showFRReport || showPDReport || showCUReport"
-      [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item (click)="reportsMenuOpened = !reportsMenuOpened">
-        <div class="nev-icon reports"></div>
-        <span class="colapsible-menu sidenav-normal  ms-2  ps-1">{{ 'sidebar.reports' | translate }}
-          <img *ngIf="!reportsMenuOpened" width="20px" height="20px"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAABl0lEQVR4nO3YsS5EQRTG8RGFVUi0W+g0SgXeQEGo0VB5Ba2WzgsIjVrHG9AoNSpiF5VEISTEX24QWdm9O3P2zp1JfL9qi82c79y7d+bsdU5ERERERERE5N8AloEH4B5Yc5kDVr+zFpmXLAvc0WkXGHaZKTIBO3+yti0LdXMKjLtMAGPAcbeglsV6uQKmonQQlm8SuOwV0rJgmSfTc1IRYB54LAtoWbSfd2ArSkfluTaBt37hLAvf4OcQaETprjNPAzjwzHRtKbAIvHgWOAeaUTr9ytIEzjyzFJkXrIWmA+50G5iL0Gxohtk6r+4rsFFhsyvAs2ftC2CiqsIjwD7+9gYZUoAhYBv48Kx3BIxW0qxlhxxkSCkbJpKcFHicgdYhpd8wkWwWIEKwmBeyElX+9AIflZNk8zy/mwuWzaXuzdClPD4Mx926ywkwA7Q8G2gFfnfG5Yiwu1bvMBGL4bmsd5iIJXDnTf63sxKBZ2vyFwt1DylZvDqqa0hJN0wkGFLyGCYivzAvztbb4nO0QiIiIiIiIiLifnwC1BaWCyVav/0AAAAASUVORK5CYII=">
-          <img *ngIf="reportsMenuOpened" width="20px" height="20px"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO3Yvy4EURTH8SsKq5Bot9BplIrlDRT+1VZD5RW0WjovIDRqKt6ARqnRTTLoJAohIb4yyRZ2EvbcO//ubH6fZLrNOefO3j9nrnMiIiIiIiIiUjmgDzwOnr4bV8AEcAB8M+wYmHTjBJgBLvjbNTDrxgEwD9wz2gOw4NoMWAFesHsFNlwbAXvAJ/6+gH3XFsAUcEJx58C0ixnQBW4ozx0w52IE9IDUOJDU87c9FxNgC3jz+dc8Z8MHsBtzM2FalwHrvbkmhdHNhHnn9dzR629SsDcT5rPV88yur0mhwsKqeJGFeE69q5CpN1gql402KdS8ufzaDOtvUvA/PnaaPO6KJlwEEmPC7IN+qazBFqhhOTTRKvBuTJTNgG7Zg83NsltjLVnNayFJEmOCU6BTyUiH6+kAZ8aakpAEUX7GWU+KkMDRfqhbeoGQoFFfxYxqUkICltZMVOW/JiUk2FMuxmGM16lZTcBRrtY0JNAm8NyWC3Nge1Bv9qw3XY+IiIiIiIiIiKvND3a2lgpofSRJAAAAAElFTkSuQmCC">
-        </span>
-      </a>
-    </li>
-    <li *ngIf="showDRReport" class="nav-item closed" [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/driver-registration-report" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,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">
-        <span  class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.driver-registration-report' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showNDRReport" class="nav-item closed" [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/non-registered-driver-report" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,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">
-        <span  class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.non-registered-driver-report' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showDAReport" class="nav-item closed" [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/driver-activity-report" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,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">
-        <span  class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.driver-activity-report' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showFRReport" class="nav-item closed" [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/financial-revenue-report" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,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">
-        <span  class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.financial-revenue-report' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showPDReport" class="nav-item closed" [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/promocode-details-report" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAEXklEQVR4nO2cS48VRRTHG01w8BEVdcEgPna+P8PIiEKiXwGDC6PuNYBoZtDorAjqhvARBBRn0Ihb0ASJ4iPxsVRmEkxUGCBhDMLPFJbJOKmq7uquurf79v+373NOnf+91dV1TlVRCCGEEEIIIYQQQgghhBBCiPYArAWeAw4DPwEXERdtLj4EtgG350j8GuBVYFH5LuUcsNPkLFXyx4Evy/2KFZwC7mma/LuB+ZWWRWVOA+ubTDtfVfclPJwExuoI8JrPoohme53VTuiFOwtMADdFK+v256ToACYHwOPAHH7OArfFGDVLTR87MgzCSdExgF34eTbGkFnnu5jNFLiTooMAR9yj4VCMkZ89RiYyBe2k6CDApHs0/Bhj5ILHyM2ZgnZSdBDgFvdoON/ahDBgf7lpPB4J0AwJMGQkwJCRAENGAoyAAJc9NsZaGXCLsJuYLi7HGPnDY+TRTEE7KToI8Jh7NPweY+Rzj5G9mYJ2UnQQ4F33aDgWY+RNj5G/gafbJgBwI/Ae8BvxLAAzwOoE43jG5sjF7hhDDwFXAyJMAzc0DTihAPtpzkxVfw7/YybBgeRfAR6INXqgJOBvgXvrBr3Cl5OKz16XqDtjoWbs9wPfldh+v47h9baQEGI+hQh4qPjs9YHNw6wCAPfZKSyEWdCMN9la/avCP6HRdISHiOf30Zy3a0w735fYXDLVslpJWeZoI/BniaPphj6cRL6E3wHOMKCXsJ3zy375Eyl7gz4OODvfpCMMD0VLAe4omfZMrtaldrqqRPUXeiTAS4E8TJlc5XJsRDjqcfxRjwSY84T8abbkL3O+2eP8lx4JcNoT8pODcH6Xx/lSjwRY8oR85zAFuNQjAS4NU4AtHueaguCp3Mk3L+HPPAIc7tE/YNYT8tHcKyDfLqnh+R4J8GIgD7uTi2D3hT4JOF3s2YfYWvvxGfoQG0/l7IkKm3JTDX04aXM9wG7JhzDbNxtrJWSZk00VNuNOtWAzbj8DrgeYMduNyBAmd5N1k7LBHjgLYT5INtRy8H9fTtpeDzBb8RWOcJ2tdUzJtFNnP4Rm8TkoWl4PWCbCNyW2D8QafaSkJDnVspLkPgZcD3BMR9OBkqTJ5YMxBt8KJH9L3UBHqR7gwjQsBER4I8bQFx4je4oM0FCANmF/CC6OxxjxVcAezhS0k6LHjVm+1sRk8/4IC7AmRWuiiysZg3ZSdJRcJ2QkwAgLsODwN190lC4KMJNyXT5suijAaivCQsp1+bDonACjRgoBBnpQe5QAbvXkbrG1VxWMEqmuKjAX0A3sso5RIlA5PBhjxNz+52Nn1hF0GOD1QN62xtY8Q8WYOXtJUe/fCfx7OcdkSc087sImK4K5elGk4eU6f6cxe+GcaMaJ2uerbTuKrxFVlPNr4/YUezjDqCji+DpVzfy/6Wh7hf4gwbUcvZKldmLe5Ob2P+AD4IdE3Qhd54LNheki2Rq92hFCCCGEEEIIIYQQQgghhBBFVv4BWb0+LF7fFrQAAAAASUVORK5CYII=">
-        <span  class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.promocode-details-report' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showCUReport" class="nav-item closed" [ngClass]="{'opened': reportsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/chargepoint-uptime-report" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFrklEQVR4nO2dy29XRRTHR7AtATHxsVA2VtZtoqgplLQmbghu0ASNmshDZKPga6M7XUjKo2jc+AeQ1B0+Flpe6s5nYpW9NVraRrFlIVKl6seMPTVNmZl7b38z9869v/kkJE35dc73ng5zz8ycc1AqkUgkEolEIpFIJBL5AFYD9wD7gCPAe8B54HtgFvhT/szK987LZ/RnnwI26TFymmsvgA3AQeAD4BKto38J7wMHgNtVOwN0AU8Ao8BfhEOP/ZHY6lLtArAOeB6YoHx+Bl4DblRNBbheHHyR6vkFeK5xazlwL/AV8fEt0K/qDtAJvAn8U9ABv8nafQjYBfQBG4GbZMxO+Xqj/N1u+az+mcsFbf0NHAc6VB0B7iw4iyeBY3qG6WWmBbsdwFZgGJgqYP8L4A5VJ4D7C4RpZ4BtIdZLicm3A+cKhIWDqg4ADwFzOR5qFLivRF2bgdM5dGntO1TMyFqZFRP/BDxcocadOUJL/Qy7VcQzOcvJJ4AbItC6HhjJ4ewdMa7JruXiCrB3hbvHo/JSm5LzjE6Pup/OoXswpujiUsYLZusKx9ZOXs5hz/oHMvTPVB6NSDz7ZUbI1tPC+KbwbNLvU/xnpzcjFPy80jhbNiOumdzT4vhG/D3BNc52zezhEHbzCOt37PiurHS5WIrtiVUgZBmZc+wgN4ey7doIjDl++3s82THiY2yHzf3Y+a6VXetKxOhTOBsnPNox4mt8h11X6HcwtP2l58m2o84ffcbJWPA1fkacPeE4016rShDxkuO37XXHR0WOFtuPOp7zhdDGuyRkMzEawJ4R33Yc9s+aFXAh6LWY3LvZ2NJAR/c5nvexkIZPWYyeCWTPSAhbDg2fmFXwYciUANuh0bYGO/pBi4x54LYQBnXehYnJUJecxOFofak8bZHybAiDOrnFxFHvxiJytOh4wyLlZIidoO0coL8NHD3gONlb5TtdwHZb3dEGju503K7f7dOQTh4sJXaO0dGi5XTIcx3XAbzmdW9G4nf0kEXOUBkvwie9GYnf0Xssct71aUQfD5ro82YkfkdvscgZ82nkB4uRbm9GCjjaI7kvfOVu1MS48gXwq8XILd6MGKA8Mi98gVstP3tR+UJKGUx4u/o3QXlM5zy5NPGHaoCjpyiHXDfrlq34dBOWjiOUw1ALt/7Hm/Ay7BJn2y4bWkWPezjvv0xgDfCWpFLMytdrygjvyr1+jwTgulAD61IyE7uCGGxXHGvloaq1NQrHodKpqrU1CikZLv2YtO2Qg3/9ljXRco5dIt8L8VhylEekgN3EVOMqUKtEdwlwpBtsr1Rc05CSNRPnqtbWKDJSwupfUx0LGUmOQdLC2hbgRces3qkiBHgZD5Qtep30uzChk7fXqwhhoSFKfRwtonVTERsjKlJo0dlV7RS/cWjapyKFFpYRVeH1uy4Js5W/DaiGzWxVoWDducWGTorsVQ1ytqpQbId0bsGxPe9VDXF21WK7HSd7izN7QEUK8E4tHC1iBzPaMczpilQV2b0f8EqR5oYqBnQTkRyiR2KIs3XtiSNxM25HF2j1MwE8UuEs3iWZ+oVRMSEzO0/zqrMhahMduh4Avs6ha74Wjl5S85F31nwsJWarA1VU6VLjz3JqmZRuYsZoRMWIbo8jnVvyMi3VTwOt5PRJyKln79uOsjUTWuuGJeNc42wVK/LQw44dpI3LUjOiyxn2yizT7TFvlsKdDmmZ2S1dGxdbZn4K/F7Q1lXgVdNt/nJnq9hhwVGus5Gq0Jo2ZWj/39mqDrBwEHVA+l1UzQWpSclVI7jobFUngLW634U8bNmMi+3CjU20s1WNr8Ue110CXCGVB+alK4NuldneaREs7NSe0aVkK91MLGNGdn77QyfL1xZgFXCXRBtD4vwx+a9AZqTM46ocZI1L7vZJyXjVLTB7guUvJxKJRCKRSCQSiYRqIP8C5XJ+a+7gkV8AAAAASUVORK5CYII=">
-        <span  class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.chargepoint-uptime-report' | translate }}</span>
-      </a>
-    </li>
-
-
-    <li class="nav-item" *ngIf="showUser || showRole || showFinancial" [ngClass]="{'opened': settingsMenuOpened}">
-      <a  class="nav-link text-dark " mat-list-item (click)="settingsMenuOpened = !settingsMenuOpened">
-        <div class="nev-icon settings"></div>
-        <span  class="colapsible-menu sidenav-normal  ms-2  ps-1" >{{ 'sidebar.settings' | translate }}
-          <img *ngIf="!settingsMenuOpened" width="20px" height="20px"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAABl0lEQVR4nO3YsS5EQRTG8RGFVUi0W+g0SgXeQEGo0VB5Ba2WzgsIjVrHG9AoNSpiF5VEISTEX24QWdm9O3P2zp1JfL9qi82c79y7d+bsdU5ERERERERE5N8AloEH4B5Yc5kDVr+zFpmXLAvc0WkXGHaZKTIBO3+yti0LdXMKjLtMAGPAcbeglsV6uQKmonQQlm8SuOwV0rJgmSfTc1IRYB54LAtoWbSfd2ArSkfluTaBt37hLAvf4OcQaETprjNPAzjwzHRtKbAIvHgWOAeaUTr9ytIEzjyzFJkXrIWmA+50G5iL0Gxohtk6r+4rsFFhsyvAs2ftC2CiqsIjwD7+9gYZUoAhYBv48Kx3BIxW0qxlhxxkSCkbJpKcFHicgdYhpd8wkWwWIEKwmBeyElX+9AIflZNk8zy/mwuWzaXuzdClPD4Mx926ywkwA7Q8G2gFfnfG5Yiwu1bvMBGL4bmsd5iIJXDnTf63sxKBZ2vyFwt1DylZvDqqa0hJN0wkGFLyGCYivzAvztbb4nO0QiIiIiIiIiLifnwC1BaWCyVav/0AAAAASUVORK5CYII=">
-          <img *ngIf="settingsMenuOpened" width="20px" height="20px"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO3Yvy4EURTH8SsKq5Bot9BplIrlDRT+1VZD5RW0WjovIDRqKt6ARqnRTTLoJAohIb4yyRZ2EvbcO//ubH6fZLrNOefO3j9nrnMiIiIiIiIiUjmgDzwOnr4bV8AEcAB8M+wYmHTjBJgBLvjbNTDrxgEwD9wz2gOw4NoMWAFesHsFNlwbAXvAJ/6+gH3XFsAUcEJx58C0ixnQBW4ozx0w52IE9IDUOJDU87c9FxNgC3jz+dc8Z8MHsBtzM2FalwHrvbkmhdHNhHnn9dzR629SsDcT5rPV88yur0mhwsKqeJGFeE69q5CpN1gql402KdS8ufzaDOtvUvA/PnaaPO6KJlwEEmPC7IN+qazBFqhhOTTRKvBuTJTNgG7Zg83NsltjLVnNayFJEmOCU6BTyUiH6+kAZ8aakpAEUX7GWU+KkMDRfqhbeoGQoFFfxYxqUkICltZMVOW/JiUk2FMuxmGM16lZTcBRrtY0JNAm8NyWC3Nge1Bv9qw3XY+IiIiIiIiIiKvND3a2lgpofSRJAAAAAElFTkSuQmCC">
-        </span>
-      </a>
-    </li>
-
-
-    <li *ngIf="showUser" class="closed nav-item" [ngClass]="{'opened': settingsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/users" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,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">
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.users' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showRole" class="closed nav-item" [ngClass]="{'opened': settingsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/roles" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,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">
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.roles' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showFinancial" class="closed nav-item" [ngClass]="{'opened': settingsMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item routerLink="/financial" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAERUlEQVR4nO2aXYhVVRTHr6lZ2jiWHwRqSW+izYRmgqBCKIE9OVN+IIMPQtjHq/k5CY6UXzD45IuiIoOp9BAKBpWOgmZpgT4Y6FOmZTqlmdWD6U8WrkNrtufOWfvcc68+3D8cGM7s/1p77b32Wmuvc0ulOuqoo2YARgJvAeuBA0A3cEYf+Xu//q8VGFF6nAAMA94HTgH38EPGfgO8BzQ+agM+Bv6kctzUnWqstRGLgKtlJnUJ6AJWA21Aiz5t+q5Lx6ThV2BhLQx4BtiTMoHrwAZgQoSsicBGoCdF3m5gSDUP8ulA4S1gWSVKdXGWA38Fsr8TndUw4sdA0ZfA6AJ1jAG+DnScL8wYXbFwJz4BnnBwXwXWAS87dfUHNgW6vgUGF2FIeCaWOXkDgD+UcwXoF6FzRaBzZxHRqddORLqjRdQ5ArYE/AWV5ImrwZnwuNNTwBLgYDCRIxp+h0W42RHD/yVXntFkZ6PTaGdIvUDf+A2Y5ZzDWOC24a7PsxuSbd3nAnhR84kHsjBNzrmsMrybUbuitVOC6x7/Bj4znH+BtcB0YDIwFfgA+N2M+TwiavYY3rsxhkgBmGCDY/xzwH+GM7/MuNlmzF1vWKV3SD4ZE21sFZtZdgAzzPgbfYVa4LDJ3JnBQyBuGCxA9hVA7xMJfsokPODMNJxrjvwyCRjkkZ0AuGx0tJayoOV0gq5MwgPO87pSCd4oFQxgr5Hf4SHIzS7B6ghFkmcSSEZ/BxgHPKvPwAoNaTfy93kIxwyhLULRK8A/lIecu7NaLT+dw5DFRla3h/CDIcyNVPZmSjmeBqlqX4qUPdfwv6+qIcp/AdgG/JxhzEVxuWoaciyPa5WRNcickWZgaxAUOqvpWvsNYU0lhpSRLxnflhxPOnkfGd6nHkJHbPiNgRx04I7RMSlH+F0XmxAvRUxwOPC6J9FJojU6ZuVIiC0ewojAjyc6Vzlp8Rxy1GWx8pvNeOEOzzREidIBTLDRMX5UUJ9NKzOuH7A96GN5LmubDeeEywglShszQY+zjP/KcK4BS4HXtIyX523gC3rjQ4fchqD8XxpjSGNwsVru4EzJyOwhjnvKFmBNUFnHXXeD4lGy9RgHZ47zliiXsAZncr0dFa3K7Ir4cAJpnvV3Rq/2ILEKzgG7JLI59Q8IZEhLaWi0ISpsYTCZTTVsB3UG/Hm5jDACpaFssSKinSOHHs0bMQ26VYHOHRUZoUKH6LXUYovTzZq0tBgf4U6dga5ThbRMjZtI6W0hzbOxhSj4v53UHeg4X/gnOs340lC2kIiyUlo2Fcht0BD7d8pOVOc7o2yxNJR5GD3asmmKkNWsGdsmuwQ7CnOnjEks0F5sGi5rpdqud4hWfRbru70aStNwpeLolDPPdAQVQF7c0O8oQ2tqRIpBUpudDKraLMjYE9ICfaSfp/sICC26U/uAo+YHA0f1XYeO8ZXiddRRR6kI3AdDuPjQSjHARgAAAABJRU5ErkJggg==">
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.financial' | translate }}</span>
-      </a>
-    </li>
-
-
-
-    <li class="nav-item" [ngClass]="{'opened': supportMenuOpened}">
-      <a class="nav-link text-dark " mat-list-item (click)="supportMenuOpened = !supportMenuOpened">
-        <div class="nev-icon support"></div>
-        <span class="sidenav-normal  ms-2  ps-1 colapsible-menu">{{ 'sidebar.support' | translate }}
-          <img *ngIf="!supportMenuOpened" width="20px" height="20px"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAABl0lEQVR4nO3YsS5EQRTG8RGFVUi0W+g0SgXeQEGo0VB5Ba2WzgsIjVrHG9AoNSpiF5VEISTEX24QWdm9O3P2zp1JfL9qi82c79y7d+bsdU5ERERERERE5N8AloEH4B5Yc5kDVr+zFpmXLAvc0WkXGHaZKTIBO3+yti0LdXMKjLtMAGPAcbeglsV6uQKmonQQlm8SuOwV0rJgmSfTc1IRYB54LAtoWbSfd2ArSkfluTaBt37hLAvf4OcQaETprjNPAzjwzHRtKbAIvHgWOAeaUTr9ytIEzjyzFJkXrIWmA+50G5iL0Gxohtk6r+4rsFFhsyvAs2ftC2CiqsIjwD7+9gYZUoAhYBv48Kx3BIxW0qxlhxxkSCkbJpKcFHicgdYhpd8wkWwWIEKwmBeyElX+9AIflZNk8zy/mwuWzaXuzdClPD4Mx926ywkwA7Q8G2gFfnfG5Yiwu1bvMBGL4bmsd5iIJXDnTf63sxKBZ2vyFwt1DylZvDqqa0hJN0wkGFLyGCYivzAvztbb4nO0QiIiIiIiIiLifnwC1BaWCyVav/0AAAAASUVORK5CYII=">
-          <img *ngIf="supportMenuOpened" width="20px" height="20px"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAACXBIWXMAAAsTAAALEwEAmpwYAAABiUlEQVR4nO3Yvy4EURTH8SsKq5Bot9BplIrlDRT+1VZD5RW0WjovIDRqKt6ARqnRTTLoJAohIb4yyRZ2EvbcO//ubH6fZLrNOefO3j9nrnMiIiIiIiIiUjmgDzwOnr4bV8AEcAB8M+wYmHTjBJgBLvjbNTDrxgEwD9wz2gOw4NoMWAFesHsFNlwbAXvAJ/6+gH3XFsAUcEJx58C0ixnQBW4ozx0w52IE9IDUOJDU87c9FxNgC3jz+dc8Z8MHsBtzM2FalwHrvbkmhdHNhHnn9dzR629SsDcT5rPV88yur0mhwsKqeJGFeE69q5CpN1gql402KdS8ufzaDOtvUvA/PnaaPO6KJlwEEmPC7IN+qazBFqhhOTTRKvBuTJTNgG7Zg83NsltjLVnNayFJEmOCU6BTyUiH6+kAZ8aakpAEUX7GWU+KkMDRfqhbeoGQoFFfxYxqUkICltZMVOW/JiUk2FMuxmGM16lZTcBRrtY0JNAm8NyWC3Nge1Bv9qw3XY+IiIiIiIiIiKvND3a2lgpofSRJAAAAAElFTkSuQmCC">
-        </span>
-      </a>
-    </li>
-
-
-    <li class="closed nav-item" [ngClass]="{'opened': supportMenuOpened}">
-      <a mat-list-item class="nav-link text-dark " routerLink="/query" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEG0lEQVRoge2YW4hVVRzGv5Ul6pSKY06Z1YyQXRwoIXuJkoioRughyMisXqzItKgoknoInywCG8nsCmEPEcxDRQkRFRo2UGbZlaAau0BNkQ1jaTbj+fWw15n5n332PnuvvU/My/7gwDp7r//3feuy13+tJVWoUKFChRJw7SQDOiSdL6lHUpekE/yrMUnDkoYkfeqcO9wuzdINAC6WtFLSCknLNWk6DWOSPpS0S9JO59yesh6CAUwHrgMGKY99wG3AzCJegkcAuFLSs5LOSHhdk/SFoqnyh/9JUqf/9UjqlXRcQuwPkm51zr0d6ikXgDnAC0At1oOjwHagD5iTg2cusBJ4GjgU46oBz+fhCTXfDXwVE/sVuBM4qQTvbGA9MBzj/hI4s13mFwFDsV7aAXS2RUATo9IPHDM6PwJJ0zSIeBaw35AeBW7IEdftR2cz8Ljv5Z4ccauBf43ePmBGmQZsM2RHgKsy6s8EnqP5O8H37lPA8RkcV3utOvqLml8WG9L1OWK2JxiPY0sOnrtM/XHggiINGDAkbwAtl1yieTzu69eAdUT5ogt43XD9A8zO4HLAThPzSqj5k42ZY8A5OWI6mZy/A7F3vbFRyOxRYCmTU3GMkEUDuNmIvRcQt4Ioq86NPb8s1oBFOfl2m5g1IQ3YagI35g5M5loCfGP43g+IfcjEPZFUJymlS43bhK9DDMcMrJP0iaQl/tEBSTcFUFjtxMSW1oAOU/47QHACwO2Stkma5R/tkLTMOXcggGbUlE9MqpDWgBFTnhcgaGGX3fudc7c450ZSayfDfkuHkiqkNeBnUz4vULSO+iiOSkqcvznQa8rfJ1VIa8AHptwy+7bAA5J2S7rXOTdekKPPlD/KHQXMozGdLy9ooDCAC41+ZvJLInjJELxDRiZOiL8ReBN4MEg4ip0WywEvhnIIOJfGneHdAbELmczkAFcEaj9sYo8CZwc3wBM9ZojGgWtzxi3wwnVcEqC5mmjrUMemQuY92XRgjyEbA+7IGdvnp+HaAL0NNO6Ad5Gx/c5DegrNx8mXga5SxI0apwOvxjQ+B4rmoCaBBcDHMYE/gUcocbQETgM20Xy4HwTmt8W8EZsBPEMzDgK92QwTPIuJdrsDsblen6KbCThGFrkXulxSv6Sl5vEG59yT/n2HpPsknSXpsKRpkuYruhdaLGlhCvV+SWudc3tDPQWD6LRVx1/4/T1wKfBdwiiloQa8RXQObus9bSvzpwIjxsRGouPkFhpXkDQcBF4D7qHo+m5QZInaKql+czasaJs7pOad46OSfvf/j0j6zdf71jlXK+S2LIBrcvTwu0D3lBhsBT9NfmlhfAhYNdU+UwGsSjE+CFxP2Yz5f4PojvQnopXjM6L1+qKp9hUEom1uR3bNChUqVMiJ/wCp+v5QLhx+MgAAAABJRU5ErkJggg==">
-        <span class="sidenav-normal  ms-2  ps-1" *ngIf="!isMasterAdmin">{{ 'sidebar.raiseQuery' | translate }}</span>
-        <span class="sidenav-normal  ms-2  ps-1" *ngIf="isMasterAdmin">{{ 'sidebar.answerQuery' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="showDeletionRequest" class="closed nav-item" [ngClass]="{'opened': supportMenuOpened}">
-      <a mat-list-item class="nav-link text-dark " routerLink="/deletion-requests" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAABLElEQVR4nO2aSw6DMBBDk6rrHoDeX+oReidW9ALuptmg0vxKPNH47YgY5FhmxAAhCCGEEMIrMXcCAIwQchYxxp97vIwSYhUZwBbA5lpbkLun2NT2LCWgtXDvdEpG6fq/aU2m+wTIALYANs094Oieq11nowTUFsw+G+xxnwAZwBbARrPAWUJmQQawBbCRAWwBbGQAWwCb5mnQKrXPKe4TIAPYAthM3wOO3kKX4j4BMoAtgI3ZHtD67rG0LvUK9wmQAWwBbMz2gNzX5lJy9e4TIAPYAtiY7QGlaBboRAawBbAx93/A6G+P7hMgA9gC2GR7gPX/AXr1uU+ADGALYDPDLPAKIdzSQedzyLZfmCEBT6PXGgOAO4AV/awAFvZ+mgCwAHgA2Bo2vn1qv27+DWr00toh+dhhAAAAAElFTkSuQmCC">
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.deletionRequests' | translate }}</span>
-      </a>
-    </li>
-    <li *ngIf="ShowChargePointRequest" class="closed nav-item" [ngClass]="{'opened': supportMenuOpened}">
-      <a mat-list-item class="nav-link text-dark " routerLink="/transfer-requests" routerLinkActive="active">
-        <img class="promoCodeIcon"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABf0lEQVR4nO2ZXU7CQBCAm9B4A0m8iqfwAdA7aLyGVzI+0hiiYhR98ASegofPLJkmUPtD968szPfGdjubrzsMOyXLFGUYgGvgE1jjh7XEm8WUuCEscWSAlSz4CIwq1wpgXnNP6ziQA7cS9yO0w4atdNqRcEVkNmnmM24j5f5vfX42T7Zmns34TuzYIoVNOjWMDyfik0FE8JdOxdAi85prTmmmqWWDVi1Bq5ZvtGpxwlWLkC0AEc9a9Gea7FkL2xYgZmoFbQE40LMWfe891LMWFiJlh5jbLNgSd9Q7PRxFTKkz3EluOlctkXjq/YV1FLkiLNMoIgazmHlynt9rmXiTzBJsRA4RTkYEeAEWURYLGRuPi6vIHuiO2KCptQeaWlXkf44lME66/AKvMvW7SSYVkbFINMoEbAHy8szWNulXJl26ylRbAI8S950tAPCAPe+VWDPCMmkTOROZcmf6sEyhBfgHcA58yQI/wEWWGhyDhAF46yq/SQAsun4QFSU7Dv4AYUne/m6j+YAAAAAASUVORK5CYII=">
-        <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.transferRequests' | translate }}</span>
-      </a>
-    </li>
-
-  </ul>
-</div>
-</aside>
+    </div>
+    <hr class="horizontal light">
+    <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-dark " routerLink="/dashboard">
+            <div class="nev-icon dashboard"></div>
+            <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.dashboard' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark " routerLink="/tenants">
+            <div class="nev-icon tenants"></div>
+            <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.tenants' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="showTransfer">
+          <a class="nav-link text-dark " routerLink="/transfer">
+            <div class="nev-icon transfer-site"></div>
+            <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.transferSite' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="showRegisterChargePoint">
+          <a class="nav-link text-dark " routerLink="/register-chargepoint">
+            <div class="nev-icon register-charge-point"></div>
+            <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.register-chargepoint' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark " routerLink="/site-dashboard">
+            <div class="nev-icon charge-points"></div>
+            <span class="sidenav-normal  ms-2  ps-1">{{
+              'sidebar.chargePoints' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="showPromocode">
+          <a class="nav-link text-dark " routerLink="/promo-code">
+            <div class="nev-icon promo-codes"></div>
+            <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.promoCode' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="showTransaction">
+          <a class="nav-link text-dark " routerLink="/transaction-list">
+            <div class="nev-icon transactions"></div>
+            <span class="sidenav-normal  ms-2  ps-1">{{ 'sidebar.transactions' | translate }}</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark " href="./dashboards/analytics.html">
+            <div class="nev-icon reports"></div>
+            <span class="sidenav-normal  ms-2  ps-1">Reports</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark " href="./dashboards/analytics.html">
+            <div class="nev-icon settings"></div>
+            <span class="sidenav-normal  ms-2  ps-1">Settings</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark " href="./dashboards/analytics.html">
+            <div class="nev-icon support"></div>
+            <span class="sidenav-normal  ms-2  ps-1">Support</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
 <ng-content></ng-content>
