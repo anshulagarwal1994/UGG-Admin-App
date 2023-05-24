@@ -20,12 +20,22 @@
          <a href="#" class="nav-link text-white p-0 position-relative" target="_blank">
            <span class="nav-fleg"><img src="./assets/img/us-fleg.svg" /></span>
          </a>
+
+         <!-- <mat-form-field appearance="outline" class="ucg-form-control">
+          <mat-label>Language</mat-label>
+          <mat-select formControlName="language" [(ngModel)]="lang" name="language" (selectionChange)="useLanguage($event.value)" placeholder="Language">
+            <mat-option *ngFor="let language of languages" [value]="language.value">
+              {{language.text}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
        </li>
        <li class="nav-item profile-img-outer">
-         <a href="./pages/authentication/signin/illustration.html"
+         <a 
            class="nav-link text-white p-0 position-relative" target="_blank">
            <img src="./assets/img/profile-img.svg" />
-           <span class="user-name">Cori Anderson</span>
+           <span class="user-name" (click)="logout()">{{currentUsername | translate}}</span>
          </a>
        </li>
      </ul>
