@@ -39009,7 +39009,9 @@ text,
   margin-bottom: 0;
   border-bottom: none;
 }
-
+.main-content{
+  margin-left: 16.025rem;
+}
 /*# sourceMappingURL=dashboard-pro.css.map */
 
 /* modified by dinesh */
