@@ -3,7 +3,7 @@
 /* @import '~bootstrap/dist/css/bootstrap.min.css'; */
 :root {
   --bs-blue: #63B3ED;
-  --bs-indigo: #596CFF;
+  --bs-indigo: #184EA2;
   --bs-purple: #6f42c1;
   --bs-pink: #d63384;
   --bs-red: #F56565;
@@ -50,7 +50,7 @@
   ;
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-family: 'Poppins', sans-serif;
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -66,8 +66,8 @@
   --bs-border-radius-xl: 0.75rem;
   --bs-border-radius-2xl: 1rem;
   --bs-border-radius-pill: 50rem;
-  --bs-link-color: #e91e63;
-  --bs-link-hover-color: #e91e63;
+  --bs-link-color: #184EA2;
+  --bs-link-hover-color: #0b3880;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fcf8e3;
 }
@@ -82,6 +82,10 @@
   :root {
     scroll-behavior: smooth;
   }
+}
+
+h1, h2, h3, h4, h5, h6, p, a, button, input, select, b, strong, .mat-h2, .mat-title, .mat-typography h2, .mat-table {
+  font-family: 'Poppins', sans-serif !important;
 }
 
 body {
@@ -39015,20 +39019,21 @@ text,
 
 /* New */
 
-.head-right-outer a{
+/* .head-right-outer a{
   border: 1px solid #E0E0E0;
   border-radius: 8px;
   padding: 10px 12px 10px 12px;
   margin-left: 10px;
   vertical-align: middle;
   display: inline-block;
-}
-.head-right-outer a > span{
+} */
+/* .head-right-outer a > span{
   display: inline-block;
-  line-height: 24px;
+  line-height: 20px;
   vertical-align: top;
-}
-.filter-outer .reset-btn{
+  height: 20px;
+} */
+/* .reset-btn{
   border: 1px solid #E0E0E0;
   border-radius: 8px;
   padding: 5px 10px 5px 10px;
@@ -39038,14 +39043,14 @@ text,
   color: #505050;
   margin-top: 15px;
   font-weight: 500;
-}
-.filter-outer .reset-btn > span{
+} */
+.reset-btn > .material-symbols-outlined{
   display: inline-block;
   line-height: 24px;
   vertical-align: top; 
 }
 .filter-outer .form-check{
-  margin-top: 25px;
+  margin-top: 18px;
 }
 .heading-2-color{
   font-style: normal;
@@ -39147,3 +39152,70 @@ text,
 /*# sourceMappingURL=dashboard-pro.css.map */
 
 /* modified by dinesh */
+
+.btn-border {
+  border: 1px solid #E0E0E0 !important;
+  border-radius: 8px !important;
+  padding: 5px 20px !important;
+}
+
+.btn-border .material-symbols-outlined {margin-right: 8px !important;}
+
+.btn-border.icon-right .material-symbols-outlined {
+  margin-right: 0 !important;
+  margin-left: 8px !important;
+}
+
+.btn-back {
+  border-radius: 8px !important;
+  padding: 5px 20px !important;
+  background: #F5F5F5 !important;
+}
+
+.btn-back .material-symbols-outlined {
+  margin-right: 8px !important;
+}
+
+.head-right-outer a {
+  margin-left: 10px;
+}
+
+.filter-outer {
+  width: 100%;
+  margin-top: 15px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.884em 0;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-label {
+  margin-top: -0.3em;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick,
+.mat-form-field.mat-focused .mat-form-field-label,
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #184EA2;
+}
+
+.reset-btn {
+  padding: 6px 20px 6px 14px !important;
+  background: #D1DCEC;
+  color: #757575;
+  font-weight: normal;
+}
+
+.filter-outer .reset-btn {
+  margin-top: 4px;
+}
+
+.mat-app-background {
+  background-color: #F5F5F8;
+}
+
+.ucg-table {
+  border: 1px solid #E4E4ED;
+  border-radius: 8px;
+  overflow: hidden;
+}
