@@ -21061,7 +21061,6 @@ fieldset:disabled .btn {
 }
 
 .card .card-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
   padding: 1.5rem;
 }
 
@@ -39218,4 +39217,99 @@ text,
   border: 1px solid #E4E4ED;
   border-radius: 8px;
   overflow: hidden;
+}
+
+/* .mat-cell.Col-number,
+.mat-header-cell.Col-number {
+  justify-content: flex-end;
+} */
+
+mat-cell, mat-header-cell, mat-footer-cell {
+  padding: 0 6px;
+}
+
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+  padding-left: 20px;
+}
+
+mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-type {
+  padding-right: 20px;
+}
+
+.table-action {
+  width: auto;
+}
+
+.table-action .mat-mini-fab {
+  width: 30px;
+  height: 30px;
+  line-height: 24px;
+  padding: 0;
+}
+
+.table-action .mat-mini-fab .mat-button-wrapper {
+  padding: 5px 0;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.table-action .mat-mini-fab .mat-button-wrapper .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color: #184EA2;
+}
+
+.table-action-btn {
+  margin-right: 5px !important;
+}
+
+.table-action-btn:last-child {
+  margin-right: 0 !important;
+}
+
+.mat-header-cell {
+  text-transform: uppercase;
+  color: #184EA2;
+}
+
+.card .card-body .h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #184EA2;
+}
+
+.wd-100 {
+  max-width: 100px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.wd-200 {
+  max-width: 200px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.wd-300 {
+  max-width: 300px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.wd-400 {
+  max-width: 400px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.wd-500 {
+  max-width: 500px;
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.action-column {
+  justify-content: flex-end;
 }

@@ -75,22 +75,22 @@
                     </ng-container>
           
                     <ng-container matColumnDef="name">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.name' | translate}} </mat-header-cell>
-                      <mat-cell *matCellDef="let element" [ngClass]="{'disable-link': deletedRecords}" (click)="edit(element);"
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="wd-200"> {{'table.header.name' | translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let element" class="wd-200" [ngClass]="{'disable-link': deletedRecords}" (click)="edit(element);"
                         style="cursor:pointer;"> {{element.name}}
                       </mat-cell>
                     </ng-container>
           
                     <ng-container matColumnDef="location">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.location' | translate}}
+                      <mat-header-cell *matHeaderCellDef mat-sort-header > {{'table.header.location' | translate}}
                       </mat-header-cell>
-                      <mat-cell *matCellDef="let element">{{element.location}} </mat-cell>
+                      <mat-cell *matCellDef="let element" >{{element.location}} </mat-cell>
                     </ng-container>
           
                     <ng-container matColumnDef="sitescount" >
-                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter"> {{'table.header.sites' | translate}}
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number wd-100"> {{'table.header.sites' | translate}}
                       </mat-header-cell>
-                      <mat-cell *matCellDef="let element" class="alignCenter Col-number"> 
+                      <mat-cell *matCellDef="let element" class="alignCenter Col-number wd-100"> 
                         <div>
                           <b>{{element.sitescount}}</b><span *ngIf="deletedRecords && element.siteList.length"> - {{ element.siteList.join(', ') }}</span>
                         </div>
@@ -98,9 +98,9 @@
                     </ng-container>
           
                     <ng-container matColumnDef="chargepointscount">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter"> {{'table.header.chargePoints' |
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number wd-100"> {{'table.header.chargePoints' |
                         translate}} </mat-header-cell>
-                      <mat-cell *matCellDef="let element" class="alignCenter Col-number"> 
+                      <mat-cell *matCellDef="let element" class="alignCenter Col-number wd-100"> 
                         <div>
                           <b>{{element.chargepointscount}}</b><span *ngIf="deletedRecords && element.chargePointList.length"> - {{ element.chargePointList.join(', ') }}</span>
                         </div>
@@ -108,16 +108,21 @@
                     </ng-container>
           
                     <ng-container matColumnDef="status" style="cursor: default;cursor:pointer;">
-                      <mat-header-cell *matHeaderCellDef class="spc-action" [ngClass]="{'disable-link hide': deletedRecords}">
+                      <mat-header-cell *matHeaderCellDef class="spc-action wd-200 action-column" [ngClass]="{'disable-link hide': deletedRecords}">
                         Action </mat-header-cell>
-                      <mat-cell *matCellDef="let element" class="spc-even" [ngClass]="{'disable-link hide': deletedRecords}">
-                        <img matTooltip="Organization Details" src="/assets/zoom-in.svg" (click)="edit(element);" />
-                        &nbsp; &nbsp; &nbsp;
-                        <img matTooltip="Delete Organization" *ngIf="!element.isRequestRaised && canDeleteTenant" width="24"
-                          src="/assets/delete.png" (click)="deleteTenant(element)" />
-                        <img matTooltip="Undo Delete Organization" width="24" *ngIf="element.isRequestRaised && !deletedRecords"
-                          (click)="unDeleteTenant(element)"
-                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEWElEQVRoge2YS2hcVRjH/985k8dkklJRS6OWKpUa0RYh0SSV4NyZWrpIyBQ7ulAURERwIbh0Y5Z1IxZEVFyIYMHYmIYExTSZCYgm03QQ6ys+ikmNSfMyNkkd28y5n4s4YZjcmXNflRbmvzyP7/v973ncez+grLLKKqussmxqLdq8fy3avP96ii+cBAd4GMxDawdb9znHsxmfeOSy0dxodx45Cg7cAgBgLEDIaO3Q6LfucDXxCcuk6NFQMpXWzdUa2BI8J59MFI0PLLI0jbrBs9+Vmq/dQky0DiC7pYNwK0w1vHqo6X4nwPkqAQ8wLdJVWtTFsLWFVg+23EtsJgDstOieZ2lGdU+qUBr4CZimUTsyflEXx5YBAFg51NgglEzCBxN+wQMODACbJhIA6i2659nkSF1y/PtSMUrCAz9RQBmhz9OzdpkcGQC8mfAbHnDwHshp22B6wjRNA4BVoh0kKLFqPHhfYYcG/mcSFRGn8ICLFchpxWi6RwhKAHSbRfccgyJ1w6kfAC38LyQqwqHTX8644XBtALBngoBAKXjB0qhJjP7hlsGTAUBrYglEAsw3bUlM+JVMGfYCD/hgAABWog/tFeBkERNWmpRKGMGRsUmvuX0xADgyMSWVCPsBD/hoAMiZwBcAdlhn4xmZlQ/7BQ+4uEZLB6NqJqooOoBJXAUF/M3pk3JXJVkc2DztlFIlL4Vb7/Yrry9bSHPPW2k6yyq8PZE+7zW35xXQwM8CmLZovyNAMvlXpHGP1/yeDGjgp7Os2qQSbQCsDu0uP0y4NqCDV0oa2xPp88GRsUnJgTCsTAixq6bzqa8zx1+LgkEdnxw55pTD1RnQwF80pTK2DaYn8hszkQO7FWWTAO4CAKqqQtWTL0A27IN56U/17MKbp5cqs4cHjpxyxOR4BTTwc0wiUggPAMHEV1OSAwaA36imFtXPvbwBn7mMt2c+lkuV2cNOWQCHBrTwoEjd0NiPxebnTFQ/82JG7N6D9eUFvDr1Dj4Luf8csr1ctuD/+3zWaf34sQOr9bcPvcKfBqcrM7rhioB5Zhon4g8bv3ngZFdXl+nIgAbe1q9kvjp6YzEwTjAhaHdOns5QQMX7O/ovAF7qQhtyDN/eG3sJwOvwcAMSMIuAaunv6L/gvi7EWGBpRp3Ab2TnZQDafVOSCahnJT4Cg9zVhTxW5TpOPtYAqboZ8FRjZabHbR/iTRMM6UdJMd4dD/5Tsf4GA8/ntxe+B+Ld8cpMxXobA+8RcGdBGGcvjVzpu3Y4dc4VtYXaT3U+Daa3AISArQY2x/XGogCGCppnHB2k2uHUOT/hAWAg1vcBKdlEQMkVFcI8Y9F8s68/NG7Vf7Rn4krN360MvF9sjGJq3tLItOjrL+W1ULw7XnklkH1EEb/r+Qz832rvjXHJAcTx62ILudToQGdfz41qYEYSPwEC33gGiMckcUtfrO93APC1xHGNpADMgSkFYZ4Y6OzrAWHzbPwLcyQRDfJSCAYAAAAASUVORK5CYII=">
+                      <mat-cell *matCellDef="let element" class="wd-200 action-column" [ngClass]="{'disable-link hide': deletedRecords}">
+                        <div class="table-action">
+                          <a matTooltip="Organization Details" mat-mini-fab color="primary" href="javascript:;" (click)="edit(element);" class="table-action-btn">
+                            <span class="material-symbols-outlined">info</span>
+                          </a>
+                          <a href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Organization" *ngIf="!element.isRequestRaised && canDeleteTenant" (click)="deleteTenant(element)" class="table-action-btn">
+                            <span class="material-symbols-outlined">delete</span>
+                          </a>
+                          <a href="javascript:;" mat-mini-fab color="success" matTooltip="Undo Delete Organization" *ngIf="element.isRequestRaised && !deletedRecords"
+                          (click)="unDeleteTenant(element)" class="table-action-btn">
+                            <span class="material-symbols-outlined">undo</span>
+                          </a>
+                        </div>
                       </mat-cell>
                     </ng-container>
           
