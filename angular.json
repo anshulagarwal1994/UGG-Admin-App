@@ -37,7 +37,9 @@
               "./node_modules/snazzy-info-window/dist/snazzy-info-window.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -133,6 +135,7 @@
               "src/styles.css"
             ],
             "scripts": []
+            
           }
         },
         "lint": {

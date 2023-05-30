@@ -1,113 +1,14 @@
-<div class="container-fluid dashboard-section dashboard mt-4 mb-2">
 
-  <!-- <div class="dflex">
-    <mat-card class="ucg-status-card green-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.tenant' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <i class="tenants-green-icon"></i>
-          </div>
-          <p>{{tenantCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-    <mat-card class="ucg-status-card blue-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.sites' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <i class="site-icon"></i>
-          </div>
-          <p>{{sitesCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-    <mat-card class="ucg-status-card green-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.chargePoints' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <i class="chargepoint-icon"></i>
-          </div>
-          <p>{{chargePointsCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-  </div> -->
-  <!-- <br /> -->
-  <!-- <div class="dflex">
-    <mat-card routerLink="/connectors/Online" class="pointer ucg-status-card-2 blue-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.connectorsAvailable' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <img width="27"
-              src="data:image/png;base64,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">
-          </div>
-          <p>{{connectorsAvailableCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-    <mat-card routerLink="/connectors/Occupied" class="pointer ucg-status-card-2 blue-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.connectorsOccupied' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <img width="27"
-              src="data:image/png;base64,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">
-          </div>
-          <p>{{connectorsInUseCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-    <mat-card routerLink="/connectors/Offline" class="pointer ucg-status-card-2 blue-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.connectorsOffline' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <img width="27"
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABmJLR0QA/wD/AP+gvaeTAAAEOUlEQVR4nO2cPW8TWRSG3zNDhMSHLJKtWXqEtqDIlmzAWKHcxPwBkCg2ToS0ElCtqYCGryQrkNj9A0mgg5iBUNOstoAe0ZMoiG3Qzj0UzkhhPjyf9j3WnKfz9Wh09D6eez1n7AsoiqIoiqIoiqIoiqIodYHSDmh7C6eY6TKAsyCcAHB4+GWNNf+B8YEdemV8PHnWevhu0MGJAmafdw4emsA9Aq4AcCovsx4YgB7RzuTVtYvdr3EHxAqYfd45eGQCLxj4Zbj11QTCFm1PzcZJiP1kH56g+xp+hTBmePLT3bi3IldA21s4xaB/odNO1fjsmp82Zlbf7x+MhLy34Gr41eOS714KD0aDJpwbSTk1hMDN8FjcJ/34CGqpJQz8GB47EHPckUEnWW8up9471Jl5r8MD3j4aHtC53jIqwDIqwDIqwDIqwDIqwDIqwDIqwDJiBbS9hetzvaXpsueZ6y1Nt72F61XUNAxECpj3FrsMukWO6f3qdX4uep52b/E0ueYFg27Nv+rcrrLGqhAnYN5b7AL8x97LhgNsFpHQ7i2eZpc9MI4BABjXJEoQJSAUfkBuCZHwAwRKECMgIfyAzBISww8QJkGEgP4imRh+QMMBNgctzHO9pWl2+HVi+AGMa1IWZhECfIdfAtjOcGgjaWEOFlwAjQzn2TXGfZO3zmEgQsDTs6v/GMc0kVFCeDpKnXa+Z5eN09poPXhbuOAKESEAKC5hnMMHBAkA+hLYOBcA7GY4vOEAm5nm/D7iwgeECQCAjdaDt8YxM8h4JSDjnC8xfECgACD3dJSG2PABoQKAyiSIDh8QLAAoLUF8+IBwAUBhCWMRPjAGAgDA/d8lUPp/GfbDjhmL3y+JF5Dze35A4S7qqBEtoGD4AWMhQayAkuEHiJcgUkBF4QeIliBOQOaWcp9d5GhbVPGMuWpECcjbUmbjtPK0Lco+Yx4GYgQU7WqWbWXbRoSAsi3lcZYgQgAc0yzbUs7bynbBZ3LXOQRECFhrrtwGI+0ZbWp7IXsrm7trzRURD+ZFCACA9fPLdwZIyNzbSZ+OuLveXLlZvNJqESMASJSQu7GWLEFW+IAwAUBEQuGuZlSCvPABgQKAvgQC3yjbUg4WZgLfkBg+EP83VRFUtUjuCRT7XEDkFVAnVIBlVIBlVIBlVIBlVIBlVIBlVIBl4m7EvmDAnkEp++Eog/kcHoi7Aj6OoJBaQjHZRjftI/JGU079MIyX4bGIAOPjCQB/JBXVCx8HzN/hwYiA/l7H9Hg0NdUJ/jO8ZyiQ8C2IdiavgrA1/KJqw2va+eH3uDdiBaxd7H6l7alZEFah01EZfICXaWfqQq7Nu/czt/XbSfLdSwRuMnACKdtaKvhCwAcGeez6f8VNO/ux/ht62/cVtvdB1Tthy6gAy6gAy6gAy6gAy6gAy6gARVEURVEURVEURVEURRkR3wBugApIpwlQYwAAAABJRU5ErkJggg==">
-          </div>
-          <p>{{connectorsOfflineCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-    <mat-card class="pointer ucg-status-card-2 blue-card">
-      <div class="card-stats">
-        <div class="card-header-1">
-          <h4>{{'cards.connectorsunavailable' | translate }}</h4>
-        </div>
-        <div class="card-footer-1 dflex">
-          <div class="circle-icon">
-            <img width="27"
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABmJLR0QA/wD/AP+gvaeTAAAEOUlEQVR4nO2cPW8TWRSG3zNDhMSHLJKtWXqEtqDIlmzAWKHcxPwBkCg2ToS0ElCtqYCGryQrkNj9A0mgg5iBUNOstoAe0ZMoiG3Qzj0UzkhhPjyf9j3WnKfz9Wh09D6eez1n7AsoiqIoiqIoiqIoiqIodYHSDmh7C6eY6TKAsyCcAHB4+GWNNf+B8YEdemV8PHnWevhu0MGJAmafdw4emsA9Aq4AcCovsx4YgB7RzuTVtYvdr3EHxAqYfd45eGQCLxj4Zbj11QTCFm1PzcZJiP1kH56g+xp+hTBmePLT3bi3IldA21s4xaB/odNO1fjsmp82Zlbf7x+MhLy34Gr41eOS714KD0aDJpwbSTk1hMDN8FjcJ/34CGqpJQz8GB47EHPckUEnWW8up9471Jl5r8MD3j4aHtC53jIqwDIqwDIqwDIqwDIqwDIqwDIqwDJiBbS9hetzvaXpsueZ6y1Nt72F61XUNAxECpj3FrsMukWO6f3qdX4uep52b/E0ueYFg27Nv+rcrrLGqhAnYN5b7AL8x97LhgNsFpHQ7i2eZpc9MI4BABjXJEoQJSAUfkBuCZHwAwRKECMgIfyAzBISww8QJkGEgP4imRh+QMMBNgctzHO9pWl2+HVi+AGMa1IWZhECfIdfAtjOcGgjaWEOFlwAjQzn2TXGfZO3zmEgQsDTs6v/GMc0kVFCeDpKnXa+Z5eN09poPXhbuOAKESEAKC5hnMMHBAkA+hLYOBcA7GY4vOEAm5nm/D7iwgeECQCAjdaDt8YxM8h4JSDjnC8xfECgACD3dJSG2PABoQKAyiSIDh8QLAAoLUF8+IBwAUBhCWMRPjAGAgDA/d8lUPp/GfbDjhmL3y+JF5Dze35A4S7qqBEtoGD4AWMhQayAkuEHiJcgUkBF4QeIliBOQOaWcp9d5GhbVPGMuWpECcjbUmbjtPK0Lco+Yx4GYgQU7WqWbWXbRoSAsi3lcZYgQgAc0yzbUs7bynbBZ3LXOQRECFhrrtwGI+0ZbWp7IXsrm7trzRURD+ZFCACA9fPLdwZIyNzbSZ+OuLveXLlZvNJqESMASJSQu7GWLEFW+IAwAUBEQuGuZlSCvPABgQKAvgQC3yjbUg4WZgLfkBg+EP83VRFUtUjuCRT7XEDkFVAnVIBlVIBlVIBlVIBlVIBlVIBlVIBl4m7EvmDAnkEp++Eog/kcHoi7Aj6OoJBaQjHZRjftI/JGU079MIyX4bGIAOPjCQB/JBXVCx8HzN/hwYiA/l7H9Hg0NdUJ/jO8ZyiQ8C2IdiavgrA1/KJqw2va+eH3uDdiBaxd7H6l7alZEFah01EZfICXaWfqQq7Nu/czt/XbSfLdSwRuMnACKdtaKvhCwAcGeez6f8VNO/ux/ht62/cVtvdB1Tthy6gAy6gAy6gAy6gAy6gAy6gARVEURVEURVEURVEURRkR3wBugApIpwlQYwAAAABJRU5ErkJggg==">
-          </div>
-          <p>{{connectorsUnavailableCount}}</p>
-        </div>
-      </div>
-    </mat-card>
-  </div> -->
 
-  <div class="tenantListContainer ucg-container">
-    <div class="tenantFilterSection container-fluid">
+
+<!-- New Design -->
+
+<div class="container-fluid mt-5">
+  <div class="card">
+    <div class="card-body">
       <div class="row">
-        <div class="col-md-6">
-          <span class="title-section">
-            <h4>{{'allTypeContent.tenantList' | translate}}</h4>
-          </span>
+        <div class="col-md-6 lg-6">
+          <h2 class="h2">{{'allTypeContent.tenantList' | translate}}</h2>
         </div>
         <div *ngIf="createTenant" class="col-md-6">
           <span class="creation-button">
@@ -115,401 +16,139 @@
               (click)="navigateTenant();">{{'button.newTenant' | translate}}</button>
           </span>
         </div>
+        <div class="col-md-6 lg-6 text-end">
+          <div class="head-right-outer">
+              <!-- <a class="filter" href="#">Filter by Name <span class="material-symbols-outlined">keyboard_arrow_down</span></a>
+              <a class="reg-org" href="#"><span class="material-symbols-outlined">add</span> Register Organization </a>
+              <a class="back" href="#"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a> -->
+          </div>
+        </div>
       </div>
+      <div class="filter-outer">
+          <div class="row">
+              <div class="col-md-3 lg-3">
+
+                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                  <mat-label>Filter by Name</mat-label>
+                  <input matInput placeholder="Filter by Name" maxlength="150" min="3" max="150"
+                  [formControl]="nameControl">
+                  
+              </mat-form-field>
 
 
-      <div class="row">
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Filter by Name</mat-label>
-            <input type="text" matInput [formControl]="nameControl">
-          </mat-form-field>
-        </div>
-        <div class="col-md-2">
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Filter by Location</mat-label>
-            <input type="text" matInput [formControl]="locationControl">
-          </mat-form-field>
-        </div>
-        <div class="col-md-3">
-          <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
-              class="reset-icon"></i>Reset</button>
-        </div>
-        <div class="col-md-5 flex-end">
-          <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
-            Deleted Records</mat-slide-toggle>
-        </div>
-        <!-- <mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 15px;">
-        <mat-label>Search by {{filter.name}}</mat-label>
-        <input matInput placeholder="Select {{filter.columnProp}}" [(ngModel)]="filter.modelValue" type="{{filter.type}}"
-        autocomplete="disabled" (change)="filterChange(filter,$event)">
+                  <!-- <div class="input-group input-group-outline my-3">
+                      <label class="form-label">Filter by Name</label>
+                      <input type="text" [formControl]="nameControl" class="form-control">
+                  </div> -->
+              </div>
+              <div class="col-md-3 lg-3">
 
-      </mat-form-field> -->
+                <mat-form-field class="w-100 ucg-input" appearance="outline">
+                  <mat-label>Filter by Location</mat-label>
+                  <input matInput placeholder="Filter by Location" maxlength="150" min="3" max="150"
+                  [formControl]="locationControl">
+                  
+              </mat-form-field>
 
-
-
-
-        <!-- <mat-form-field class="example-full-width">
-        <mat-label>No of sites</mat-label>
-        <input type="text" matInput [formControl]="sitesControl" [matAutocomplete]="autoSites">
-        <mat-autocomplete autoActiveFirstOption #autoSites="matAutocomplete" (optionSelected)="filterChange(filterSelectObj[2], $event)">
-          <mat-option *ngFor="let option of filteredBySites | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-
-      &nbsp;
-      <mat-form-field class="example-full-width">
-        <mat-label>No of chargePoints</mat-label>
-        <input type="text" matInput [formControl]="chargePointsControl" [matAutocomplete]="autoChargePoints">
-        <mat-autocomplete autoActiveFirstOption #autoChargePoints="matAutocomplete" (optionSelected)="filterChange(filterSelectObj[3], $event)">
-          <mat-option *ngFor="let option of filteredByChargePoints | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-
-      &nbsp;
-      <mat-form-field class="example-full-width">
-        <mat-label>Status</mat-label>
-        <input type="text" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
-        <mat-autocomplete autoActiveFirstOption #autoStatus="matAutocomplete" (optionSelected)="filterChange(filterSelectObj[4], $event)">
-          <mat-option *ngFor="let option of filteredByStatus | async" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field> -->
-
-
+         
+              </div>
+              <div class="col-md-3 lg-3">
+                  <div class="form-check form-switch">
+                      <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox" id="flexSwitchCheckDefault" checked="">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
+                  </div>
+              </div>
+              <div class="col-md-3 lg-3">
+                  <a class="reset-btn" (click)="resetFilters()"><span class="material-symbols-outlined">keyboard_arrow_down</span> Reset</a>
+              </div>
+          </div>
       </div>
+      <div class="body-content-outer">
+          <div class="row">
+              <div class="col-md-12 lg-12">
 
-      <div class="mat-elevation-z8 ucg-table">
-        <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate" matSortDirection="desc">
-
-          <ng-container matColumnDef="registrationDate">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.registrationDate |
-              date:"MM-dd-yyyy h:mm a"}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="tenantId">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.tenantId' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.tenantId}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.name' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element" [ngClass]="{'disable-link': deletedRecords}" (click)="edit(element);"
-              style="cursor:pointer;"> {{element.name}}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="location">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.location' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.location}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="sitescount">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter"> {{'table.header.sites' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="alignCenter"> 
-              <div>
-                <b>{{element.sitescount}}</b><span *ngIf="deletedRecords && element.siteList.length"> - {{ element.siteList.join(', ') }}</span>
-              </div>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="chargepointscount">
-            <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter"> {{'table.header.chargePoints' |
-              translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="alignCenter"> 
-              <div>
-                <b>{{element.chargepointscount}}</b><span *ngIf="deletedRecords && element.chargePointList.length"> - {{ element.chargePointList.join(', ') }}</span>
-              </div>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="status" style="cursor: default;cursor:pointer;">
-            <mat-header-cell *matHeaderCellDef class="spc-action" [ngClass]="{'disable-link hide': deletedRecords}">
-              Action </mat-header-cell>
-            <mat-cell *matCellDef="let element" class="spc-even" [ngClass]="{'disable-link hide': deletedRecords}">
-              <img matTooltip="Organization Details" src="/assets/zoom-in.svg" (click)="edit(element);" />
-              &nbsp; &nbsp; &nbsp;
-              <img matTooltip="Delete Organization" *ngIf="!element.isRequestRaised && canDeleteTenant" width="24"
-                src="/assets/delete.png" (click)="deleteTenant(element)" />
-              <img matTooltip="Undo Delete Organization" width="24" *ngIf="element.isRequestRaised && !deletedRecords"
-                (click)="unDeleteTenant(element)"
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEWElEQVRoge2YS2hcVRjH/985k8dkklJRS6OWKpUa0RYh0SSV4NyZWrpIyBQ7ulAURERwIbh0Y5Z1IxZEVFyIYMHYmIYExTSZCYgm03QQ6ys+ikmNSfMyNkkd28y5n4s4YZjcmXNflRbmvzyP7/v973ncez+grLLKKqussmxqLdq8fy3avP96ii+cBAd4GMxDawdb9znHsxmfeOSy0dxodx45Cg7cAgBgLEDIaO3Q6LfucDXxCcuk6NFQMpXWzdUa2BI8J59MFI0PLLI0jbrBs9+Vmq/dQky0DiC7pYNwK0w1vHqo6X4nwPkqAQ8wLdJVWtTFsLWFVg+23EtsJgDstOieZ2lGdU+qUBr4CZimUTsyflEXx5YBAFg51NgglEzCBxN+wQMODACbJhIA6i2659nkSF1y/PtSMUrCAz9RQBmhz9OzdpkcGQC8mfAbHnDwHshp22B6wjRNA4BVoh0kKLFqPHhfYYcG/mcSFRGn8ICLFchpxWi6RwhKAHSbRfccgyJ1w6kfAC38LyQqwqHTX8644XBtALBngoBAKXjB0qhJjP7hlsGTAUBrYglEAsw3bUlM+JVMGfYCD/hgAABWog/tFeBkERNWmpRKGMGRsUmvuX0xADgyMSWVCPsBD/hoAMiZwBcAdlhn4xmZlQ/7BQ+4uEZLB6NqJqooOoBJXAUF/M3pk3JXJVkc2DztlFIlL4Vb7/Yrry9bSHPPW2k6yyq8PZE+7zW35xXQwM8CmLZovyNAMvlXpHGP1/yeDGjgp7Os2qQSbQCsDu0uP0y4NqCDV0oa2xPp88GRsUnJgTCsTAixq6bzqa8zx1+LgkEdnxw55pTD1RnQwF80pTK2DaYn8hszkQO7FWWTAO4CAKqqQtWTL0A27IN56U/17MKbp5cqs4cHjpxyxOR4BTTwc0wiUggPAMHEV1OSAwaA36imFtXPvbwBn7mMt2c+lkuV2cNOWQCHBrTwoEjd0NiPxebnTFQ/82JG7N6D9eUFvDr1Dj4Luf8csr1ctuD/+3zWaf34sQOr9bcPvcKfBqcrM7rhioB5Zhon4g8bv3ngZFdXl+nIgAbe1q9kvjp6YzEwTjAhaHdOns5QQMX7O/ovAF7qQhtyDN/eG3sJwOvwcAMSMIuAaunv6L/gvi7EWGBpRp3Ab2TnZQDafVOSCahnJT4Cg9zVhTxW5TpOPtYAqboZ8FRjZabHbR/iTRMM6UdJMd4dD/5Tsf4GA8/ntxe+B+Ld8cpMxXobA+8RcGdBGGcvjVzpu3Y4dc4VtYXaT3U+Daa3AISArQY2x/XGogCGCppnHB2k2uHUOT/hAWAg1vcBKdlEQMkVFcI8Y9F8s68/NG7Vf7Rn4krN360MvF9sjGJq3tLItOjrL+W1ULw7XnklkH1EEb/r+Qz832rvjXHJAcTx62ILudToQGdfz41qYEYSPwEC33gGiMckcUtfrO93APC1xHGNpADMgSkFYZ4Y6OzrAWHzbPwLcyQRDfJSCAYAAAAASUVORK5CYII=">
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-
-        <div *ngIf="process" class="text-center norecord">
-          <img class="rotate" width="35" src="assets/greenprocess.png" />
-        </div>
-
-        <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
-          {{'table.noRecordFound' | translate}}</div>
-
-        <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
-          [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
-        </mat-paginator>
-      </div>
-
-    </div>
-  </div>
-  <div class="container-fluid py-4">
-    <div class="row">
-      <div class="col-lg-12 position-relative z-index-2">
-        <div class="row mt-4">
-          <div class="col-lg-3 col-sm-3">
-            <div class="card  mb-2 box-1 total-tenants-outer">
-              <div class="card-header d-flex">
-                <div class="box-icon-outer text-center">
-                  <img src="./assets/img/total-tenants.svg" />
+                <div class="mat-elevation-z8 ucg-table">
+                  <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate" matSortDirection="desc">
+          
+                    <ng-container matColumnDef="registrationDate">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.registrationDate |
+                        date:"MM-dd-yyyy h:mm a"}} </mat-cell>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="tenantId">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.tenantId' | translate}}
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let element"> {{element.tenantId}} </mat-cell>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="name">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.name' | translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let element" [ngClass]="{'disable-link': deletedRecords}" (click)="edit(element);"
+                        style="cursor:pointer;"> {{element.name}}
+                      </mat-cell>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="location">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.location' | translate}}
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let element">{{element.location}} </mat-cell>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="sitescount">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter"> {{'table.header.sites' | translate}}
+                      </mat-header-cell>
+                      <mat-cell *matCellDef="let element" class="alignCenter"> 
+                        <div>
+                          <b>{{element.sitescount}}</b><span *ngIf="deletedRecords && element.siteList.length"> - {{ element.siteList.join(', ') }}</span>
+                        </div>
+                      </mat-cell>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="chargepointscount">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter"> {{'table.header.chargePoints' |
+                        translate}} </mat-header-cell>
+                      <mat-cell *matCellDef="let element" class="alignCenter"> 
+                        <div>
+                          <b>{{element.chargepointscount}}</b><span *ngIf="deletedRecords && element.chargePointList.length"> - {{ element.chargePointList.join(', ') }}</span>
+                        </div>
+                      </mat-cell>
+                    </ng-container>
+          
+                    <ng-container matColumnDef="status" style="cursor: default;cursor:pointer;">
+                      <mat-header-cell *matHeaderCellDef class="spc-action" [ngClass]="{'disable-link hide': deletedRecords}">
+                        Action </mat-header-cell>
+                      <mat-cell *matCellDef="let element" class="spc-even" [ngClass]="{'disable-link hide': deletedRecords}">
+                        <img matTooltip="Organization Details" src="/assets/zoom-in.svg" (click)="edit(element);" />
+                        &nbsp; &nbsp; &nbsp;
+                        <img matTooltip="Delete Organization" *ngIf="!element.isRequestRaised && canDeleteTenant" width="24"
+                          src="/assets/delete.png" (click)="deleteTenant(element)" />
+                        <img matTooltip="Undo Delete Organization" width="24" *ngIf="element.isRequestRaised && !deletedRecords"
+                          (click)="unDeleteTenant(element)"
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEWElEQVRoge2YS2hcVRjH/985k8dkklJRS6OWKpUa0RYh0SSV4NyZWrpIyBQ7ulAURERwIbh0Y5Z1IxZEVFyIYMHYmIYExTSZCYgm03QQ6ys+ikmNSfMyNkkd28y5n4s4YZjcmXNflRbmvzyP7/v973ncez+grLLKKqussmxqLdq8fy3avP96ii+cBAd4GMxDawdb9znHsxmfeOSy0dxodx45Cg7cAgBgLEDIaO3Q6LfucDXxCcuk6NFQMpXWzdUa2BI8J59MFI0PLLI0jbrBs9+Vmq/dQky0DiC7pYNwK0w1vHqo6X4nwPkqAQ8wLdJVWtTFsLWFVg+23EtsJgDstOieZ2lGdU+qUBr4CZimUTsyflEXx5YBAFg51NgglEzCBxN+wQMODACbJhIA6i2659nkSF1y/PtSMUrCAz9RQBmhz9OzdpkcGQC8mfAbHnDwHshp22B6wjRNA4BVoh0kKLFqPHhfYYcG/mcSFRGn8ICLFchpxWi6RwhKAHSbRfccgyJ1w6kfAC38LyQqwqHTX8644XBtALBngoBAKXjB0qhJjP7hlsGTAUBrYglEAsw3bUlM+JVMGfYCD/hgAABWog/tFeBkERNWmpRKGMGRsUmvuX0xADgyMSWVCPsBD/hoAMiZwBcAdlhn4xmZlQ/7BQ+4uEZLB6NqJqooOoBJXAUF/M3pk3JXJVkc2DztlFIlL4Vb7/Yrry9bSHPPW2k6yyq8PZE+7zW35xXQwM8CmLZovyNAMvlXpHGP1/yeDGjgp7Os2qQSbQCsDu0uP0y4NqCDV0oa2xPp88GRsUnJgTCsTAixq6bzqa8zx1+LgkEdnxw55pTD1RnQwF80pTK2DaYn8hszkQO7FWWTAO4CAKqqQtWTL0A27IN56U/17MKbp5cqs4cHjpxyxOR4BTTwc0wiUggPAMHEV1OSAwaA36imFtXPvbwBn7mMt2c+lkuV2cNOWQCHBrTwoEjd0NiPxebnTFQ/82JG7N6D9eUFvDr1Dj4Luf8csr1ctuD/+3zWaf34sQOr9bcPvcKfBqcrM7rhioB5Zhon4g8bv3ngZFdXl+nIgAbe1q9kvjp6YzEwTjAhaHdOns5QQMX7O/ovAF7qQhtyDN/eG3sJwOvwcAMSMIuAaunv6L/gvi7EWGBpRp3Ab2TnZQDafVOSCahnJT4Cg9zVhTxW5TpOPtYAqboZ8FRjZabHbR/iTRMM6UdJMd4dD/5Tsf4GA8/ntxe+B+Ld8cpMxXobA+8RcGdBGGcvjVzpu3Y4dc4VtYXaT3U+Daa3AISArQY2x/XGogCGCppnHB2k2uHUOT/hAWAg1vcBKdlEQMkVFcI8Y9F8s68/NG7Vf7Rn4krN360MvF9sjGJq3tLItOjrL+W1ULw7XnklkH1EEb/r+Qz832rvjXHJAcTx62ILudToQGdfz41qYEYSPwEC33gGiMckcUtfrO93APC1xHGNpADMgSkFYZ4Y6OzrAWHzbPwLcyQRDfJSCAYAAAAASUVORK5CYII=">
+                      </mat-cell>
+                    </ng-container>
+          
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                  </mat-table>
+          
+                  <div *ngIf="process" class="text-center norecord">
+                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                  </div>
+          
+                  <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                    {{'table.noRecordFound' | translate}}</div>
+          
+                  <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
+                    [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
+                  </mat-paginator>
                 </div>
-                <div class="header-text-outer mt-2">
-                  <h4>Total Tenants</h4>
-                  <p>254</p>
-                </div>
+                  
               </div>
-              <hr class="dark horizontal my-0">
-              <div class="card-footer p-3">
-                <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                    class="text-success text-sm font-weight-bolder">5%</span>Increase</p>
-              </div>
-            </div>
           </div>
-          <div class="col-lg-3">
-            <div class="card  mb-2 box-1 total-sites">
-              <div class="card-header d-flex">
-                <div class="box-icon-outer text-center">
-                  <img src="./assets/img/total-sites.svg" />
-                </div>
-                <div class="header-text-outer mt-2">
-                  <h4>Total Sites</h4>
-                  <p>254</p>
-                </div>
-              </div>
-              <hr class="dark horizontal my-0">
-              <div class="card-footer p-3">
-                <p class="mb-0"><img src="./assets/img/trending_down.svg"><span
-                    class="text-danger text-sm font-weight-bolder">2%</span>Decrease</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="card  mb-2 box-1 total-charge-points">
-              <div class="card-header d-flex">
-                <div class="box-icon-outer text-center">
-                  <img src="./assets/img/total-charge-points.svg" />
-                </div>
-                <div class="header-text-outer mt-2">
-                  <h4>Total Charge Points</h4>
-                  <p>254</p>
-                </div>
-              </div>
-              <hr class="dark horizontal my-0">
-              <div class="card-footer p-3">
-                <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                    class="text-success font-weight-bolder">5%</span>Increase</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-sm-3 mt-sm-0 mt-4">
-            <div class="card  mb-2 box-1 offline-charge-points">
-              <div class="card-header d-flex">
-                <div class="box-icon-outer text-center">
-                  <img src="./assets/img/offline-charge-points.svg" />
-                </div>
-                <div class="header-text-outer mt-2">
-                  <h4>Off. Charge Points</h4>
-                  <p>254</p>
-                </div>
-              </div>
-              <hr class="dark horizontal my-0">
-              <div class="card-footer p-3">
-                <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                class="text-success font-weight-bolder">5%</span>Increase</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-5 box-2">
-          <div class="col-lg-6 box-2-2">
-            <div class="card z-index-2">
-              <div class="card-body pt-0">
-                <div class="border-radius-lg">
-                  <div class="chart">
-                    <canvas id="chart-bars" class="chart-canvas" height="210"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="card">
-              <div class="text-center mt-n3 mx-3 Connectors-img-outer">
-                <img src="./assets/img/Connectors-img.svg" />
-              </div>
-              <div class="card-body p-3 connectors-footer">
-                <div class="row">
-                  <div class="col-lg-12 col-md-12">
-                    <h3>Connectors</h3>
-                  </div>
-                </div>
-                <div class="row connectors-footer-contect">
-                  <div class="col-lg-4 col-md-4">
-                    <label><span class="available">127</span>Available</label>
-                  </div>
-                  <div class="col-lg-4 col-md-4">
-                    <label><span class="unavailable">92</span>Occupied</label>
-                  </div>
-                  <div class="col-lg-4 col-md-4">
-                    <label><span class="occupied">53</span>Unavailable</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-5 box-3">
-          <div class="col-lg-3 col-md-3 box-3-1">
-            <div class="card z-index-2">
-              <div class="card-body pt-0">
-                <div class="border-radius-lg">
-                  <div class="box-3-header d-flex align-items-start">
-                    <div class="icon-outer">
-                      <img src="./assets/img/currency_exchange.svg">
-                    </div>
-                    <div class="text-outer">
-                      <h4>Tickets</h4>
-                      <p>26</p>
-                    </div>
-                  </div>
-                  <div class="box-3-body">
-                    <p>Lorem ispum doler sit.</p>
-                    <p>Lorem ispum doler sit.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 box-3-2">
-            <div class="card z-index-2">
-              <div class="card-body pt-0">
-                <div class="border-radius-lg">
-                  <div class="box-3-header d-flex align-items-start">
-                    <div class="icon-outer">
-                      <img src="./assets/img/currency_exchange.svg">
-                    </div>
-                    <div class="text-outer">
-                      <h4>Tickets</h4>
-                      <p>26</p>
-                    </div>
-                  </div>
-                  <div class="box-3-body">
-                    <p>Lorem ispum doler sit.</p>
-                    <p>Lorem ispum doler sit.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 box-3-3">
-            <div class="card z-index-2">
-              <div class="card-body pt-0">
-                <div class="border-radius-lg">
-                  <div class="box-3-header d-flex align-items-start">
-                    <div class="icon-outer">
-                      <img src="./assets/img/currency_exchange.svg">
-                    </div>
-                    <div class="text-outer">
-                      <h4>Tickets</h4>
-                      <p>26</p>
-                    </div>
-                  </div>
-                  <div class="box-3-body">
-                    <p>Lorem ispum doler sit.</p>
-                    <p>Lorem ispum doler sit.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3 box-3-4">
-            <div class="card z-index-2">
-              <div class="card-body pt-0">
-                <div class="border-radius-lg">
-                  <div class="box-3-header d-flex align-items-start">
-                    <div class="icon-outer">
-                      <img src="./assets/img/currency_exchange.svg">
-                    </div>
-                    <div class="text-outer">
-                      <h4>Tickets</h4>
-                      <p>26</p>
-                    </div>
-                  </div>
-                  <div class="box-3-body">
-                    <p>Lorem ispum doler sit.</p>
-                    <p>Lorem ispum doler sit.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-5 box-4">
-          <div class="col-lg-12 col-md-12">
-            <div class="card z-index-2">
-              <div class="card-body">
-                <div class="border-radius-lg d-flex">
-                  <div class="box-4-left mr-auto">
-                    <h2>Reduced <span>Co2</span> Emission</h2>
-                  </div>
-                  <div class="box-4-right">
-                    <ul>
-                      <li>
-                        <img src="./assets/img/ENERGY.svg">
-                        <p>ENERGY</p>
-                      </li>
-                      <li>
-                        <img src="./assets/img/ENVIRONMENT.svg">
-                        <p>ENVIRONMENT</p>
-                      </li>
-                      <li>
-                        <img src="./assets/img/ECO.svg">
-                        <p>ECO</p>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-5 box-5">
-          <div class="col-lg-12 col-md-12">
-            <img src="./assets/img/map.svg">
-          </div>
-        </div>
       </div>
     </div>
-    <footer class="footer mt-4">
-      <div class="container-fluid">
-        <div class="row align-items-center justify-content-lg-between">
-          <div class="col-lg-12 mb-lg-0 text-center">
-            <p>Copyrights © 2023 Universal EV Chargers  | Designed by Cognisun</p>
-          </div>
-        </div>
-      </div>
-    </footer>
   </div>
-  
 </div>
+

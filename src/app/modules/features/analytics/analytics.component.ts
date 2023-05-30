@@ -14,13 +14,18 @@ import { environment } from '@env';
 import { Router } from '@angular/router';
 import { RoleType } from '@app/shared/services/roles.enum';
 import { RouterExtService } from '@app/shared/services/routerExt.service';
+import DataTable from 'datatables.net-dt';
+import * as jquery from "jquery"
+
 
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.css'],
 })
+
 export class AnalyticsComponent implements OnInit {
+  // dtOptions: DataTables.Settings = {};
 
   public isMasterAdmin = false;
   tenants: Tenant[];
@@ -37,6 +42,7 @@ export class AnalyticsComponent implements OnInit {
   chargePointsCount: number = 0;
   connectorsAvailableCount: number = 0;
   connectorsInUseCount: number = 0;
+  displayStyle = "none";
   connectorsOfflineCount: number = 0;
   connectorsUnavailableCount: number = 0;
   failedTransactionCount: any = 0;
@@ -131,9 +137,14 @@ export class AnalyticsComponent implements OnInit {
     private cdref: ChangeDetectorRef,
     private routerExtService: RouterExtService,
     public router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
+    jquery('#example').DataTable({
+      dom: 'Qlfrtip'
+    });
+    // let table = new DataTable('#myTable');
     this.getTenantNames();
     const sessionRole = localStorage.getItem('role') || '';
     if (sessionRole) {
@@ -151,6 +162,7 @@ export class AnalyticsComponent implements OnInit {
             this.connection.on('targetupdate', (data: any) => {
               console.log(data);
               this.tenantCount = data.Tenants;
+              console.log("tenantCount = ", this.tenantCount)
               // this.sitesCount = data.Sites;
               // this.chargePointsCount = data.ChargePoints;
               this.connectorsAvailableCount = data.Connectors_Available;
@@ -168,6 +180,15 @@ export class AnalyticsComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  
+  
+  openPopup() {
+    this.displayStyle = "block";
+  }
+  closePopup() {
+    this.displayStyle = "none";
   }
 
   getCardCount(tenantId: any) {
@@ -249,11 +270,11 @@ export class AnalyticsComponent implements OnInit {
     this.httpDataService
       .get(
         AppConstants.APIUrlChargePointsById +
-          this.selectedTenant.tenantId +
-          '/' +
-          site.siteId +
-          '/' +
-          false
+        this.selectedTenant.tenantId +
+        '/' +
+        site.siteId +
+        '/' +
+        false
       )
       .subscribe(
         (res) => {
@@ -289,11 +310,11 @@ export class AnalyticsComponent implements OnInit {
       this.httpDataService
         .get(
           AppConstants.APIUrlGetStatistics +
-            this.selectedTenant.tenantId +
-            '/' +
-            Helper.getFormattedDate(this.startDate) +
-            '/' +
-            Helper.getFormattedDate(this.endDate)
+          this.selectedTenant.tenantId +
+          '/' +
+          Helper.getFormattedDate(this.startDate) +
+          '/' +
+          Helper.getFormattedDate(this.endDate)
         )
         .subscribe(
           (res) => {
@@ -326,11 +347,11 @@ export class AnalyticsComponent implements OnInit {
       this.httpDataService
         .get(
           AppConstants.APIUrlGetGraphData +
-            Helper.getFormattedDate(this.startDate) +
-            '/' +
-            Helper.getFormattedDate(this.endDate) + 
-            '/' +
-            this.selectedTenant.tenantId
+          Helper.getFormattedDate(this.startDate) +
+          '/' +
+          Helper.getFormattedDate(this.endDate) +
+          '/' +
+          this.selectedTenant.tenantId
         )
         .subscribe(
           (res) => {

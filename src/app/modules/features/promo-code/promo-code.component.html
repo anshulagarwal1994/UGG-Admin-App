@@ -1,37 +1,53 @@
-<div class="margin-top-16 member-info-section">
-    <div class="ucg-container">
-        <div class="tenantFilterSection container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <span class="title-section">
-                        <h4>Promo Code List</h4>
-                    </span>
-                </div>
-                <div class="col-md-6">
-                    <span class="creation-button">
-                        <button mat-raised-button color="primary" class="btn-primary"
-                            (click)="sendDetails({}, 'new')">{{'button.newPromoCode' |
-                            translate }}</button>
-                    </span>
-                </div>
+<div class="container-fluid mt-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6 lg-6">
+            <h2 class="h2">Promo Code List</h2>
+          </div>
+          <div class="col-md-6 lg-6 text-end">
+            <div class="head-right-outer">
+              <a class="reg-org" (click)="sendDetails({}, 'new')"><span class="material-symbols-outlined">add</span>{{'button.newPromoCode' | translate }}</a>
             </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by PromoCode</mat-label>
-                        <input type="text" matInput [formControl]="promoCodeControl">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-1">
-                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
-                            class="reset-icon"></i>Reset</button>
-                </div>
-                <div class="col-md-9 flex-end">
-                    <mat-slide-toggle [color]="'primary'" [(ngModel)]="showDeleted" (change)="getPromoCodes()">Show
-                        Deleted Records</mat-slide-toggle>
-                </div>
+          </div>
+        </div>
+        <div class="filter-outer">
+          <div class="row">
+            <div class="col-md-3 lg-3">
+              <div class="input-group input-group-outline my-3">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Filter by PromoCode</mat-label>
+                    <input type="text" matInput [formControl]="promoCodeControl">
+                </mat-form-field>
+              </div>
             </div>
-            <div class="mat-elevation-z8 ucg-table">
+            <div class="col-md-3 lg-3">
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="flexSwitchCheckDefault"
+                  checked=""
+                />
+                <label class="form-check-label" (change)="getPromoCodes()" for="flexSwitchCheckDefault"
+                  >Show Deleted Records</label
+                >
+              </div>
+            </div>
+            <div class="col-md-3 lg-3">
+              <a class="reset-btn" (click)="resetFilters()"
+                ><span class="material-symbols-outlined"
+                  >keyboard_arrow_down</span
+                >
+                Reset</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="body-content-outer">
+          <div class="row">
+            <div class="col-md-12 lg-12">
+
                 <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
                     <!-- matSortActive="promocode" -->
                     <ng-container matColumnDef="promoCode">
@@ -109,7 +125,11 @@
                 <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
                     [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
                 </mat-paginator>
+
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  

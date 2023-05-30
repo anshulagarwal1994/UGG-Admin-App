@@ -43,6 +43,7 @@ export class ChargerEditComponent implements OnInit {
   chargerMessageForm: FormGroup;
   canUpdateChargepoint = false;
   canViewConnector = false;
+  displayStyle = "none"
   canViewConfiguration = false;
   canUpdateConfiguration = false;
   canViewOperation = false;
@@ -263,6 +264,13 @@ export class ChargerEditComponent implements OnInit {
     });
   }
 
+
+  openPopup() {
+    this.displayStyle = "block";
+  }
+  closePopup() {
+    this.displayStyle = "none";
+  }
   // Getting data based on group name
   pushNotificationGroupName(connection: signalR.HubConnection) {
     let postData = {
