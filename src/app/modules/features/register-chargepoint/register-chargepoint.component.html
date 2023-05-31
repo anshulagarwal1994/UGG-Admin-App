@@ -1,10 +1,11 @@
-<div class="margin-top-16 member-info-section">
-    <div class="ucg-container">
-        <div class="tenantFilterSection container-fluid">
+<div class="mt-3">
+    <div class="card mat-elevation-z mb-3">
+        <div class="card-body">
             <div class="row">
-                <div class="col-md-2">
-                    <h4 class="font-18">Organization</h4>
+                <div class="col-md-6 lg-6">
+                    <h2 class="h2">Organization</h2>
                 </div>
+
                 <div class="col-md-4">
                     <mat-form-field class="w-100" appearance="outline">
                         <mat-label>Select Organization</mat-label>
@@ -30,127 +31,169 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-            </div>
-        </div>
-        <div class="tenantFilterSection container-fluid">
-            <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-6">
-                    <span class="creation-button">
-                        <button mat-raised-button color="primary" class="btn-primary" [disabled]="!showTransfer"
-                            (click)="navigateCharger()">{{'button.newCharger' | translate}}
-                        </button>
-                    </span>
+
+                <div class="col-md-6 lg-6 text-end">
+                    <div class="head-right-outer">
+                        <a class="btn-border mat-elevation-z icon-right" mat-raised-button
+                            href="javascript:;">Filter<span
+                                class="material-symbols-outlined">keyboard_arrow_down</span></a>
+                        <a (click)="navigateCharger()" class="btn-border mat-elevation-z" mat-raised-button
+                            href="javascript:;"><span class="material-symbols-outlined">add</span>
+                            {{'button.newCharger' | translate}}</a>
+                        <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span
+                                class="material-symbols-outlined">keyboard_backspace</span> Back</a>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-2">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by ChargePointId</mat-label>
-                        <input type="text" matInput [formControl]="chargePointIdControl">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by ChargerType</mat-label>
-                        <input type="text" matInput [formControl]="chargeTypeControl">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by Status</mat-label>
-                        <input type="text" matInput [formControl]="statusControl">
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
-                            class="reset-icon"></i>Reset</button>
-                </div>
-                <div class="col-md-4 flex-end">
-                    <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
-                        Deleted Records</mat-slide-toggle>
+            <div class="filter-outer">
+                <div class="row">
+                    <div class="col-md-3 lg-3">                        
+                            <mat-form-field appearance="outline" class="w-100 ucg-input">
+                                <mat-label>Filter by ChargePointId</mat-label>
+                                <input type="text" matInput [formControl]="chargePointIdControl">
+                            </mat-form-field>
+                    </div>
+                    <div class="col-md-3 lg-3">
+                        
+                            <mat-form-field appearance="outline" class="w-100 ucg-input">
+                                <mat-label>Filter by ChargerType</mat-label>
+                                <input type="text" matInput [formControl]="chargeTypeControl">
+                            </mat-form-field>
+                    </div>
+                    <div class="col-md-3 lg-3">
+                        
+                            <mat-form-field appearance="outline" class="w-100 ucg-input">
+                                <mat-label>Filter by Status</mat-label>
+                                <input type="text" matInput [formControl]="statusControl">
+                            </mat-form-field>
+                      
+                    </div>
+
+                    <div class="col-md-3 lg-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox"
+                                id="flexSwitchCheckDefault" checked="">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3 lg-3">
+                        <a href="javascript:;" mat-raised-button class="reset-btn mat-elevation-z"
+                            (click)="resetFilters()"><span class="material-symbols-outlined">restart_alt</span>
+                            Reset</a>
+                    </div>
                 </div>
             </div>
-            <div class="mat-elevation-z8 ucg-table">
-                <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate"
-                    matSortDirection="desc">
+            <div class="body-content-outer">
+                <div class="row">
+                    <div class="col-md-12 lg-12">
 
-                    <ng-container matColumnDef="registrationDate">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.registrationDate |
-                            date:"MM-dd-yyyy h:mm a"}} </mat-cell>
-                    </ng-container>
+                        <div class="ucg-table">
+                            <mat-table #table [dataSource]="dataSource" matSort matSortDirection="asc">
 
-                    <ng-container matColumnDef="chargePointId">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.chargePointId' | translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let element" [ngClass]="{'disable-link': deletedRecords}"
-                            (click)="chargeEdit(element);" style="cursor:pointer;">
-                            {{element.chargePointId}} </mat-cell>
-                    </ng-container>
+                                <ng-container matColumnDef="registrationDate">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.registrationDate |
+                                        date:"MM-dd-yyyy h:mm a"}} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="chargePointId">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.chargePointId' | translate}}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" [ngClass]="{'disable-link': deletedRecords}"
+                                        (click)="chargeEdit(element);" style="cursor:pointer;">
+                                        {{element.chargePointId}} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="chargerType">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.chargerType' | translate}}
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.chargerType}} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="availabilityStatus">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Availability Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{element.availabilityStatus}} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="numberOfConnectors">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number wd-100">
+                                        {{'table.header.noOfConnectors' | translate}} </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="alignCenter Col-number wd-100"> {{element.numberOfConnectors}}
+                                    </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="connectortype1">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
+                                        {{'table.header.connectortype1' | translate}} </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="alignCenter"> {{element.connectortype1}}
+                                    </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="connectortype2">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
+                                        {{'table.header.connectortype2' | translate}} </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="alignCenter"> {{element.connectortype2}}
+                                    </mat-cell>
+                                </ng-container>
+            
 
-                    <ng-container matColumnDef="chargerType">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'table.header.chargerType' | translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.chargerType}} </mat-cell>
-                    </ng-container>
+                             
 
-                    <ng-container matColumnDef="availabilityStatus">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Availability Status </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.availabilityStatus}} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="numberOfConnectors">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
-                            {{'table.header.noOfConnectors' | translate}} </mat-header-cell>
-                        <mat-cell *matCellDef="let element" class="alignCenter"> {{element.numberOfConnectors}}
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="connectortype1">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
-                            {{'table.header.connectortype1' | translate}} </mat-header-cell>
-                        <mat-cell *matCellDef="let element" class="alignCenter"> {{element.connectortype1}}
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="connectortype2">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter">
-                            {{'table.header.connectortype2' | translate}} </mat-header-cell>
-                        <mat-cell *matCellDef="let element" class="alignCenter"> {{element.connectortype2}}
-                        </mat-cell>
-                    </ng-container>
-
+                                
                     <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
-                        <mat-header-cell *matHeaderCellDef class="spc-action"
+                        <mat-header-cell *matHeaderCellDef class="spc-action wd-200 action-column"
                             [ngClass]="{'disable-link hide': deletedRecords}"> Action </mat-header-cell>
-                        <mat-cell *matCellDef="let element" class="spc-even"
+                        <mat-cell *matCellDef="let element" class="wd-200 action-column"
                             [ngClass]="{'disable-link hide': deletedRecords}">
-                            <img matTooltip="Chargepoint Details" src="/assets/zoom-in.svg"
-                                (click)="chargeEdit(element);" />
-                            <img *ngIf="showTransfer" width="30" matTooltip="Transfer Chargepoint" (click)="transferChargepoint(element);"
-                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADSklEQVR4nO2dT2sUMRjGHw96K/YqHqz4ZWwFq2KpB1HxotXvYrefxc8geNCrrhfBWa0oHhYFd6WFVxYiLGG3GedP8iTz/CDQQzrzJr/NJJN9ZxYQQgghhBC8XAVwBGAMYAbAyMrMxTYCsIXCeQbgD0GnW80yB/AUhfKcoIOtYTlAgZepOUHHWsOyGNXXUBBHKxr5GcBG4P8mS/WrGueZdFD/IoAHAKZevIcoiA9e4xYdsV3j/7ZdRy3K9cj1H3oxv0dB+Kup0MhgYNOL+TcKwr9c5YJlGnfrhu24y1jdS9lOpPqDFZJi8j6LVTIkpGaHVT3XH6SQlKups+oPVggrlmncxTbMMo37vxvGtpqarKk/GCGMq6mqRtzFICFkrBodTKupak39wYyQXLBM4y62YZZp3EG0l0WG9rLIkBAytJdFRq6To2Uad7ENs0zjDqK9LDK0dUKGhJChvSwycp0cLRC35Zp1LyHgyrovdS/Lei69SSl168R6LvO+Ll+lCumSqFn3oYal/maQKS8rStZ9qZN6tln3EkLWX/4J2FZTE7K8rOhCGCfvqkbcsZAQDFwI22qqIsvLii4kF6xUIf5Dn4ulHTsbMZafqYSMvRMs7kiZVlM+N9xz9L3foKUSMvJOMHV3pJskqyl/ZHxZ0SkvUJCQrcxfrTEDcAWFzV2PCTrWGpbYbwSKIgSuYfPMRsYTxCeaELihf+gmSdYXmL1zc0bMy1QyISKMhJAhIWRISGlCdgF8d+UmeLBMJ8fWcS/f2S62HFiwoQphbbiRxhVCQsiQEDIkhAwJIUNCyJAQMiSEDAkhQ0LIkBAyJIQMOiF7AH4AOAZwq8VxTHtZ7YWcczL+deYJgH0JSftJ/OYdr6kU0wjpRsgdJ6GtFJOQ7r53uLtCyimA+xKS7pO433KkzDLMuu/koc+f3kEuk0gZB7LuGXnURdb9a+8gL0mkjAJZ90xsOhnTLrLuU/2K5wmA2wX/oGXjrPsLAN4mCvprILYDgo5tWlolel8C8CZB0Mc1Yhts1v1594l8BeBXhMBPA5esZZR13yF7HdyTiI6QDCIkgwjJIGJ3zY3gvdSBDRX/bW6SkZjlxxskg+SS9QnAR/e3EEIIIYQQiMNfQvEU99cdXMcAAAAASUVORK5CYII=">
-                            <img *ngIf="!element.isrequestraised" matTooltip="Delete Chargepoint" width="24"
-                                src="/assets/delete.png" (click)="deleteChargePoint(element)" />
-                            <img matTooltip="Undo Delete Chargepoint" width="24"
-                                *ngIf="element.isrequestraised && !deletedRecords"
-                                (click)="unDeleteChargePoint(element)"
-                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEWElEQVRoge2YS2hcVRjH/985k8dkklJRS6OWKpUa0RYh0SSV4NyZWrpIyBQ7ulAURERwIbh0Y5Z1IxZEVFyIYMHYmIYExTSZCYgm03QQ6ys+ikmNSfMyNkkd28y5n4s4YZjcmXNflRbmvzyP7/v973ncez+grLLKKqussmxqLdq8fy3avP96ii+cBAd4GMxDawdb9znHsxmfeOSy0dxodx45Cg7cAgBgLEDIaO3Q6LfucDXxCcuk6NFQMpXWzdUa2BI8J59MFI0PLLI0jbrBs9+Vmq/dQky0DiC7pYNwK0w1vHqo6X4nwPkqAQ8wLdJVWtTFsLWFVg+23EtsJgDstOieZ2lGdU+qUBr4CZimUTsyflEXx5YBAFg51NgglEzCBxN+wQMODACbJhIA6i2659nkSF1y/PtSMUrCAz9RQBmhz9OzdpkcGQC8mfAbHnDwHshp22B6wjRNA4BVoh0kKLFqPHhfYYcG/mcSFRGn8ICLFchpxWi6RwhKAHSbRfccgyJ1w6kfAC38LyQqwqHTX8644XBtALBngoBAKXjB0qhJjP7hlsGTAUBrYglEAsw3bUlM+JVMGfYCD/hgAABWog/tFeBkERNWmpRKGMGRsUmvuX0xADgyMSWVCPsBD/hoAMiZwBcAdlhn4xmZlQ/7BQ+4uEZLB6NqJqooOoBJXAUF/M3pk3JXJVkc2DztlFIlL4Vb7/Yrry9bSHPPW2k6yyq8PZE+7zW35xXQwM8CmLZovyNAMvlXpHGP1/yeDGjgp7Os2qQSbQCsDu0uP0y4NqCDV0oa2xPp88GRsUnJgTCsTAixq6bzqa8zx1+LgkEdnxw55pTD1RnQwF80pTK2DaYn8hszkQO7FWWTAO4CAKqqQtWTL0A27IN56U/17MKbp5cqs4cHjpxyxOR4BTTwc0wiUggPAMHEV1OSAwaA36imFtXPvbwBn7mMt2c+lkuV2cNOWQCHBrTwoEjd0NiPxebnTFQ/82JG7N6D9eUFvDr1Dj4Luf8csr1ctuD/+3zWaf34sQOr9bcPvcKfBqcrM7rhioB5Zhon4g8bv3ngZFdXl+nIgAbe1q9kvjp6YzEwTjAhaHdOns5QQMX7O/ovAF7qQhtyDN/eG3sJwOvwcAMSMIuAaunv6L/gvi7EWGBpRp3Ab2TnZQDafVOSCahnJT4Cg9zVhTxW5TpOPtYAqboZ8FRjZabHbR/iTRMM6UdJMd4dD/5Tsf4GA8/ntxe+B+Ld8cpMxXobA+8RcGdBGGcvjVzpu3Y4dc4VtYXaT3U+Daa3AISArQY2x/XGogCGCppnHB2k2uHUOT/hAWAg1vcBKdlEQMkVFcI8Y9F8s68/NG7Vf7Rn4krN360MvF9sjGJq3tLItOjrL+W1ULw7XnklkH1EEb/r+Qz832rvjXHJAcTx62ILudToQGdfz41qYEYSPwEC33gGiMckcUtfrO93APC1xHGNpADMgSkFYZ4Y6OzrAWHzbPwLcyQRDfJSCAYAAAAASUVORK5CYII=">
+                            <!-- <img matTooltip="Chargepoint Details" src="/assets/zoom-in.svg"
+                                (click)="chargeEdit(element);" /> -->
+
+                                
+                                <a  href="javascript:;" mat-mini-fab color="success"
+                                matTooltip="Chargepoint Details" (click)="chargeEdit(element)"
+                                class="table-action-btn">
+                                <span class="material-symbols-outlined">undo</span>
+                            </a>
+
+                            <a *ngIf="showTransfer" matTooltip="Transfer Chargepoint" mat-mini-fab color="primary" href="javascript:;" (click)="transferChargepoint(element);" class="table-action-btn">
+                                <span class="material-symbols-outlined">info</span>
+                              </a>
+                              <a *ngIf="!element.isrequestraised" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteChargePoint(element)" class="table-action-btn">
+                                <span class="material-symbols-outlined">delete</span>
+                              </a>
+
+                              <a  href="javascript:;" mat-mini-fab color="success"  *ngIf="element.isrequestraised && !deletedRecords"
+                              matTooltip="Undo Delete Chargepoint" (click)="unDeleteChargePoint(element)"
+                              class="table-action-btn">
+                              <span class="material-symbols-outlined">undo</span>
+                          </a>
+                          
                         </mat-cell>
                     </ng-container>
 
-                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                </mat-table>
-                <div *ngIf="process" class="text-center norecord">
-                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                            <div *ngIf="process" class="text-center norecord">
+                                <img class="rotate" width="35" src="assets/greenprocess.png" />
+                            </div>
+                            <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)"
+                                class="norecord">
+                                {{'table.noRecordFound' | translate}}</div>
+                            <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber"
+                                [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true"
+                                (page)="pageChanged($event)">
+                            </mat-paginator>
+
+
+                        </div>
+
+                    </div>
                 </div>
-                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
-                    {{'table.noRecordFound' | translate}}</div>
-                <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
-                    [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
-                </mat-paginator>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Old -->
+
