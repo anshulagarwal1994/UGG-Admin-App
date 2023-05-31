@@ -55,12 +55,12 @@
 
       <li class="nav-item"
         *ngIf="showDRReport || showNDRReport || showDAReport || showFRReport || showPDReport || showCUReport">
-        <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link text-dark"
-          aria-controls="applicationsExamples" role="button" aria-expanded="false">
+        <a data-bs-toggle="collapse" class="nav-link text-dark"
+          aria-controls="applicationsExamples1" role="button" aria-expanded="false">
           <div class="nev-icon reports"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.reports' | translate }}</span>
         </a>
-        <div class="collapse " id="applicationsExamples">
+        <div class="collapse " id="applicationsExamples1">
           <ul class="nav ">
             <li class="nav-item " *ngIf="showDRReport">
               <a class="nav-link text-dark" routerLink="/driver-registration-report">
@@ -105,8 +105,8 @@
 
 
       <li class="nav-item" *ngIf="showUser || showRole || showFinancial">
-        <a data-bs-toggle="collapse" href="#applicationsExamplesettings" class="nav-link text-dark"
-          aria-controls="applicationsExamples" role="button" aria-expanded="false">
+        <a data-bs-toggle="collapse" class="nav-link text-dark"
+          aria-controls="applicationsExamplesettings" role="button" aria-expanded="false">
           <div class="nev-icon settings"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.settings' | translate }}</span>
         </a>
@@ -137,8 +137,8 @@
 
 
       <li class="nav-item">
-        <a data-bs-toggle="collapse" href="#applicationsExamplesupport" class="nav-link text-dark"
-          aria-controls="applicationsExamples" role="button" aria-expanded="false">
+        <a data-bs-toggle="collapse"  class="nav-link text-dark"
+          aria-controls="applicationsExamplesupport" role="button" aria-expanded="false">
           <div class="nev-icon support"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.support' | translate }}</span>
         </a>

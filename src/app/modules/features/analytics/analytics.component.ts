@@ -141,9 +141,7 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    jquery('#example').DataTable({
-      dom: 'Qlfrtip'
-    });
+   
     // let table = new DataTable('#myTable');
     this.getTenantNames();
     const sessionRole = localStorage.getItem('role') || '';
