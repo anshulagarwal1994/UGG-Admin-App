@@ -1,4 +1,9 @@
-<div class="margin-top-16 member-info-section">
+
+
+
+<!-- New Design -->
+
+<div class="mt-3">
     <mat-accordion>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -254,39 +259,48 @@
 
         </mat-expansion-panel>
     </mat-accordion>
-
-
-    <div class="tenantListContainer ucg-container">
-
-        <div class="tenantFilterSection container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <span class="title-section">
-                        <h4>{{'allTypeContent.siteList' | translate }}</h4>
-                    </span>
-                </div>
-                <div *ngIf="canCreateSite" class="col-md-6">
-                    <span class="creation-button">
-                        <button mat-raised-button [ngClass]="{'img-disable': parentTenantRequest}" color="primary"
-                            class="btn-primary" (click)="navigateSite();">{{'button.newSite' | translate }}</button>
-                    </span>
-                </div>
+    <div class="card mat-elevation-z mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 lg-6">
+            <h2 class="h2">{{'allTypeContent.siteList' | translate }}</h2>
+          </div>
+          <!-- <div *ngIf="createTenant" class="col-md-6 lg-6 text-end">
+            <span class="creation-button">
+              <button mat-raised-button color="primary" class="btn-primary"
+                (click)="navigateTenant();">{{'button.newTenant' | translate}}</button>
+            </span>
+          </div> -->
+          <div class="col-md-6 lg-6 text-end">
+            <div class="head-right-outer">
+                <a class="btn-border mat-elevation-z icon-right" mat-raised-button href="javascript:;">Filter<span class="material-symbols-outlined">keyboard_arrow_down</span></a>
+                <a *ngIf="canCreateSite" class="btn-border mat-elevation-z" (click)="navigateSite();" mat-raised-button href="javascript:;"><span class="material-symbols-outlined" [ngClass]="{'img-disable': parentTenantRequest}">add</span> {{'button.newSite' | translate }} </a>
+                <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a>
             </div>
+          </div>
+        </div>
+        <div class="filter-outer">
             <div class="row">
-                <div class="col-md-2">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by Name</mat-label>
-                        <input type="text" matInput [formControl]="siteNameControl" [matAutocomplete]="autoName"
-                            (change)="filterChange(filterSelectObj[0], $event)">
-                        <mat-autocomplete autoActiveFirstOption #autoName="matAutocomplete"
-                            (optionSelected)="filterChange(filterSelectObj[0], $event)">
-                            <mat-option *ngFor="let option of filteredBySiteName | async" [value]="option">
-                                {{option}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
+                <div class="col-md-3 lg-3">
+                  
+                  <!-- <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Filter by Name</label>
+                    <input type="text" [formControl]="nameControl" class="form-control">
+                  </div> -->
+
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Filter by Name</mat-label>
+                    <input type="text" matInput [formControl]="siteNameControl" [matAutocomplete]="autoName"
+                        (change)="filterChange(filterSelectObj[0], $event)">
+                    <mat-autocomplete autoActiveFirstOption #autoName="matAutocomplete"
+                        (optionSelected)="filterChange(filterSelectObj[0], $event)">
+                        <mat-option *ngFor="let option of filteredBySiteName | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3 lg-3">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Filter by Location</mat-label>
                         <input type="text" matInput [formControl]="locationControl" [matAutocomplete]="autoLocation"
@@ -299,18 +313,23 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2">
-                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
-                            class="reset-icon"></i>Reset</button>
+                <div class="col-md-3 lg-3">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox" id="flexSwitchCheckDefault" checked="">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
+                    </div>
                 </div>
-                <div class="col-md-6 flex-end">
-                    <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
-                        Deleted Records</mat-slide-toggle>
+                <div class="col-md-3 lg-3">
+                    <a href="javascript:;" mat-raised-button class="reset-btn mat-elevation-z" (click)="resetFilters()"><span class="material-symbols-outlined">restart_alt</span> Reset</a>
                 </div>
             </div>
-
-            <div class="mat-elevation-z8 ucg-table">
-                <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate"
+        </div>
+        <div class="body-content-outer">
+            <div class="row">
+                <div class="col-md-12 lg-12">
+  
+                  <div class="ucg-table">
+                    <mat-table #table [dataSource]="dataSource" matSort matSortActive="registrationDate"
                     matSortDirection="desc">
 
                     <ng-container matColumnDef="registrationDate">
@@ -344,30 +363,52 @@
                             [ngClass]="{'disable-link hide': deletedRecords}"> Action </mat-header-cell>
                         <mat-cell *matCellDef="let element" class="spc-even"
                             [ngClass]="{'disable-link hide': deletedRecords}">
-                            <img matTooltip="Site Details" src="/assets/zoom-in.svg" (click)="siteEdit(element);" />
-                            <img [ngClass]="{'img-disable': parentTenantRequest}"
-                                *ngIf="!element.isRequestRaised && canDeleteSite" matTooltip="Delete Site" width="24"
-                                src="/assets/delete.png" (click)="deleteSite(element)" />
-                            <img matTooltip="Undo Delete Site" [ngClass]="{'img-disable': parentTenantRequest}"
-                                width="24" *ngIf="element.isRequestRaised && canDeleteSite && !deletedRecords"
-                                (click)="unDeleteSite(element)"
-                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAEWElEQVRoge2YS2hcVRjH/985k8dkklJRS6OWKpUa0RYh0SSV4NyZWrpIyBQ7ulAURERwIbh0Y5Z1IxZEVFyIYMHYmIYExTSZCYgm03QQ6ys+ikmNSfMyNkkd28y5n4s4YZjcmXNflRbmvzyP7/v973ncez+grLLKKqussmxqLdq8fy3avP96ii+cBAd4GMxDawdb9znHsxmfeOSy0dxodx45Cg7cAgBgLEDIaO3Q6LfucDXxCcuk6NFQMpXWzdUa2BI8J59MFI0PLLI0jbrBs9+Vmq/dQky0DiC7pYNwK0w1vHqo6X4nwPkqAQ8wLdJVWtTFsLWFVg+23EtsJgDstOieZ2lGdU+qUBr4CZimUTsyflEXx5YBAFg51NgglEzCBxN+wQMODACbJhIA6i2659nkSF1y/PtSMUrCAz9RQBmhz9OzdpkcGQC8mfAbHnDwHshp22B6wjRNA4BVoh0kKLFqPHhfYYcG/mcSFRGn8ICLFchpxWi6RwhKAHSbRfccgyJ1w6kfAC38LyQqwqHTX8644XBtALBngoBAKXjB0qhJjP7hlsGTAUBrYglEAsw3bUlM+JVMGfYCD/hgAABWog/tFeBkERNWmpRKGMGRsUmvuX0xADgyMSWVCPsBD/hoAMiZwBcAdlhn4xmZlQ/7BQ+4uEZLB6NqJqooOoBJXAUF/M3pk3JXJVkc2DztlFIlL4Vb7/Yrry9bSHPPW2k6yyq8PZE+7zW35xXQwM8CmLZovyNAMvlXpHGP1/yeDGjgp7Os2qQSbQCsDu0uP0y4NqCDV0oa2xPp88GRsUnJgTCsTAixq6bzqa8zx1+LgkEdnxw55pTD1RnQwF80pTK2DaYn8hszkQO7FWWTAO4CAKqqQtWTL0A27IN56U/17MKbp5cqs4cHjpxyxOR4BTTwc0wiUggPAMHEV1OSAwaA36imFtXPvbwBn7mMt2c+lkuV2cNOWQCHBrTwoEjd0NiPxebnTFQ/82JG7N6D9eUFvDr1Dj4Luf8csr1ctuD/+3zWaf34sQOr9bcPvcKfBqcrM7rhioB5Zhon4g8bv3ngZFdXl+nIgAbe1q9kvjp6YzEwTjAhaHdOns5QQMX7O/ovAF7qQhtyDN/eG3sJwOvwcAMSMIuAaunv6L/gvi7EWGBpRp3Ab2TnZQDafVOSCahnJT4Cg9zVhTxW5TpOPtYAqboZ8FRjZabHbR/iTRMM6UdJMd4dD/5Tsf4GA8/ntxe+B+Ld8cpMxXobA+8RcGdBGGcvjVzpu3Y4dc4VtYXaT3U+Daa3AISArQY2x/XGogCGCppnHB2k2uHUOT/hAWAg1vcBKdlEQMkVFcI8Y9F8s68/NG7Vf7Rn4krN360MvF9sjGJq3tLItOjrL+W1ULw7XnklkH1EEb/r+Qz832rvjXHJAcTx62ILudToQGdfz41qYEYSPwEC33gGiMckcUtfrO93APC1xHGNpADMgSkFYZ4Y6OzrAWHzbPwLcyQRDfJSCAYAAAAASUVORK5CYII=">
+
+
+                            <div class="table-action">
+                                <a *ngIf="!element.isRequestRaised && canDeleteSite" matTooltip="Site Details" mat-mini-fab color="primary" href="javascript:;" (click)="siteEdit(element)" class="table-action-btn">
+                                  <span class="material-symbols-outlined">info</span>
+                                </a>
+                                <a href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Site" *ngIf="!element.isRequestRaised && canDeleteSite" (click)="deleteSite(element)" class="table-action-btn">
+                                  <span class="material-symbols-outlined">delete</span>
+                                </a>
+
+
+                                <a href="javascript:;" mat-mini-fab color="success" matTooltip="Undo Delete Site" *ngIf="element.isRequestRaised && canDeleteSite && !deletedRecords"
+                                (click)="unDeleteSite(element)" class="table-action-btn">
+                                  <span class="material-symbols-outlined">undo</span>
+                                </a>
+                              </div>
+
+                        
+                            
                         </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 </mat-table>
-                <div *ngIf="process" class="text-center norecord">
-                    <img class="rotate" width="35" src="assets/greenprocess.png" />
+            
+                    <div *ngIf="process" class="text-center norecord">
+                      <img class="rotate" width="35" src="assets/greenprocess.png" />
+                    </div>
+            
+                    <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
+                      {{'table.noRecordFound' | translate}}</div>
+            
+                    <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
+                      [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
+                    </mat-paginator>
+                  </div>
+                    
                 </div>
-                <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">
-                    {{'table.noRecordFound' | translate }}</div>
-                <mat-paginator #paginator [length]="totalCount" [pageIndex]="pageNumber" [pageSize]="pageSize"
-                    [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true" (page)="pageChanged($event)">
-                </mat-paginator>
             </div>
         </div>
+      </div>
     </div>
+  </div>
+  
+  <!-- OLD Design -->
+  
 
-</div>
+
