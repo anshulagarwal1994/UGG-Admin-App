@@ -14,8 +14,7 @@ import { environment } from '@env';
 import { Router } from '@angular/router';
 import { RoleType } from '@app/shared/services/roles.enum';
 import { RouterExtService } from '@app/shared/services/routerExt.service';
-import DataTable from 'datatables.net-dt';
-import * as jquery from "jquery"
+
 
 
 @Component({

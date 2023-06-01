@@ -60,8 +60,7 @@
           <div class="nev-icon reports"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.reports' | translate }}</span>
         </a>
-        <div class="collapse " id="applicationsExamples1">
-          <ul class="nav ">
+      </li>
             <li class="nav-item " *ngIf="showDRReport">
               <a class="nav-link text-dark" routerLink="/driver-registration-report">
                 <span class="sidenav-mini-icon"> C </span>
@@ -99,9 +98,8 @@
                 <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.chargepoint-uptime-report' | translate }} </span>
               </a>
             </li>
-          </ul>
-        </div>
-      </li>
+        
+      
 
 
       <li class="nav-item" *ngIf="showUser || showRole || showFinancial">
