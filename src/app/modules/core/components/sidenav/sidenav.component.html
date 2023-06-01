@@ -108,8 +108,7 @@
           <div class="nev-icon settings"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.settings' | translate }}</span>
         </a>
-        <div class="collapse " id="applicationsExamplesettings">
-          <ul class="nav ">
+      </li>
             <li class="nav-item " *ngIf="showUser">
               <a class="nav-link text-dark" routerLink="/users">
                 <span class="sidenav-mini-icon"> C </span>
@@ -129,9 +128,7 @@
               </a>
             </li>
 
-          </ul>
-        </div>
-      </li>
+     
 
 
       <li class="nav-item">
@@ -140,8 +137,8 @@
           <div class="nev-icon support"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.support' | translate }}</span>
         </a>
-        <div class="collapse " id="applicationsExamplesupport">
-          <ul class="nav ">
+        </li>
+        
             <li class="nav-item " *ngIf="showUser">
               <a class="nav-link text-dark" routerLink="/query">
                 <span class="sidenav-mini-icon"> C </span>
@@ -163,13 +160,6 @@
                 <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.transferRequests' | translate }} </span>
               </a>
             </li>
-
-          </ul>
-        </div>
-      </li>
-
-
-
     </ul>
   </div>
 </aside>
