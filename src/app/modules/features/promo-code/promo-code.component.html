@@ -110,30 +110,27 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
-                  <mat-header-cell *matHeaderCellDef class="actions"> Action </mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef class="actions action-column"> Action </mat-header-cell>
                   <mat-cell *matCellDef="let element" class="wd-200 action-column">
-                    
-                    <a *ngIf="!showDeleted && (element.used === 0)" matTooltip="Edit Promo Code Details" mat-mini-fab color="primary" href="javascript:;" (click)="sendDetails(element,'edit');" class="table-action-btn">
-                      <span class="material-symbols-outlined">info</span>
-                    </a>
-                    
+                    <div class="table-action">
+                      <a *ngIf="!showDeleted && (element.used === 0)" matTooltip="Edit Promo Code Details" mat-mini-fab color="primary" href="javascript:;" (click)="sendDetails(element,'edit');" class="table-action-btn">
+                        <span class="material-symbols-outlined">info</span>
+                      </a>
                       <a *ngIf="!showDeleted && (element.used === 0)" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Promo Code"  (click)="deletePromocode(element)" class="table-action-btn">
                         <span class="material-symbols-outlined">delete</span>
                       </a>
-                    <!-- <img matTooltip="Undo Delete Promo Code"  width="24" src="/assets/undelete.png"
+                      <!-- <img matTooltip="Undo Delete Promo Code"  width="24" src="/assets/undelete.png"
                       (click)="undeletePromocode(element.promoCodeID)" /> -->
-
                       <a *ngIf="showDeleted" href="javascript:;" mat-mini-fab color="success" matTooltip="Undo Delete Promo Code" 
                           (click)="undeletePromocode(element.promoCodeID)" class="table-action-btn">
-                            <span class="material-symbols-outlined">undo</span>
-                          </a>
-
-                    <!-- <img *ngIf="element.used !== 0" src="/assets/zoom-in.svg" (click)="edit(element); viewRecord = true;"/> -->
-
-                    <a *ngIf="element.used !== 0" href="javascript:;" mat-mini-fab color="success" matTooltip="Promo Code Details" 
+                        <span class="material-symbols-outlined">undo</span>
+                      </a>
+                      <!-- <img *ngIf="element.used !== 0" src="/assets/zoom-in.svg" (click)="edit(element); viewRecord = true;"/> -->
+                      <a *ngIf="element.used !== 0" href="javascript:;" mat-mini-fab color="primary" matTooltip="Promo Code Details" 
                           (click)="sendDetails(element, 'view')" class="table-action-btn">
-                            <span class="material-symbols-outlined">undo</span>
-                          </a>
+                          <span class="material-symbols-outlined">info</span>
+                      </a>
+                    </div>
                     <!-- <img matTooltip="Promo Code Details"  src="/assets/zoom-in.svg"
                       (click)="sendDetails(element, 'view')" /> -->
                   </mat-cell>
@@ -142,8 +139,12 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
               </mat-table>
-              <div *ngIf="process" class="text-center norecord">
-                <img class="rotate" width="35" src="assets/greenprocess.png" />
+              <div *ngIf="process" class="text-center norecord table-loader">
+                <!-- <img class="rotate" width="35" src="assets/greenprocess.png" /> -->
+                <div class="loader-inner">
+                    <mat-spinner [diameter]="40"></mat-spinner>
+                    <small>Loading</small>
+                </div>
               </div>
               <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)"
                 class="norecord">

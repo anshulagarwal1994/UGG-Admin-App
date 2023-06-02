@@ -6,31 +6,7 @@
                     <h2 class="h2">Register Charge Point</h2>
                 </div>
 
-                <div class="col-md-4">
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Select Organization</mat-label>
-                        <mat-select [(ngModel)]="selectedTenant" tabindex="1"
-                            (selectionChange)="tenantSelection($event.value)">
-                            <mat-option *ngFor="let tenant of tenants" [value]="tenant">
-                                {{tenant.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <h4 class="font-18">Site</h4>
-                </div>
-                <div class="col-md-4">
-                    <mat-form-field class="w-100" appearance="outline">
-                        <mat-label>Select Site</mat-label>
-                        <mat-select [(ngModel)]="selectedSite" tabindex="2" [disabled]="!selectedTenant"
-                            (selectionChange)="getChargePoints()">
-                            <mat-option *ngFor="let site of sites" [value]="site">
-                                {{site.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
+                
 
                 <div class="col-md-6 lg-6 text-end">
                     <div class="head-right-outer">
@@ -45,15 +21,40 @@
                     </div>
                 </div>
             </div>
-            <div class="filter-outer">
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Organization</mat-label>
+                        <mat-select [(ngModel)]="selectedTenant" tabindex="1"
+                            (selectionChange)="tenantSelection($event.value)">
+                            <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                                {{tenant.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Select Site</mat-label>
+                        <mat-select [(ngModel)]="selectedSite" tabindex="2" [disabled]="!selectedTenant"
+                            (selectionChange)="getChargePoints()">
+                            <mat-option *ngFor="let site of sites" [value]="site">
+                                {{site.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="devider mb-3"></div>
+            <div class="filter-outer mt-0">
                 <div class="row">
-                    <div class="col-md-3 lg-3">                        
+                    <div class="col-md-2 lg-2">                        
                             <mat-form-field appearance="outline" class="w-100 ucg-input">
                                 <mat-label>Filter by ChargePointId</mat-label>
                                 <input type="text" matInput [formControl]="chargePointIdControl">
                             </mat-form-field>
                     </div>
-                    <div class="col-md-3 lg-3">
+                    <div class="col-md-2 lg-2">
                         
                             <mat-form-field appearance="outline" class="w-100 ucg-input">
                                 <mat-label>Filter by ChargerType</mat-label>
@@ -68,7 +69,6 @@
                             </mat-form-field>
                       
                     </div>
-
                     <div class="col-md-3 lg-3">
                         <div class="form-check form-switch">
                             <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox"
@@ -76,7 +76,7 @@
                             <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
                         </div>
                     </div>
-                    <div class="col-md-3 lg-3">
+                    <div class="col-md-2 lg-2">
                         <a href="javascript:;" mat-raised-button class="reset-btn mat-elevation-z"
                             (click)="resetFilters()"><span class="material-symbols-outlined">restart_alt</span>
                             Reset</a>
@@ -147,35 +147,36 @@
                             [ngClass]="{'disable-link hide': deletedRecords}">
                             <!-- <img matTooltip="Chargepoint Details" src="/assets/zoom-in.svg"
                                 (click)="chargeEdit(element);" /> -->
-
-                                
+                            <div class="table-action">
                                 <a  href="javascript:;" mat-mini-fab color="success"
                                 matTooltip="Chargepoint Details" (click)="chargeEdit(element)"
                                 class="table-action-btn">
-                                <span class="material-symbols-outlined">undo</span>
-                            </a>
-
-                            <a *ngIf="showTransfer" matTooltip="Transfer Chargepoint" mat-mini-fab color="primary" href="javascript:;" (click)="transferChargepoint(element);" class="table-action-btn">
-                                <span class="material-symbols-outlined">info</span>
-                              </a>
-                              <a *ngIf="!element.isrequestraised" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteChargePoint(element)" class="table-action-btn">
+                                    <span class="material-symbols-outlined">undo</span>
+                                </a>
+                                <a *ngIf="showTransfer" matTooltip="Transfer Chargepoint" mat-mini-fab color="primary" href="javascript:;" (click)="transferChargepoint(element);" class="table-action-btn">
+                                    <span class="material-symbols-outlined">info</span>
+                                </a>
+                                <a *ngIf="!element.isrequestraised" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteChargePoint(element)" class="table-action-btn">
                                 <span class="material-symbols-outlined">delete</span>
-                              </a>
-
-                              <a  href="javascript:;" mat-mini-fab color="success"  *ngIf="element.isrequestraised && !deletedRecords"
-                              matTooltip="Undo Delete Chargepoint" (click)="unDeleteChargePoint(element)"
-                              class="table-action-btn">
-                              <span class="material-symbols-outlined">undo</span>
-                          </a>
-                          
+                                </a>
+                                <a  href="javascript:;" mat-mini-fab color="success"  *ngIf="element.isrequestraised && !deletedRecords"
+                                matTooltip="Undo Delete Chargepoint" (click)="unDeleteChargePoint(element)"
+                                class="table-action-btn">
+                                    <span class="material-symbols-outlined">undo</span>
+                                </a>
+                            </div>
                         </mat-cell>
                     </ng-container>
 
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                             </mat-table>
-                            <div *ngIf="process" class="text-center norecord">
-                                <img class="rotate" width="35" src="assets/greenprocess.png" />
+                            <div *ngIf="process" class="text-center norecord table-loader">
+                                <!-- <img class="rotate" width="35" src="assets/greenprocess.png" /> -->
+                                <div class="loader-inner">
+                                    <mat-spinner [diameter]="40"></mat-spinner>
+                                    <small>Loading</small>
+                                </div>
                             </div>
                             <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)"
                                 class="norecord">
