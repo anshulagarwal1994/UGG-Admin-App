@@ -1,5 +1,26 @@
 
 <div class="py-2">
+  <form [formGroup]="siteDashboardForm" #siteDashboard="ngForm" class="margin-bottom-40 ucg-container">
+    <div class="ucgHeader-1">
+      <div class="row">
+      
+        <div class="col-lg-4 col-md-6 col-sm-7">
+          <mat-form-field *ngIf="!hasTenantAdmin" class="w-100" appearance="outline">
+            <mat-label>Organization</mat-label>
+            <mat-select formControlName="tenantName" [(ngModel)]="selectedTenant" tabindex="1"
+              [disabled]="hasTenantAdmin">
+              <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                {{tenant.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="hasTenantAdmin" class="w-100 ucg-input" appearance="outline">
+            <input matInput readonly [value]="tenantName">
+        </mat-form-field>
+        </div>
+      </div>
+    </div>
+    </form>
   <div class="row mt-4">
     <div class="col-lg-4 col-sm-4">
       <div class="card  mb-2 box-1 total-tenants-outer">
@@ -7,9 +28,9 @@
           <div class="box-icon-outer text-center">
             <img src="./assets/img/total-tenants.svg" />
           </div>
-          <div class="header-text-outer mt-2">
-            <h4>Total Tenants</h4>
-            <p>254</p>
+          <div (click)="goToSite()" class="header-text-outer mt-2">
+            <h4>Sites</h4>
+            <p>{{siteCards.sites}}</p>
           </div>
         </div>
         <hr class="dark horizontal my-0">
@@ -26,8 +47,8 @@
             <img src="./assets/img/total-charge-points.svg" />
           </div>
           <div class="header-text-outer mt-2">
-            <h4>Total Charge Points</h4>
-            <p>254</p>
+            <h4>Chargers</h4>
+            <p>{{siteCards.chargePoints}}</p>
           </div>
         </div>
         <hr class="dark horizontal my-0">
@@ -44,8 +65,8 @@
             <img src="./assets/img/offline-charge-points.svg" />
           </div>
           <div class="header-text-outer mt-2">
-            <h4>Off. Charge Points</h4>
-            <p>254</p>
+            <h4>KWH Consumed</h4>
+            <p>{{ (siteCards.kwh)?.toFixed(2) }}</p>
           </div>
         </div>
         <hr class="dark horizontal my-0">
@@ -70,13 +91,13 @@
           </div>
           <div class="row connectors-footer-contect">
             <div class="col-lg-4 col-md-4">
-              <label><span class="available">127</span>Available</label>
+              <label><span class="available">{{ siteCards.connectors_Available }}</span>Available</label>
             </div>
             <div class="col-lg-4 col-md-4">
-              <label><span class="unavailable">92</span>Occupied</label>
+              <label><span class="unavailable">{{ siteCards.connectors_InUse }}</span>Occupied</label>
             </div>
             <div class="col-lg-4 col-md-4">
-              <label><span class="occupied">53</span>Unavailable</label>
+              <label><span class="occupied">{{ siteCards.connectors_Offline }}</span>Unavailable</label>
             </div>
           </div>
         </div>
@@ -102,94 +123,7 @@
   <div class="card mat-elevation-z mb-3">
     <div class="card-body">
       <div class="row">
-        <form [formGroup]="siteDashboardForm" #siteDashboard="ngForm" class="margin-bottom-40 ucg-container">
-          <div class="ucgHeader-1">
-            <div class="row">
-            
-              <div class="col-lg-4 col-md-6 col-sm-7">
-                <mat-form-field *ngIf="!hasTenantAdmin" class="w-100" appearance="outline">
-                  <mat-label>Organization</mat-label>
-                  <mat-select formControlName="tenantName" [(ngModel)]="selectedTenant" tabindex="1"
-                    [disabled]="hasTenantAdmin">
-                    <mat-option *ngFor="let tenant of tenants" [value]="tenant">
-                      {{tenant.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field *ngIf="hasTenantAdmin" class="w-100 ucg-input" appearance="outline">
-                  <input matInput readonly [value]="tenantName">
-              </mat-form-field>
-              </div>
-            </div>
-          </div>
-          <div class="siteDashboardCard">
-            <div class="row">
-              <div class="col-lg-2 col-md-6">
-                <mat-card class="ucg-card green-card">
-                  <mat-card-title>Sites</mat-card-title>
-                  <mat-card-content class="ucg-card-content">
-                    <p class="pointer" (click)="goToSite()">{{siteCards.sites}}</p>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-              <div class="col-lg-2 col-md-6">
-                <mat-card class="ucg-card blue-card">
-                  <mat-card-title>Chargers</mat-card-title>
-                  <mat-card-content class="ucg-card-content">
-                    <p>{{siteCards.chargePoints}}</p>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-              <div class="col-lg-2 col-md-6">
-                <mat-card class="ucg-card green-card">
-                  <mat-card-title>KWH Consumed</mat-card-title>
-                  <mat-card-content class="ucg-card-content">
-                    <p style="width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 24px;">
-                      {{ (siteCards.kwh)?.toFixed(2) }}
-                    </p>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-              <div class="col-lg-6 col-md-6">
-                <mat-card class="ucg-card blue-card">
-                  <mat-card-title>Connectors</mat-card-title>
-                  <mat-card-content class="ucg-card-content">
-                    <div class="container-fluid">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4">
-                          <div class="sites-content">
-                            <span>
-                              <i>{{ siteCards.connectors_Available }}</i>
-                              Available
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                          <div class="sites-content">
-                            <span>
-                              <i>{{ siteCards.connectors_InUse }}</i>
-                              Occupied
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4">
-                          <div class="sites-content last-child">
-                            <span>
-                              <i>{{ siteCards.connectors_Offline }}</i>
-                              Offline
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-    
-            </div>
-          </div>
-    
-        </form>
+       
 
         <div class="col-md-5">
           <span class="title-section">
@@ -200,8 +134,10 @@
      
         <div class="col-md-6 lg-6 text-end">
           <div class="head-right-outer" *ngIf="tenantId != undefined && canCreateSite">
-            <a class="btn-border mat-elevation-z" mat-raised-button href="javascript:;" (click) = "newSite()">Add New Site<span class="material-symbols-outlined">add</span></a>
-
+            <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z icon-right"  mat-raised-button href="javascript:;">Filter<span class="material-symbols-outlined">keyboard_arrow_down</span>
+            </a>
+            <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z" mat-raised-button href="javascript:;" (click) = "newSite()">Add New Site<span class="material-symbols-outlined">add</span></a>
+            <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a>
             <mat-button-toggle-group #group="matButtonToggleGroup" [value]="selectedVal" (change)="onValChange(group.value)"
                 *ngIf="dataSource.data.length != 0 && dataSource.filteredData.length != 0" name="fontStyle" aria-label="Font Style" style="margin-right: 10px;">
                   <mat-button-toggle value="mapView" (click)="mapView()" class="toggleBtn"> <i class="mapviewico"></i> Map View</mat-button-toggle>

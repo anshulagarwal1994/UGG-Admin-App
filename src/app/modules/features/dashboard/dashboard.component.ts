@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   createTenant = false;
   canDeleteTenant = false;
   deletedRecords = false;
+  showdiv = '';
   process = true;
   dialogRef: MatDialogRef<any>;
   filterName = '';
@@ -114,6 +115,22 @@ export class DashboardComponent implements OnInit {
   toggleDeletedRecords() {
     this.deletedRecords = !this.deletedRecords;
     this.getTenants();
+  }
+
+  showhidediv(){
+    let showdiv = document.getElementById("ShowFilter");
+    if(showdiv != null){
+      console.log("show = ",showdiv.style.display);
+      if (showdiv.style.display === "none") {
+        showdiv.style.display = "block";
+      } else {
+        showdiv.style.display = "none";
+      }
+    }
+    
+    
+
+    
   }
 
   pageChanged(event: PageEvent) {
