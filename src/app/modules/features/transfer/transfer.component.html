@@ -16,9 +16,8 @@
           </div> -->
           
         </div>
-        <div class="filter-outer">
+        <!-- <div class="filter-outer">
             <div class="tenantFilterSection container-fluid">
-                <br />
                 <div class="row">
                     <div class="col-md-2">
                         <h4 class="font-18">From Organization</h4>
@@ -70,11 +69,64 @@
                         </mat-form-field>
                     </div>
                 </div>
+                
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-lg-5 col-md-5">
+                <div class="ts-box">
+                    <div class="common-input">
+                        <label>From Organization</label>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Select Organization</mat-label>
+                            <mat-select [(ngModel)]="selectedFromTenant" tabindex="1"
+                                (selectionChange)="tenantFromSelection($event.value)">
+                                <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                                    {{tenant.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint>Site will be transfered from selected organization.</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="common-input my-0">
+                        <label>Select Site</label>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Select Site</mat-label>
+                            <mat-select [(ngModel)]="selectedSite" tabindex="2" [disabled]="!selectedFromTenant">
+                                <mat-option *ngFor="let site of sites" [value]="site">
+                                    {{site.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-5">
+                <div class="ts-box tobox">
+                    <div class="common-input">
+                        <label>To Organization</label>
+                        <mat-form-field class="w-100" appearance="outline">
+                            <mat-label>Select Organization</mat-label>
+                            <mat-select [(ngModel)]="selectedToTenant" tabindex="3" [disabled]="!selectedFromTenant">
+                                <mat-option *ngFor="let tenant of tenantsTo" [value]="tenant">
+                                    {{tenant.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div class="hint">
+                            <span class="material-symbols-outlined">info</span>
+                            <p>Site will be transferred to selected organization</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <button mat-raised-button [disabled]="!selectedFromTenant || !selectedToTenant || !selectedSite"
                     color="primary" class="btn-primary btn-popup" (click)="transfer()">Transfer</button>
             </div>
         </div>
-        
       </div>
     </div>
   </div>
