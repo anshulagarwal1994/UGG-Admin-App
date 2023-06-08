@@ -337,7 +337,7 @@
                                 [(ngModel)]="selectedValue" (change)="radioChange($event)">
                                 <mat-radio-button [color]="'primary'" class="col-md-6" *ngFor="let value of values"
                                     [value]="value">
-                                    <mat-form-field *ngIf="value === 'Percentage'" class="ucg-input w-250"
+                                    <mat-form-field *ngIf="value === 'Percentage'" class="ucg-input mb-slam"
                                         appearance="outline">
                                         <mat-label>{{'formFields.discountpercentage' | translate}}</mat-label>
                                         <input matInput autocomplete="off"
@@ -358,7 +358,7 @@
                                                 translate}}</span>
                                         </mat-error>
                                     </mat-form-field>
-                                    <mat-form-field *ngIf="value === 'Flat'" class="w-250 ucg-input"
+                                    <mat-form-field *ngIf="value === 'Flat'" class="ucg-input mb-slam"
                                         appearance="outline">
                                         <mat-label>{{'formFields.flatdiscount' | translate}}</mat-label>
                                         <input matInput autocomplete="off"

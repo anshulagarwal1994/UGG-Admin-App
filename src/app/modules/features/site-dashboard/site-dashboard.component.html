@@ -123,26 +123,23 @@
   <div class="card mat-elevation-z mb-3">
     <div class="card-body">
       <div class="row">
-       
-
-        <div class="col-md-5">
+        <div class="col-md-4">
           <span class="title-section">
-            <h2 class="h2" *ngIf="!isMapViewEnabled">ChargePoint List</h2>
+            <h2 class="h2" *ngIf="!isMapViewEnabled">Charge Point List</h2>
             <h2 class="h2" *ngIf="isMapViewEnabled">Site Map View</h2>
           </span>
         </div>
      
-        <div class="col-md-6 lg-6 text-end">
+        <div class="col-md-8 lg-8 text-end">
           <div class="head-right-outer" *ngIf="tenantId != undefined && canCreateSite">
-            <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z icon-right"  mat-raised-button href="javascript:;">Filter<span class="material-symbols-outlined">keyboard_arrow_down</span>
-            </a>
+            <mat-button-toggle-group #group="matButtonToggleGroup" [value]="selectedVal" (change)="onValChange(group.value)" *ngIf="dataSource.data.length != 0 && dataSource.filteredData.length != 0" name="fontStyle" aria-label="Font Style" class="custom-toggle">
+              <mat-button-toggle value="mapView" (click)="mapView()" class="toggleBtn"><span class="material-symbols-outlined">location_on</span> Map View</mat-button-toggle>
+              <mat-button-toggle value="listView" (click)="listView()" class="toggleBtn"><span class="material-symbols-outlined">format_list_bulleted</span> List View</mat-button-toggle>
+            </mat-button-toggle-group>
+            <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z icon-right"  mat-raised-button href="javascript:;">Filter<span class="material-symbols-outlined">keyboard_arrow_down</span></a>
             <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z" mat-raised-button href="javascript:;" (click) = "newSite()">Add New Site<span class="material-symbols-outlined">add</span></a>
             <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a>
-            <mat-button-toggle-group #group="matButtonToggleGroup" [value]="selectedVal" (change)="onValChange(group.value)"
-                *ngIf="dataSource.data.length != 0 && dataSource.filteredData.length != 0" name="fontStyle" aria-label="Font Style" style="margin-right: 10px;">
-                  <mat-button-toggle value="mapView" (click)="mapView()" class="toggleBtn"> <i class="mapviewico"></i> Map View</mat-button-toggle>
-                  <mat-button-toggle value="listView" (click)="listView()" class="toggleBtn"><i class="listviewico"></i> List View</mat-button-toggle>
-                </mat-button-toggle-group>
+            
 
 
             
@@ -154,9 +151,7 @@
       </div>
       <div class="filter-outer">
           <div class="row">
-              <div class="col-md-3 lg-3">
-                
-
+              <!-- <div class="col-md-3 lg-3">
                 <mat-form-field *ngIf="!isMapViewEnabled && dataSource.data.length > 0" appearance="outline" class="w-100 ucg-input">
                   <mat-label>Filter by Sitename</mat-label>
                   <input type="text" matInput [formControl]="siteNameControl" [matAutocomplete]="autoSiteName" (change)="filterChange(filterSelectObj[0], $event)">
@@ -167,10 +162,7 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-                
-              </div>
-
-
+              </div> -->
               <div class="col-md-3 lg-3">
                 <mat-form-field *ngIf="!isMapViewEnabled && dataSource.data.length > 0" appearance="outline" class="w-100 ucg-input">
                   <mat-label>Filter by Sitename</mat-label>
@@ -183,9 +175,7 @@
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
-
               <div class="col-md-3 lg-3">
-
                 <mat-form-field *ngIf="!isMapViewEnabled && dataSource.data.length > 0" appearance="outline" class="w-100 ucg-input">
                   <mat-label>Filter by Location</mat-label>
                   <input type="text" matInput [formControl]="locationControl" [matAutocomplete]="autoLocation" (change)="filterChange(filterSelectObj[1], $event)">
@@ -198,14 +188,12 @@
                 </mat-form-field>
 
               </div>
-
               <div class="col-md-3 lg-3">
                   <div class="form-check form-switch">
                       <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox" id="flexSwitchCheckDefault" checked="">
                       <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
                   </div>
               </div>
-              
               <div class="col-md-3 lg-3" *ngIf="!isMapViewEnabled && dataSource.data.length > 0">
                   <a href="javascript:;" mat-raised-button class="reset-btn mat-elevation-z" (click)="resetFilters()"><span class="material-symbols-outlined">restart_alt</span> Reset</a>
               </div>

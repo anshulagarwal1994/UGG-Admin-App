@@ -8,9 +8,21 @@
   align-items: stretch;
 }
 
-.w-250 {
+/* .w-250 {
   width: 250%;
   margin-bottom: -15px;
+} */
+
+.mb-slam {
+  margin-bottom: -15px;
+}
+
+.mat-radio-label-content {
+  width: 100% !important  ;
+}
+
+.mat-form-field {
+  width: 100% !important;
 }
 
 .flex-end {

@@ -84,13 +84,13 @@
   }
 }
 
-h1, h2, h3, h4, h5, h6, p, a, button, input, select, b, strong, .mat-h2, .mat-title, .mat-typography h2, .mat-table {
+h1, h2, h3, h4, h5, h6, p, a, button, input, select, b, strong, .mat-h2, .mat-title, .mat-typography h2, .mat-table,.mat-body, .mat-body-1, .mat-typography, .mat-form-field, .mat-option, .mat-select {
   font-family: 'Poppins', sans-serif !important;
 }
 
 body {
   margin: 0;
-  font-family: var(--bs-body-font-family);
+  font-family:'Poppins', sans-serif;
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
@@ -20562,18 +20562,6 @@ fieldset:disabled .btn {
   color: #e91e63;
 }
 
-.btn-secondary,
-.btn.bg-gradient-secondary {
-  box-shadow: 0 3px 3px 0 rgba(, 128, 154, 0.15), 0 3px 1px -2px rgba(, 128, 154, 0.2), 0 1px 5px 0 rgba(, 128, 154, 0.15);
-}
-
-.btn-secondary:hover,
-.btn.bg-gradient-secondary:hover {
-  background-color: #7b809a;
-  border-color: #7b809a;
-  box-shadow: 0 14px 26px -12px rgba(, 128, 154, 0.4), 0 4px 23px 0 rgba(, 128, 154, 0.15), 0 8px 10px -5px rgba(, 128, 154, 0.2);
-}
-
 .btn-secondary .btn.bg-outline-secondary,
 .btn.bg-gradient-secondary .btn.bg-outline-secondary {
   border: 1px solid #7b809a;
@@ -39421,4 +39409,47 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
 .devider {
   width: 100%;
   border-bottom: 1px solid #E4E4ED;
+}
+
+.custom-toggle .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: 44px;
+}
+
+.custom-toggle.mat-button-toggle-group-appearance-standard {
+  border-radius: 8px;
+}
+
+.custom-toggle .mat-button-toggle-checked {
+  background: #1951a1;
+  color: #fff;
+}
+
+.custom-toggle .material-symbols-outlined {
+  margin-right: 5px;
+}
+
+.h2 span {
+  color: #757575;
+}
+
+.list-tick {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.list-tick p {
+    margin: 0;
+    color: #757575;
+}
+
+.list-tick .material-symbols-outlined {
+    font-size: 16px;
+    margin-right: 5px;
+    color: #757575;
+}
+
+.list-tick p b {
+    color: #363636;
+    font-weight: 600;
 }

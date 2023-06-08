@@ -223,11 +223,11 @@
         </div>
 
         <div class="btn-group d-grid gap-2 d-md-flex justify-content-md-end">
-            <button mat-raised-button color="primary" class="btn-primary mx-3" (click)="saveTenant();">
-                {{'button.save' | translate}}
+            <button mat-raised-button color="primary" class="mat-elevation-z btn-icon" (click)="saveTenant();">
+                <span class="material-symbols-outlined">check</span> {{'button.save' | translate}}
             </button>
-            <button mat-raised-button color="secondary" class="btn-secondary" (click)="cancel()">
-                {{'button.cancel' | translate}}
+            <button mat-raised-button color="secondary" class="btn-secondary mat-elevation-z" (click)="cancel()">
+                <span class="material-symbols-outlined">close</span> {{'button.cancel' | translate}}
             </button>
         </div>
 
