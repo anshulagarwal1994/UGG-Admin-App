@@ -10633,7 +10633,7 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #e91e63 !important;
+  background-color: #184EA2 !important;
 }
 
 .bg-secondary {
@@ -39455,4 +39455,36 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
 }
 .hidedive{
   display: none;
+}
+
+.pr-info-card {
+    border: 1px solid #D3D3D3;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pr-icn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #184EA2;
+    border-radius: 8px;
+    flex: 0 0 auto;
+}
+
+.pr-icn .material-symbols-outlined {
+    color: #fff;
+}
+
+.pr-info-card p {padding-left: 10px;margin: 0;font-weight: 500;font-size: 16px;line-height: 140%;}
+
+.pr-info-card.address {
+    margin: 0;
+    align-items: flex-start;
+    min-height: 157px;
 }
