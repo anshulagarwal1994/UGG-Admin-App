@@ -357,6 +357,7 @@ export class TransactionListComponent implements OnInit {
   transactions() {
     this.process = true;
     this.transactionList=[];
+    
     if (this.transactionForm.valid) {
       let date = this.transactionForm.get('date')?.value
         ? Helper.getFormattedDate(this.transactionForm.get('date')?.value)
@@ -395,6 +396,7 @@ export class TransactionListComponent implements OnInit {
             transactionData.startTransactionMin = new Date(transactionObj.startTime).toLocaleString('en-US', {timeZone: 'CST'});
             transactionData.stopTransactionMin = new Date(transactionObj.stopTime).toLocaleString('en-US', {timeZone: 'CST'});
             transactionData.id = dataObj.id;
+            document.getElementById("showDiv").style.display = "block"
             this.transactionList.push(transactionData);
           });
         });
