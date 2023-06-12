@@ -50,6 +50,17 @@ export class SiteEditComponent implements OnInit {
   canModifyMarkupCharge = false;
   deletedRecords = false;
   process = true;
+  Presname : any;
+  Presstreet : any;
+  Presstate : any;
+  Prescity : any;
+  Prescountry : any;
+  PreszipCode : any;
+  Presphone : any;
+  PresutilityProvider : any;
+  Presutilitytdu : any;
+  Presstatus : any;
+
   // countryList : any  = (Country  as  any).default;
   dialogRef: MatDialogRef<any>;
   invalidFileSize: boolean = false;
@@ -565,6 +576,18 @@ export class SiteEditComponent implements OnInit {
   }
 
   setSite(site: Site) {
+
+    this.Presname = site.name;
+      this.Presstreet = site.address.street
+      this.Presstate = site.address.state
+      this.Prescity = site.address.city
+      this.Prescountry = site.address.country
+      this.PreszipCode = site.address.zipcode
+      this.Presphone = site.phone
+      this.PresutilityProvider = site.utilityProvider
+      this.Presutilitytdu = site.utilitytdu
+      this.Presstatus = site.status
+
     this.siteForm.patchValue({
       name: site.name,
       street: site.address.street,
@@ -584,6 +607,8 @@ export class SiteEditComponent implements OnInit {
       markupPercentForDC: site.markupPercentForDC ? site.markupPercentForDC : 0,
     });
 
+      
+      
     this.siteForm.patchValue({
       level2Rate: site.level2Rate,
       dcFastRate: site.dcFastRate,
@@ -628,6 +653,8 @@ export class SiteEditComponent implements OnInit {
             AppConstants.Success,
             AppConstants.Success
           );
+          document.getElementById("Description").style.display = "block";
+          document.getElementById("EditForm").style.display = "none";
         },
         (error) => {
           if (!Helper.isNullOrWhitespace(error)) {
@@ -843,11 +870,13 @@ export class SiteEditComponent implements OnInit {
 
   cancel() {
     // this.routerExtService.clearRouteValue();
-    this.routerExtService.setRouteValue(
-      AppConstants.TenantID,
-      this.tenantId.toString()
-    );
-    this.router.navigate([AppConstants.TenantDetailPage]);
+    // this.routerExtService.setRouteValue(
+    //   AppConstants.TenantID,
+    //   this.tenantId.toString()
+    // );
+    // this.router.navigate([AppConstants.TenantDetailPage]);
+    document.getElementById("Description").style.display = "block";
+    document.getElementById("EditForm").style.display = "none";
   }
 
   deleteChargePoint(chargePoint: any) {
@@ -876,6 +905,11 @@ export class SiteEditComponent implements OnInit {
           });
       }
     });
+  }
+
+  showEditForm(){
+    document.getElementById("Description").style.display = "none";
+    document.getElementById("EditForm").style.display = "block";
   }
 
   unDeleteChargePoint(chargePoint: any) {
