@@ -2,16 +2,34 @@
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-lg-12 position-relative z-index-2">
+          <!-- <form [formGroup]="siteDashboardForm" #siteDashboard="ngForm" class="margin-bottom-40 ucg-container"> -->
+            <div class="ucgHeader-1">
+              <div class="row">
+              
+                <div class="col-lg-4 col-md-6 col-sm-7">
+                  <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Organization</mat-label>
+                    <mat-select (selectionChange)="tenantSelection($event.value)" [(ngModel)]="selectedTenant"
+                        tabindex="1">
+                        <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                            {{tenant.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- </form> -->
           <div class="row mt-4">
-            <div class="col-lg-3 col-sm-3">
+            <div class="col-lg-4 col-sm-4">
               <div class="card  mb-2 box-1 total-tenants-outer">
                 <div class="card-header d-flex">
                   <div class="box-icon-outer text-center">
                     <img src="./assets/img/total-tenants.svg" />
                   </div>
-                  <div class="header-text-outer mt-2">
-                    <h4>Total Tenants</h4>
-                    <p>254</p>
+                  <div class="header-text-outer mt-2" (click)="goToSite()">
+                    <h4>{{'cards.sites' | translate }}</h4>
+                    <p>{{sitesCount}}</p>
                   </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -21,7 +39,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-3">
+            <!-- <div class="col-lg-3">
               <div class="card  mb-2 box-1 total-sites">
                 <div class="card-header d-flex">
                   <div class="box-icon-outer text-center">
@@ -38,16 +56,16 @@
                       class="text-danger text-sm font-weight-bolder">2%</span>Decrease</p>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3">
+            </div> -->
+            <div class="col-lg-4">
               <div class="card  mb-2 box-1 total-charge-points">
                 <div class="card-header d-flex">
                   <div class="box-icon-outer text-center">
                     <img src="./assets/img/total-charge-points.svg" />
                   </div>
-                  <div class="header-text-outer mt-2">
-                    <h4>Total Charge Points</h4>
-                    <p>254</p>
+                  <div class="header-text-outer mt-2" routerLink="/connectors/All">
+                    <h4>{{'cards.chargePoints' | translate }}</h4>
+                    <p>{{chargePointsCount}}</p>
                   </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -63,9 +81,9 @@
                   <div class="box-icon-outer text-center">
                     <img src="./assets/img/offline-charge-points.svg" />
                   </div>
-                  <div class="header-text-outer mt-2">
+                  <div class="header-text-outer mt-2" routerLink="/connectors/Offline">
                     <h4>Off. Charge Points</h4>
-                    <p>254</p>
+                    <p>{{connectorsOfflineCount}}</p>
                   </div>
                 </div>
                 <hr class="dark horizontal my-0">
@@ -100,14 +118,14 @@
                     </div>
                   </div>
                   <div class="row connectors-footer-contect">
-                    <div class="col-lg-4 col-md-4">
-                      <label><span class="available">127</span>Available</label>
+                    <div class="col-lg-4 col-md-4" routerLink="/connectors/Online">
+                      <label><span class="available" >{{connectorsAvailableCount}}</span>Available</label>
                     </div>
-                    <div class="col-lg-4 col-md-4">
-                      <label><span class="unavailable">92</span>Occupied</label>
+                    <div class="col-lg-4 col-md-4" routerLink="/connectors/Occupied">
+                      <label><span class="unavailable">{{connectorsInUseCount}}</span>Occupied</label>
                     </div>
-                    <div class="col-lg-4 col-md-4">
-                      <label><span class="occupied">53</span>Unavailable</label>
+                    <div class="col-lg-4 col-md-4" routerLink="/connectors/Unavailable">
+                      <label><span class="occupied">{{connectorsUnavailableCount}}</span>Unavailable</label>
                     </div>
                   </div>
                 </div>

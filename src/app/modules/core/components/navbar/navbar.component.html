@@ -31,13 +31,39 @@
         </mat-form-field> -->
 
        </li>
-       <li class="nav-item profile-img-outer">
+
+       <li class="nav-item" >
+        <a data-bs-toggle="collapse" href="#applicationsExamplesHeaderMenu" class="nav-link text-dark" aria-controls="applicationsExamples" role="button" aria-expanded="false">
+          <div class="nev-icon reports"></div>
+          <span class="nav-link-text ms-2 ps-1">{{currentUsername | translate}}</span>
+        </a>
+        <div class="collapse " id="applicationsExamplesHeaderMenu">
+          <ul class="nav ">
+            
+            <li class="nav-item ">
+              <a class="nav-link text-dark" (click)="profile()">
+                <span class="sidenav-mini-icon"> P </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Profile </span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link text-dark" (click)="logout()">
+                <span class="sidenav-mini-icon"> L </span>
+                <span class="sidenav-normal  ms-2  ps-1"> Logout </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+       <!-- <li class="nav-item profile-img-outer">
          <a 
            class="nav-link text-white p-0 position-relative" target="_blank">
            <img src="./assets/img/profile-img.svg" />
            <span class="user-name" (click)="logout()">{{currentUsername | translate}}</span>
          </a>
-       </li>
+       </li>       -->
      </ul>
    </div>
  </div>

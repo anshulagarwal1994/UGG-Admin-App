@@ -1,128 +1,116 @@
-<div class="margin-top-16 member-info-section">
-    <div class="ucg-container">
-        <div class="tenantFilterSection container-fluid">
+
+
+<div class="mt-3">
+    <div class="card mat-elevation-z mb-3">
+        <div class="card-body">
             <div class="row">
-                <div class="col-md-5">
-                    <span class="title-section">
-                        <h4>Details</h4>
-                    </span>
+                <div class="col-md-6 lg-6">
+                    <h2 class="h2">Details</h2>
                 </div>
-                <!-- <div class="col-md-3">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by User</mat-label>
-                        <input type="text" matInput [formControl]="userControl" [matAutocomplete]="autoUser"
-                            (change)="filterChange(filterSelectObj[0], $event)">
-                        <mat-autocomplete autoActiveFirstOption #autoUser="matAutocomplete"
-                            (optionSelected)="filterChange(filterSelectObj[0], $event)">
-                            <mat-option *ngFor="let option of filteredByUser | async" [value]="option">
-                                {{option}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Filter by Status</mat-label>
-                        <input type="text" matInput [formControl]="userStatusControl" [matAutocomplete]="autoUserStatus"
-                            (change)="statusFilterChange(filterstatusSelectObj[0], $event)">
-                        <mat-autocomplete autoActiveFirstOption #autoUserStatus="matAutocomplete"
-                            (optionSelected)="statusFilterChange(filterstatusSelectObj[0], $event)">
-                            <mat-option *ngFor="let option of filteredByUserStatus | async" [value]="option">
-                                {{option}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2 text-end">
-                    <button mat-raised-button color="primary" class="btn-primary mt-02" (click)="resetFilters()"><i
-                            class="reset-icon"></i>Reset</button>
-                </div> -->
+                <!-- <div *ngIf="createTenant" class="col-md-6 lg-6 text-end">
+            <span class="creation-button">
+              <button mat-raised-button color="primary" class="btn-primary"
+                (click)="navigateTenant();">{{'button.newTenant' | translate}}</button>
+            </span>
+          </div> -->
+
             </div>
-            <div class="mat-elevation-z8 ucg-table">
-                <mat-table *ngIf="status !== 'Offline'" #table [dataSource]="dataSource" matSort matSortDirection="asc">
-                    <!-- matSortActive="userName" -->
-                    <ng-container matColumnDef="idx">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Sr. No. </mat-header-cell>
-                        <mat-cell *matCellDef="let element; let i = index"> {{ element.idx }} </mat-cell>
-                    </ng-container>
+           
+            <div class="body-content-outer">
+                <div class="row">
+                    <div class="col-md-12 lg-12">
 
-                    <ng-container matColumnDef="name">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint Name </mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            <a *ngIf="element.chargePointId!=null && element.chargePointId!='Not Available'" class="pointer" (click)="goToCharger(element)">
-                                {{element.name}}
-                            </a>
-                            <label *ngIf="element.chargePointId=='Not Available'" class="form-label">Not Available</label>
-                        </mat-cell>
-                    </ng-container>
+                        <div class="ucg-table">
 
-                    <ng-container matColumnDef="chargePointId">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element.chargePointId }} </mat-cell>
-                    </ng-container>
+                            <mat-table *ngIf="status !== 'Offline'" #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                                <!-- matSortActive="userName" -->
+                                <ng-container matColumnDef="idx">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Sr. No. </mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index"> {{ element.idx }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint Name </mat-header-cell>
+                                    <mat-cell *matCellDef="let element">
+                                        <a *ngIf="element.chargePointId!=null && element.chargePointId!='Not Available'" class="pointer" (click)="goToCharger(element)">
+                                            {{element.name}}
+                                        </a>
+                                        <label *ngIf="element.chargePointId=='Not Available'" class="form-label">Not Available</label>
+                                    </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="chargePointId">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element.chargePointId }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="numberOfConnectors">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Connectors </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element.numberOfConnectors }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="connectorStatus1">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Connector-1 Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element?.connectors[1]?.status }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="connectorStatus2">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Connector-2 Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element?.connectors[2]?.status }} </mat-cell>
+                                </ng-container>
+            
+                                <mat-header-row *matHeaderRowDef="unavailableDisplayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: unavailableDisplayedColumns;"></mat-row>
+                            </mat-table>
+                            <mat-table *ngIf="status === 'Offline'" #table [dataSource]="dataSource" matSort matSortDirection="asc">
+                                <!-- matSortActive="userName" -->
+                                <ng-container matColumnDef="idx">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Sr. No. </mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = index"> {{ element.idx }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint Name </mat-header-cell>
+                                    <mat-cell *matCellDef="let element">
+                                        <a *ngIf="element.chargePointId!=null && element.chargePointId!='Not Available'" class="pointer" (click)="goToCharger(element)">
+                                            {{element.name}}
+                                        </a>
+                                        <label *ngIf="element.chargePointId=='Not Available'" class="form-label">Not Available</label>
+                                    </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="chargePointId">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element.chargePointId }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="chargerType">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Charger Type </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element.chargerType }} </mat-cell>
+                                </ng-container>
+            
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
+                                </ng-container>
+            
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                            <div *ngIf="dataSource.data.length == 0 || dataSource.filteredData.length == 0" class="norecord">
+                                {{'table.noRecordFound' | translate}}</div>
+                            <mat-paginator *ngIf="dataSource.data.length !== 0" #paginator [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                            </mat-paginator>
 
-                    <ng-container matColumnDef="status">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
-                    </ng-container>
+                        </div>
 
-                    <ng-container matColumnDef="numberOfConnectors">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Connectors </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element.numberOfConnectors }} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="connectorStatus1">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Connector-1 Status </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element?.connectors[1]?.status }} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="connectorStatus2">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Connector-2 Status </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element?.connectors[2]?.status }} </mat-cell>
-                    </ng-container>
-
-                    <mat-header-row *matHeaderRowDef="unavailableDisplayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: unavailableDisplayedColumns;"></mat-row>
-                </mat-table>
-                <mat-table *ngIf="status === 'Offline'" #table [dataSource]="dataSource" matSort matSortDirection="asc">
-                    <!-- matSortActive="userName" -->
-                    <ng-container matColumnDef="idx">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Sr. No. </mat-header-cell>
-                        <mat-cell *matCellDef="let element; let i = index"> {{ element.idx }} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="name">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint Name </mat-header-cell>
-                        <mat-cell *matCellDef="let element">
-                            <a *ngIf="element.chargePointId!=null && element.chargePointId!='Not Available'" class="pointer" (click)="goToCharger(element)">
-                                {{element.name}}
-                            </a>
-                            <label *ngIf="element.chargePointId=='Not Available'" class="form-label">Not Available</label>
-                        </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="chargePointId">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> ChargePoint </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element.chargePointId }} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="chargerType">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Charger Type </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element.chargerType }} </mat-cell>
-                    </ng-container>
-
-                    <ng-container matColumnDef="status">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{ element.status }} </mat-cell>
-                    </ng-container>
-
-                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                </mat-table>
-                <div *ngIf="dataSource.data.length == 0 || dataSource.filteredData.length == 0" class="norecord">
-                    {{'table.noRecordFound' | translate}}</div>
-                <mat-paginator *ngIf="dataSource.data.length !== 0" #paginator [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
-                </mat-paginator>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

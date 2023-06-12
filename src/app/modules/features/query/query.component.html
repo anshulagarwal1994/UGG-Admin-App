@@ -110,8 +110,12 @@
                         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                     </mat-table>
             
-                    <div *ngIf="process" class="text-center norecord">
-                      <img class="rotate" width="35" src="assets/greenprocess.png" />
+                    <div *ngIf="process" class="text-center norecord table-loader">
+                               
+                      <div class="loader-inner">
+                        <mat-spinner [diameter]="40"></mat-spinner>
+                        <small>Loading</small>
+                      </div>
                     </div>
             
                     <div *ngIf="!process && (dataSource.data.length == 0 || dataSource.filteredData.length == 0)" class="norecord">

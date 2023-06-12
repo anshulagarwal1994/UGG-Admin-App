@@ -53,118 +53,123 @@
         </a>
       </li>
 
-      <li class="nav-item"
-        *ngIf="showDRReport || showNDRReport || showDAReport || showFRReport || showPDReport || showCUReport">
-        <a data-bs-toggle="collapse" class="nav-link text-dark" aria-controls="applicationsExamples1" role="button"
-          aria-expanded="false">
+  
+
+      <li class="nav-item" *ngIf="showDRReport || showNDRReport || showDAReport || showFRReport || showPDReport || showCUReport">
+        <a data-bs-toggle="collapse" href="#applicationsExamplesreports" class="nav-link text-dark" aria-controls="applicationsExamples" role="button" aria-expanded="false">
           <div class="nev-icon reports"></div>
           <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.reports' | translate }}</span>
         </a>
-        <div class="collapse " id="applicationsExamples1">
-          <li class="nav-item " *ngIf="showDRReport">
-            <a class="nav-link text-dark" routerLink="/driver-registration-report">
-              <span class="sidenav-mini-icon"> C </span>
-              <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.driver-registration-report' | translate }} </span>
-            </a>
-          </li>
-          <li class="nav-item " *ngIf="showNDRReport">
-            <a class="nav-link text-dark" routerLink="/non-registered-driver-report">
-              <span class="sidenav-mini-icon"> C </span>
-              <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.non-registered-driver-report' | translate }}
-              </span>
-            </a>
-          </li>
-          <li class="nav-item " *ngIf="showDAReport">
-            <a class="nav-link text-dark" routerLink="/driver-activity-report">
-              <span class="sidenav-mini-icon"> C </span>
-              <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.driver-activity-report' | translate }} </span>
-            </a>
-          </li>
-          <li class="nav-item " *ngIf="showFRReport">
-            <a class="nav-link text-dark" routerLink="/financial-revenue-report">
-              <span class="sidenav-mini-icon"> C </span>
-              <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.financial-revenue-report' | translate }} </span>
-            </a>
-          </li>
-          <li class="nav-item " *ngIf="showPDReport">
-            <a class="nav-link text-dark" routerLink="/promocode-details-report">
-              <span class="sidenav-mini-icon"> C </span>
-              <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.promocode-details-report' | translate }} </span>
-            </a>
-          </li>
-          <li class="nav-item " *ngIf="showCUReport">
-            <a class="nav-link text-dark" routerLink="/chargepoint-uptime-report">
-              <span class="sidenav-mini-icon"> C </span>
-              <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.chargepoint-uptime-report' | translate }} </span>
-            </a>
-          </li>
+        <div class="collapse " id="applicationsExamplesreports">
+          <ul class="nav ">
+            <li class="nav-item " *ngIf="showDRReport">
+              <a class="nav-link text-dark" routerLink="/driver-registration-report">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.driver-registration-report' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showNDRReport">
+              <a class="nav-link text-dark" routerLink="/non-registered-driver-report">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.non-registered-driver-report' | translate }}
+                </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showDAReport">
+              <a class="nav-link text-dark" routerLink="/driver-activity-report">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.driver-activity-report' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showFRReport">
+              <a class="nav-link text-dark" routerLink="/financial-revenue-report">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.financial-revenue-report' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showPDReport">
+              <a class="nav-link text-dark" routerLink="/promocode-details-report">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.promocode-details-report' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showCUReport">
+              <a class="nav-link text-dark" routerLink="/chargepoint-uptime-report">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.chargepoint-uptime-report' | translate }} </span>
+              </a>
+            </li>
+          </ul>
         </div>
       </li>
 
 
 
 
-  <li class="nav-item" *ngIf="showUser || showRole || showFinancial">
-    <a data-bs-toggle="collapse" class="nav-link text-dark" aria-controls="applicationsExamplesettings" role="button"
-      aria-expanded="false">
-      <div class="nev-icon settings"></div>
-      <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.settings' | translate }}</span>
-    </a>
-    <div class="collapse " id="applicationsExamplesettings">
-  <li class="nav-item " *ngIf="showUser">
-    <a class="nav-link text-dark" routerLink="/users">
-      <span class="sidenav-mini-icon"> C </span>
-      <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.users' | translate }} </span>
-    </a>
-  </li>
-  <li class="nav-item " *ngIf="showRole">
-    <a class="nav-link text-dark" routerLink="/roles">
-      <span class="sidenav-mini-icon"> C </span>
-      <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.roles' | translate }} </span>
-    </a>
-  </li>
-  <li class="nav-item " *ngIf="showFinancial">
-    <a class="nav-link text-dark" routerLink="/financial">
-      <span class="sidenav-mini-icon"> C </span>
-      <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.financial' | translate }} </span>
-    </a>
-  </li>
 
-  </div>
-  </li>
+      <li class="nav-item" *ngIf="showUser || showRole || showFinancial">
+        <a data-bs-toggle="collapse" href="#applicationsExamples" class="nav-link text-dark" aria-controls="applicationsExamples" role="button" aria-expanded="false">
+          <div class="nev-icon reports"></div>
+          <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.settings' | translate }}</span>
+        </a>
+        <div class="collapse " id="applicationsExamples">
+          <ul class="nav ">
+            <li class="nav-item " *ngIf="showUser">
+              <a class="nav-link text-dark" routerLink="/users">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.users' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showRole">
+              <a class="nav-link text-dark" routerLink="/roles">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.roles' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showFinancial">
+              <a class="nav-link text-dark" routerLink="/financial">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.financial' | translate }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
 
 
-  <li class="nav-item">
-    <a data-bs-toggle="collapse" class="nav-link text-dark" aria-controls="applicationsExamplesupport" role="button"
-      aria-expanded="false">
-      <div class="nev-icon support"></div>
-      <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.support' | translate }}</span>
-    </a>
-    <div class="collapse " id="applicationsExamplesupport">
 
-  <li class="nav-item " *ngIf="showUser">
-    <a class="nav-link text-dark" routerLink="/query">
-      <span class="sidenav-mini-icon"> C </span>
-      <span class="nav-link-text ms-2 ps-1" *ngIf="!isMasterAdmin">{{ 'sidebar.raiseQuery' | translate
-        }}</span>
-      <span class="nav-link-text ms-2 ps-1" *ngIf="isMasterAdmin">{{ 'sidebar.answerQuery' | translate
-        }}</span>
-    </a>
-  </li>
-  <li class="nav-item " *ngIf="showDeletionRequest">
-    <a class="nav-link text-dark" routerLink="/deletion-requests">
-      <span class="sidenav-mini-icon"> C </span>
-      <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.deletionRequests' | translate }} </span>
-    </a>
-  </li>
-  <li class="nav-item " *ngIf="ShowChargePointRequest">
-    <a class="nav-link text-dark" routerLink="/transfer-requests">
-      <span class="sidenav-mini-icon"> C </span>
-      <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.transferRequests' | translate }} </span>
-    </a>
-  </li>
-  </div>
-  </li>
+      <li class="nav-item" >
+        <a data-bs-toggle="collapse" href="#applicationsExamplessupport" class="nav-link text-dark" aria-controls="applicationsExamples" role="button" aria-expanded="false">
+          <div class="nev-icon reports"></div>
+          <span class="nav-link-text ms-2 ps-1">{{ 'sidebar.support' | translate }}</span>
+        </a>
+        <div class="collapse " id="applicationsExamplessupport">
+          <ul class="nav ">
+            <li class="nav-item " *ngIf="showUser">
+              <a class="nav-link text-dark" routerLink="/query">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="nav-link-text ms-2 ps-1" *ngIf="!isMasterAdmin">{{ 'sidebar.raiseQuery' | translate
+                  }}</span>
+                <span class="nav-link-text ms-2 ps-1" *ngIf="isMasterAdmin">{{ 'sidebar.answerQuery' | translate
+                  }}</span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="showDeletionRequest">
+              <a class="nav-link text-dark" routerLink="/deletion-requests">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.deletionRequests' | translate }} </span>
+              </a>
+            </li>
+            <li class="nav-item " *ngIf="ShowChargePointRequest">
+              <a class="nav-link text-dark" routerLink="/transfer-requests">
+                <span class="sidenav-mini-icon"> C </span>
+                <span class="sidenav-normal  ms-2  ps-1"> {{ 'sidebar.transferRequests' | translate }} </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
   </ul>
   </div>
 </aside>
