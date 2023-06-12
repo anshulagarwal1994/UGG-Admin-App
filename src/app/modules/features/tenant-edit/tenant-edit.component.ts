@@ -44,6 +44,16 @@ export class TenantEditComponent implements OnInit {
   parentTenantRequest = false;
   deletedRecords = false;
   process = true;
+  Prename = "";
+  Precompany = "";
+  Prestreet = "";
+  Prestate = "";
+  Precity = "";
+  Precountry = "";
+  Preemail = "";
+  Prephone = "";
+  PrezipCode = "";
+  Prestatus = "";
   dialogRef: MatDialogRef<any>;
   // countryList : any  = (Country  as  any).default;
   public tenantConstants = TenantConstants;
@@ -344,7 +354,25 @@ export class TenantEditComponent implements OnInit {
     });
   }
   
+  showEditForm(){
+    document.getElementById("Description").style.display = "none";
+    document.getElementById("EditForm").style.display = "block";
+  }
   setTenant(tenant: Tenant) {
+    console.log("Tenants = ",tenant
+    );
+
+    this.Prename = tenant.name;
+    this.Precompany = tenant.company;
+    this.Prestreet = tenant.address.street;
+    this.Prestate = tenant.address.state;
+    this.Precity = tenant.address.city;
+    this.Precountry = tenant.address.country;
+    this.Preemail = tenant.email;
+    this.Prephone = tenant.phone;
+    this.PrezipCode = tenant.address.zipcode;
+    this.Prestatus = tenant.status
+    
     this.tenantForm.setValue({
       name: tenant.name,
       company: tenant.company,
@@ -367,6 +395,8 @@ export class TenantEditComponent implements OnInit {
           this.tenantForm.markAsUntouched();
           this.popUpService.showMsg(AppConstants.TenantUpdated,AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
           this.getTenantById();
+          document.getElementById("Description").style.display = "block";
+          document.getElementById("EditForm").style.display = "none";
         },
         (error) => {
           if (!Helper.isNullOrWhitespace(error)) {
@@ -403,7 +433,9 @@ export class TenantEditComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate([AppConstants.NavigateTenants]);
+    document.getElementById("Description").style.display = "block";
+    document.getElementById("EditForm").style.display = "none";
+    // this.router.navigate([AppConstants.NavigateTenants]);
   }
 
   toggleDeletedRecords() {
