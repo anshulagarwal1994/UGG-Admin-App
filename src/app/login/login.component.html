@@ -1,31 +1,31 @@
 <div class="main-container">
-  <div class="imgbg">
-    <img class="logo-img" src="assets/EV-Chargers-Logo.png">
-  </div>
+  
   <div class="gradbg">
     <div class="app">
-      <div class="bg"></div>
       <form>
         <header>
-          <img src="assets/login.png">
+          <!-- <img src="assets/login.png"> -->
+          <div class="imgbg">
+            <img class="logo-img" src="assets/EV-Chargers-Logo.png">
+          </div>
         </header>
         <div class="inputs">
           <div *ngIf="!showForgotPassword" class="input-icons">
-            <img src="assets/user.svg" width="24" />
             <input type="text" name="username" class="input-field" placeholder="Username" [(ngModel)]="username">
+            <span class="material-symbols-outlined">account_circle</span>
           </div>
           <div *ngIf="!showForgotPassword" class="input-icons">
-            <img src="assets/lock.svg" width="26" />
             <input type="password" name="password" placeholder="Password" [(ngModel)]="password"
               (keyup.enter)="login()">
+              <span class="material-symbols-outlined">key</span>
           </div>
-          <p class="light" *ngIf="!showForgotPassword"><a class="pointer" (click)="showForgotPassword = true; clearAllMsgs();">Forgot
+          <p class="forgot-pass" *ngIf="!showForgotPassword"><a class="pointer" (click)="showForgotPassword = true; clearAllMsgs();">Forgot
               password?</a></p>
           <div *ngIf="showForgotPassword" class="input-icons" style="padding-top: 3rem;">
             <img src="assets/email.svg" width="26" />
             <input type="text" name="email" class="input-field" placeholder="Email" [(ngModel)]="email">
           </div>
-          <p class="light" *ngIf="showForgotPassword"><a class="pointer" (click)="showForgotPassword = false; clearAllMsgs();">Back to
+          <p class="forgot-pass" *ngIf="showForgotPassword"><a class="pointer" (click)="showForgotPassword = false; clearAllMsgs();">Back to
               login</a></p>
         </div>
       </form>
