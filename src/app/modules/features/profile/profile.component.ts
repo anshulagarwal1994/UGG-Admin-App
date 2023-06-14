@@ -53,6 +53,11 @@ export class ProfileComponent implements OnInit {
     );
   }
 
+  ShowHidedata(){
+    document.getElementById("EditForm").style.display = "block";
+    document.getElementById("DisplayUnit").style.display = "none";
+  }
+
   buildProfileForm() {
     this.profileForm = this.formBuilder.group({
       name: [null, []],
@@ -119,6 +124,10 @@ export class ProfileComponent implements OnInit {
             AppConstants.Success,
             AppConstants.Success
           );
+          this.getUserProfile();
+          document.getElementById("DisplayUnit").style.display = "block";
+          document.getElementById("EditForm").style.display = "none";
+          
         },
         (err: any) => {
           this.popUpService.showMsg(
