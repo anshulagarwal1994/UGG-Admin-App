@@ -15,7 +15,7 @@
      <h2>Universal EVCS Management</h2>
    </div>
    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-     <ul class="navbar-nav  justify-content-end ms-md-auto">
+     <ul class="navbar-nav  justify-content-end ms-md-auto align-items-center">
        <li class="nav-item nav-fleg-outer">
          <a href="#" class="nav-link text-white p-0 position-relative" target="_blank">
            <span class="nav-fleg"><img src="./assets/img/us-fleg.svg" /></span>
@@ -32,7 +32,7 @@
 
        </li>
 
-       <li class="nav-item" >
+       <!-- <li class="nav-item" >
         <a data-bs-toggle="collapse" href="#applicationsExamplesHeaderMenu" class="nav-link text-dark" aria-controls="applicationsExamples" role="button" aria-expanded="false">
           <div class="nev-icon reports"></div>
           <span class="nav-link-text ms-2 ps-1">{{currentUsername | translate}}</span>
@@ -54,8 +54,16 @@
             </li>
           </ul>
         </div>
+      </li> -->
+      <li class="nav-item dropdown user-drop">
+        <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{currentUsername | translate}} <span class="material-symbols-outlined">expand_more</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="javascript:;" (click)="profile()">Profile</a></li>
+          <li><a class="dropdown-item" href="javascript:;" (click)="logout()">Logout</a></li>
+        </ul>
       </li>
-
 
        <!-- <li class="nav-item profile-img-outer">
          <a 

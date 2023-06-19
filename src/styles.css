@@ -39488,3 +39488,54 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
     align-items: flex-start;
     min-height: 157px;
 }
+
+.dropdown.user-drop .dropdown-toggle:after,
+.dropdown.user-drop .dropdown-menu:before {
+    display: none;
+}
+
+.dropdown.user-drop .nav-link {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 26px;
+  color: #fff;
+}
+
+.dropdown.user-drop .nav-link .material-symbols-outlined {
+  margin-left: 5px;
+}
+
+.dropdown.user-drop .nav-link:hover, .dropdown.user-drop .nav-link:focus {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.main-filter-card .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.main-filter-card {
+  padding: 10px;
+}
+
+.dialog-header-primary {
+  margin-bottom: 20px;
+}
+
+.sidenav-mini-icon .material-symbols-outlined {
+  font-size: 16px;
+  margin-top: 2px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dialoug-footer {
+  justify-content: flex-end;
+  display: flex;
+}
+
+.dialoug-footer button {
+  margin-left: 10px;
+}
