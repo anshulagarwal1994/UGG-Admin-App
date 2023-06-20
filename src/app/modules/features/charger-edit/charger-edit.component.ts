@@ -266,7 +266,9 @@ export class ChargerEditComponent implements OnInit {
 
 
   openPopup() {
-    this.displayStyle = "block";
+    // this.displayStyle = "block";
+    document.getElementById("ShowDetails").style.display = "none";
+    document.getElementById("ShowForm").style.display = "block";
   }
   closePopup() {
     this.displayStyle = "none";
@@ -421,8 +423,10 @@ export class ChargerEditComponent implements OnInit {
   }
 
   cancel() {
-    localStorage.removeItem('chargePointId');
-    this.router.navigate([AppConstants.SiteEditUrl]);
+    // localStorage.removeItem('chargePointId');
+    document.getElementById("ShowDetails").style.display = "block";
+    document.getElementById("ShowForm").style.display = "none";
+    // this.router.navigate([AppConstants.SiteEditUrl]);
   }
 
   updateCharge() {
@@ -433,6 +437,8 @@ export class ChargerEditComponent implements OnInit {
           this.chargerForm.markAsUntouched();
           this.popUpService.showMsg(AppConstants.ChargePointUpdatedMsg, AppConstants.SiteEditUrl, AppConstants.Success, AppConstants.Success);
           // this.getChargePointById(this.chargePointById);
+          document.getElementById("ShowDetails").style.display = "block";
+          document.getElementById("ShowForm").style.display = "none";
         },
         (error) => {
           if (!Helper.isNullOrWhitespace(error)) {
