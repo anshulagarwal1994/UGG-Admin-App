@@ -362,18 +362,17 @@
                                             </div>
                                             <!-- Button forms -->
                                             <div class="cnt-status">
-                                                <button mat-raised-button color="warning" class="btn-warning btn-icon mt-2 mat-elevation-z"
+                                                <button *ngIf="chargerForm.get('connector1Status')?.value == 'Available' && chargerPoint.status == 'Online'" mat-raised-button color="warning" class="btn-warning btn-icon mt-2 mat-elevation-z"
                                                     (click)="connector1InOperative()"><span class="material-symbols-outlined">error</span> InOperative</button>
-                                                <button mat-raised-button color="info" class="btn-info btn-icon mt-2 mat-elevation-z"
+                                                <button *ngIf="chargerForm.get('connector1Status')?.value == 'Faulted' || chargerForm.get('connector1Status')?.value != 'Available' && chargerPoint.status == 'Online'" mat-raised-button color="info" class="btn-info btn-icon mt-2 mat-elevation-z"
                                                     (click)="connector1Operative()"><span class="material-symbols-outlined">check_circle</span> Operative</button>
-                                                <button mat-raised-button color="primary" class="btn-primary btn-icon mt-2 mat-elevation-z"
+                                                <button  *ngIf="(chargerForm.get('connector1Status')?.value == 'Available' || chargerForm.get('connector1Status')?.value == 'Preparing') && chargerPoint.status == 'Online'" mat-raised-button color="primary" class="btn-primary btn-icon mt-2 mat-elevation-z"
                                                     (click)="connector1Start()"><span class="material-symbols-outlined">preliminary</span> Start</button>
-                                                <button mat-raised-button color="danger" class="btn-danger btn-icon mt-2 mat-elevation-z"
+                                                <button  *ngIf="chargerForm.get('connector1Status')?.value == 'Occupied' && (chargerForm.get('connector1Status')?.value != 'Available' && chargerPoint.status == 'Online')" mat-raised-button color="danger" class="btn-danger btn-icon mt-2 mat-elevation-z"
                                                     (click)="connector1Stop()"><span class="material-symbols-outlined">stop_circle</span> Stop</button>
-                                                <button mat-raised-button color="success" class="btn-success btn-icon mt-2 mat-elevation-z"
+                                                <button *ngIf="chargerPoint.status == 'Online'" mat-raised-button color="success" class="btn-success btn-icon mt-2 mat-elevation-z"
                                                     (click)="connector1Unlock()"><span class="material-symbols-outlined">lock_open_right</span> Unlock</button>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6"
@@ -408,27 +407,20 @@
                                                 </ul>
                                             </div>
 
-                                            <div  class="col-md-3">
-                                                <button
-                                                   
-                                                    mat-raised-button color="primary" class="btn-primary w-100"
-                                                    (click)="connector2InOperative()">InOperative</button>
-                                                <button
-                                                    
-                                                    mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector2Operative()">Operative</button>
-                                                <button
-                                                    
-                                                    mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector2Start()">Start</button>
-                                                <button
-                                                    
-                                                    mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector2Stop()">Stop</button>
-                                                <button  mat-raised-button
-                                                    color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector2Unlock()">Unlock</button>
-
+                                            <div *ngIf="canViewConnector" class="col-md-3">
+                                                <!-- <div class="cnt-status"> -->
+                                                    <button *ngIf="chargerForm.get('connector2Status')?.value == 'Available' && chargerPoint.status == 'Online'" mat-raised-button color="warning" class="btn-warning btn-icon mt-2 mat-elevation-z"
+                                                        (click)="connector2InOperative()"><span class="material-symbols-outlined">error</span> InOperative</button>
+                                                    <button *ngIf="chargerForm.get('connector2Status')?.value == 'Faulted' || chargerForm.get('connector2Status')?.value != 'Available' && chargerPoint.status == 'Online'" mat-raised-button color="info" class="btn-info btn-icon mt-2 mat-elevation-z"
+                                                        (click)="connector2Operative()"><span class="material-symbols-outlined">check_circle</span> Operative</button>
+                                                    <button  *ngIf="(chargerForm.get('connector2Status')?.value == 'Available' || chargerForm.get('connector2Status')?.value == 'Preparing') && chargerPoint.status == 'Online'" mat-raised-button color="primary" class="btn-primary btn-icon mt-2 mat-elevation-z"
+                                                        (click)="connector2Start()"><span class="material-symbols-outlined">preliminary</span> Start</button>
+                                                    <button  *ngIf="chargerForm.get('connector2Status')?.value == 'Occupied' && (chargerForm.get('connector2Status')?.value != 'Available' && chargerPoint.status == 'Online')" mat-raised-button color="danger" class="btn-danger btn-icon mt-2 mat-elevation-z"
+                                                        (click)="connector2Stop()"><span class="material-symbols-outlined">stop_circle</span> Stop</button>
+                                                    <button *ngIf="chargerPoint.status == 'Online'" mat-raised-button color="success" class="btn-success btn-icon mt-2 mat-elevation-z"
+                                                        (click)="connector2Unlock()"><span class="material-symbols-outlined">lock_open_right</span> Unlock</button>
+                                                <!-- </div> -->
+                                                
                                             </div>
                                         </div>
                                     </div>

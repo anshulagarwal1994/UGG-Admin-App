@@ -99,12 +99,21 @@
                         <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
                             <mat-header-cell *matHeaderCellDef class="spc-even"> Action </mat-header-cell>
                             <mat-cell *matCellDef="let element" class="spc-even">
-                                <i *ngIf="isMasterAdmin || element?.reply?.length" matTooltip="Reply Query"
-                                    class="editIcon pointer" (click)="sendQueryDetails(element, 'edit')"></i>
-                                <i *ngIf="!isMasterAdmin && !element?.reply?.length" matTooltip="Edit Query Details"
-                                    class="editIcon pointer" (click)="sendQueryDetails(element, 'edit')"></i>
-                                <img *ngIf="!isMasterAdmin" matTooltip="Delete Query" width="24" src="/assets/delete.png"
-                                    (click)="deleteQuery(element.id)" />
+                              <a  href="javascript:;" mat-mini-fab color="success"
+                              matTooltip="Reply Query" (click)="sendQueryDetails(element, 'edit')"
+                              class="table-action-btn" *ngIf="isMasterAdmin || element?.reply?.length">
+                                  <span class="material-symbols-outlined">undo</span>
+                              </a>
+
+                              <a  href="javascript:;" mat-mini-fab color="success"
+                              matTooltip="Edit Query Details" (click)="sendQueryDetails(element, 'edit')"
+                              class="table-action-btn" *ngIf="!isMasterAdmin && !element?.reply?.length">
+                                  <span class="material-symbols-outlined">undo</span>
+                              </a>
+                              <a *ngIf="!isMasterAdmin" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteQuery(element.id)" class="table-action-btn">
+                                <span class="material-symbols-outlined">delete</span>
+                                </a>
+                                
                             </mat-cell>
                         </ng-container>
     
