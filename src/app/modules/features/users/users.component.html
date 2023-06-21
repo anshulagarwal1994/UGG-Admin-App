@@ -21,8 +21,8 @@
                         <a class="btn-border mat-elevation-z" (click)="sendDetails({}, 'new')" mat-raised-button
                             href="javascript:;"><span class="material-symbols-outlined">add</span> {{'button.newUser' |
                             translate }} </a>
-                        <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span
-                                class="material-symbols-outlined">keyboard_backspace</span> Back</a>
+                        <!-- <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span
+                                class="material-symbols-outlined">keyboard_backspace</span> Back</a> -->
                     </div>
                 </div>
             </div>
@@ -47,9 +47,11 @@
                     </div>
                     <div class="col-md-3 lg-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" (change)="getUsers()" type="checkbox"
+                            <mat-slide-toggle [color]="'primary'" [(ngModel)]="showDeleted" (change)="getUsers()">Show
+                                Deleted Records</mat-slide-toggle>
+                            <!-- <input class="form-check-input" (change)="getUsers()" type="checkbox"
                                 id="flexSwitchCheckDefault" checked="">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label> -->
                         </div>
                     </div>
                     <div class="col-md-3 lg-3">

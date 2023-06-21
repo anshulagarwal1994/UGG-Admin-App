@@ -191,8 +191,10 @@
               </div>
               <div class="col-md-3 lg-3">
                   <div class="form-check form-switch">
-                      <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox" id="flexSwitchCheckDefault" checked="">
-                      <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label>
+                    <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
+                      Deleted Records</mat-slide-toggle>
+                      <!-- <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox" id="flexSwitchCheckDefault" checked="">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Show Deleted Records</label> -->
                   </div>
               </div>
               <div class="col-md-3 lg-3" *ngIf="!isMapViewEnabled && dataSource.data.length > 0">
