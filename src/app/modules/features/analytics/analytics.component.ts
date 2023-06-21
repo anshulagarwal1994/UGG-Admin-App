@@ -164,7 +164,7 @@ export class AnalyticsComponent implements OnInit {
               // this.chargePointsCount = data.ChargePoints;
               this.connectorsAvailableCount = data.Connectors_Available;
               this.connectorsInUseCount = data.Connectors_InUse;
-              // this.connectorsOfflineCount = data.Connectors_Offline;
+              this.connectorsOfflineCount = data.Connectors_Offline;
             });
           })
           .catch((err: any) =>
@@ -192,6 +192,8 @@ export class AnalyticsComponent implements OnInit {
     this.httpDataService
       .get(AppConstants.APIUrlDashboardCard + '?tenantId=' + tenantId)
       .subscribe((res) => {
+        console.log("res",res);
+        
         this.tenantCount = res.tenants;
         this.sitesCount = res.sites;
         this.chargePointsCount = res.chargePoints;
