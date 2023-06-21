@@ -38,24 +38,7 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="col-lg-3">
-              <div class="card  mb-2 box-1 total-sites">
-                <div class="card-header d-flex">
-                  <div class="box-icon-outer text-center">
-                    <img src="./assets/img/total-sites.svg" />
-                  </div>
-                  <div class="header-text-outer mt-2">
-                    <h4>Total Sites</h4>
-                    <p>254</p>
-                  </div>
-                </div>
-                <hr class="dark horizontal my-0">
-                <div class="card-footer p-3">
-                  <p class="mb-0"><img src="./assets/img/trending_down.svg"><span
-                      class="text-danger text-sm font-weight-bolder">2%</span>Decrease</p>
-                </div>
-              </div>
-            </div> -->
+            
             <div class="col-lg-4 col-sm-4 mt-sm-0 mt-4">
               <div class="card  mb-2 box-1 total-charge-points">
                 <div class="card-header d-flex">
@@ -98,8 +81,16 @@
               <div class="card z-index-2">
                 <div class="card-body pt-0">
                   <div class="border-radius-lg">
+                    
                     <div class="chart">
-                      <canvas id="chart-bars" class="chart-canvas" height="210"></canvas>
+                      <div *ngIf="chartData.length" class="chartjs-container">
+                        <canvas id="ChartJs" baseChart [datasets]="chartData" [labels]="chartLabel"
+                            [options]="chartOptions" [colors]="chartColors" [legend]="chartLegend"
+                            [chartType]="'bar'" [plugins]="chartPlugins">
+                            <!-- (chartHover)="chartHovered($event)" 
+                            (chartClick)="chartClicked($event)" -->
+                        </canvas>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -246,6 +237,10 @@
               </div>
             </div>
           </div>
+
+
+
+
           <div class="row mt-5 box-5">
             <div class="col-lg-12 col-md-12">
               <img src="./assets/img/map.svg">
@@ -264,5 +259,5 @@
       </footer>
     
 
-    <!-- Form Design -->
+
 

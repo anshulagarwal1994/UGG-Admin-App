@@ -55,7 +55,7 @@ export class AnalyticsComponent implements OnInit {
   offlineSiteChargers: any = [];
   chartData: ChartDataSets[] = [];
   chartLabel: Label[] = [];
-  chartLegend = true;
+  chartLegend = false;
   chartOptions: ChartOptions = {
     responsive: true,
   };
@@ -234,6 +234,8 @@ export class AnalyticsComponent implements OnInit {
   }
 
   tenantSelection(tenant: any) {
+    console.log("Here In this");
+    
     this.greenprocess = true;
     this.countprocess = true;
     this.dataSource.data = [];
@@ -255,7 +257,7 @@ export class AnalyticsComponent implements OnInit {
           this.getOfflineChargers();
           this.endDate = new Date();
           this.startDate = new Date(
-            this.endDate.getTime() - 7 * 24 * 60 * 60 * 1000
+            this.endDate.getTime() - 90 * 24 * 60 * 60 * 1000
           );
           this.getStatistics();
         },
