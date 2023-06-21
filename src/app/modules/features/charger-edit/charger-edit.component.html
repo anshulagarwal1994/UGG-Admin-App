@@ -361,17 +361,17 @@
                                                 </ul>
                                             </div>
                                             <!-- Button forms -->
-                                            <div class="col-md-3">
-                                                <button mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector1InOperative()">InOperative</button>
-                                                <button mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector1Operative()">Operative</button>
-                                                <button mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector1Start()">Start</button>
-                                                <button mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector1Stop()">Stop</button>
-                                                <button mat-raised-button color="primary" class="btn-primary w-100 mt-2"
-                                                    (click)="connector1Unlock()">Unlock</button>
+                                            <div class="cnt-status">
+                                                <button mat-raised-button color="warning" class="btn-warning btn-icon mt-2 mat-elevation-z"
+                                                    (click)="connector1InOperative()"><span class="material-symbols-outlined">error</span> InOperative</button>
+                                                <button mat-raised-button color="info" class="btn-info btn-icon mt-2 mat-elevation-z"
+                                                    (click)="connector1Operative()"><span class="material-symbols-outlined">check_circle</span> Operative</button>
+                                                <button mat-raised-button color="primary" class="btn-primary btn-icon mt-2 mat-elevation-z"
+                                                    (click)="connector1Start()"><span class="material-symbols-outlined">preliminary</span> Start</button>
+                                                <button mat-raised-button color="danger" class="btn-danger btn-icon mt-2 mat-elevation-z"
+                                                    (click)="connector1Stop()"><span class="material-symbols-outlined">stop_circle</span> Stop</button>
+                                                <button mat-raised-button color="success" class="btn-success btn-icon mt-2 mat-elevation-z"
+                                                    (click)="connector1Unlock()"><span class="material-symbols-outlined">lock_open_right</span> Unlock</button>
                                             </div>
 
                                         </div>

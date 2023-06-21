@@ -39539,3 +39539,11 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
 .dialoug-footer button {
   margin-left: 10px;
 }
+
+.cnt-status {
+    width: 100%;
+}
+
+.cnt-status button {
+    margin-right: 5px;
+}
