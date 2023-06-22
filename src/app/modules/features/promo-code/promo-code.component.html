@@ -71,13 +71,13 @@
                 </ng-container>
 
                 <ng-container matColumnDef="discountPercentage">
-                  <mat-header-cell class="alignCenter Col-number wd-100" *matHeaderCellDef mat-sort-header> Discount&nbsp;(%) </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{ element.discountPercentage }} </mat-cell>
+                  <mat-header-cell class="alignCenter Col-number " *matHeaderCellDef mat-sort-header> Discount&nbsp;(%) </mat-header-cell>
+                  <mat-cell class="" *matCellDef="let element"> {{ element.discountPercentage }} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="flatDiscount">
-                  <mat-header-cell class="alignCenter Col-number wd-100" *matHeaderCellDef mat-sort-header> Flat&nbsp;Discount </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{ element.flatDiscount }} </mat-cell>
+                  <mat-header-cell class="alignCenter Col-number" *matHeaderCellDef mat-sort-header> Flat&nbsp;Discount </mat-header-cell>
+                  <mat-cell class="" *matCellDef="let element"> {{ element.flatDiscount }} </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="validityStartDate">
@@ -115,7 +115,7 @@
 
                 <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
                   <mat-header-cell *matHeaderCellDef class="actions action-column"> Action </mat-header-cell>
-                  <mat-cell *matCellDef="let element" class="wd-200 action-column">
+                  <mat-cell *matCellDef="let element" class="action-column">
                     <div class="table-action">
                       <a *ngIf="!showDeleted && (element.used === 0)" matTooltip="Edit Promo Code Details" mat-mini-fab color="primary" href="javascript:;" (click)="sendDetails(element,'edit');" class="table-action-btn">
                         <span class="material-symbols-outlined">info</span>

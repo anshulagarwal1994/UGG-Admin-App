@@ -38557,18 +38557,12 @@ text,
   letter-spacing: 0.02em;
   color: #757575;
   margin: 0px;
-}
-
-.connectors-footer-contect span {
-  position: relative;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 36px;
-  letter-spacing: 0.02em;
-  color: #363636;
-  padding-right: 30px;
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  margin-right: 0;
+  margin-bottom: 10px;
+  min-width: 180px;
+  padding-right: 10px;
 }
 
 .connectors-footer-contect span:before {
@@ -39547,3 +39541,48 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
 .cnt-status button {
     margin-right: 5px;
 }
+
+.connectors-footer-contect {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cn-status-inner {
+  width: 100%;
+}
+
+.connectors-footer-contect label p {margin: 0 3px;font-size: 16px;color: #363636;font-weight: 700;}
+
+.connectors-footer-contect label.available span {
+  color: #52BA6C;
+}
+
+.connectors-footer-contect label.unavailable span {
+  color: #DD405D;
+}
+
+.connectors-footer-contect label.occupied span {
+  color: #757575;
+}
+
+.connectors-footer-contect label.faulted span {
+  color: #FFBD2E;
+}
+
+.connectors-footer-contect label.preparing span {
+  color: #25B6FF;
+}
+
+.connectors-footer-contect label.authorized span {
+  color: #52BA6C;
+}
+
+.connectors-footer-contect label.finishing span {
+  color: #184EA2;
+}
+
+.nav-fleg-outer.dropdown .dropdown-toggle:after, .nav-fleg-outer.dropdown .dropdown-menu:before {
+  display: none;
+}
+

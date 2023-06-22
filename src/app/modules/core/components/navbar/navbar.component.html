@@ -16,11 +16,15 @@
    </div>
    <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
      <ul class="navbar-nav  justify-content-end ms-md-auto align-items-center">
-       <li class="nav-item nav-fleg-outer">
-         <a href="#" class="nav-link text-white p-0 position-relative" target="_blank">
+       <li class="nav-item dropdown nav-fleg-outer">
+         <a href="javascript:;" class="nav-link text-white p-0 dropdown-toggle position-relative" role="button" data-bs-toggle="dropdown" aria-expanded="false">
            <span class="nav-fleg"><img src="./assets/img/us-fleg.svg" /></span>
          </a>
-
+         <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="javascript:;">English</a></li>
+          <li><a class="dropdown-item" href="javascript:;">French</a></li>
+          <li><a class="dropdown-item" href="javascript:;">Spanish</a></li>
+        </ul>
          <!-- <mat-form-field appearance="outline" class="ucg-form-control">
           <mat-label>Language</mat-label>
           <mat-select formControlName="language" [(ngModel)]="lang" name="language" (selectionChange)="useLanguage($event.value)" placeholder="Language">

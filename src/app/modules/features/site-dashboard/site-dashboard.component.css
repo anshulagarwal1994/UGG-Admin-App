@@ -10,9 +10,6 @@ table {
 tr.student-detail-row {
   height: 0;
 }
-label {
-  margin-bottom: 0;
-}
 .disable-link {
   pointer-events: none;
   color: #1951a1;

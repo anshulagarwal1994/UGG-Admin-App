@@ -76,8 +76,8 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="email">
-                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> {{ element.email }} </mat-cell>
+                                    <mat-header-cell class="wd-400" *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                                    <mat-cell class="wd-400" *matCellDef="let element"> {{ element.email }} </mat-cell>
                                 </ng-container>
 
                                 <ng-container matColumnDef="role">
@@ -98,8 +98,8 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
-                                    <mat-header-cell *matHeaderCellDef class="spc-action"> Action </mat-header-cell>
-                                    <mat-cell *matCellDef="let element" class="spc-even">
+                                    <mat-header-cell *matHeaderCellDef class="action-column"> Action </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="action-column">
 
                                         <div class="table-action">
                                             <a *ngIf="!showDeleted" matTooltip="Edit User Details" mat-mini-fab color="primary"

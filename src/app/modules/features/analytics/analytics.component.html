@@ -102,12 +102,7 @@
                   <img src="./assets/img/Connectors-img.svg" />
                 </div>
                 <div class="card-body p-3 connectors-footer">
-                  <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                      <h3>Connectors</h3>
-                    </div>
-                  </div>
-                  <div class="row connectors-footer-contect">
+                  <!-- <div class="row connectors-footer-contect">
                     <div class="col-lg-4 col-md-4" routerLink="/connectors/Online">
                       <label><span class="available" >{{connectorsAvailableCount}}</span>Available</label>
                     </div>
@@ -116,6 +111,46 @@
                     </div>
                     <div class="col-lg-4 col-md-4" routerLink="/connectors/Unavailable">
                       <label><span class="occupied">{{connectorsOfflineCount}}</span>Unavailable</label>
+                    </div>
+                  </div> -->
+                  <div class="cn-status-inner">
+                    <h3>Connectors</h3>
+                    <div class="connectors-footer-contect">
+                      <label class="available">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        <p>{{connectorsAvailableCount}}</p>
+                        Available
+                      </label>
+                      <label class="unavailable">
+                        <span class="material-symbols-outlined">change_circle</span>
+                        <p>{{connectorsInUseCount}}</p>
+                        Occupied
+                      </label>
+                      <label class="occupied">
+                        <span class="material-symbols-outlined">error</span>
+                        <p>{{connectorsOfflineCount}}</p>
+                        Unavailable
+                      </label>
+                      <label class="faulted">
+                        <span class="material-symbols-outlined">disabled_by_default</span>
+                        <p>{{connectorsOfflineCount}}</p>
+                        Faulted
+                      </label>
+                      <label class="preparing">
+                        <span class="material-symbols-outlined">ev_charger</span>
+                        <p>{{connectorsOfflineCount}}</p>
+                        Preparing
+                      </label>
+                      <label class="authorized">
+                        <span class="material-symbols-outlined">account_circle</span>
+                        <p>{{connectorsOfflineCount}}</p>
+                        Authorized
+                      </label>
+                      <label class="finishing">
+                        <span class="material-symbols-outlined">done_all</span>
+                        <p>{{connectorsOfflineCount}}</p>
+                        Finishing
+                      </label>
                     </div>
                   </div>
                 </div>
