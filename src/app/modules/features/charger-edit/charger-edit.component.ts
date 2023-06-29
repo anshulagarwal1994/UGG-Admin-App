@@ -17,7 +17,10 @@ import { Guid } from 'guid-typescript';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import * as signalR from '@microsoft/signalr';
-import { configurationKey, ConfigurationModel } from '@app/models/configuration.model';
+import {
+  configurationKey,
+  ConfigurationModel,
+} from '@app/models/configuration.model';
 import { environment } from '@env';
 import { Transaction } from '@app/models/transaction.model';
 import { IndexedDBService } from '@app/shared/utility/indexed-db.service';
@@ -27,10 +30,9 @@ import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dial
 @Component({
   selector: 'app-charger-edit',
   templateUrl: './charger-edit.component.html',
-  styleUrls: ['./charger-edit.component.css']
+  styleUrls: ['./charger-edit.component.css'],
 })
 export class ChargerEditComponent implements OnInit {
-
   tenantName: any;
   siteName: any;
   tenantId: Guid;
@@ -43,7 +45,7 @@ export class ChargerEditComponent implements OnInit {
   chargerMessageForm: FormGroup;
   canUpdateChargepoint = false;
   canViewConnector = false;
-  displayStyle = "none"
+  displayStyle = 'none';
   canViewConfiguration = false;
   canUpdateConfiguration = false;
   canViewOperation = false;
@@ -71,37 +73,63 @@ export class ChargerEditComponent implements OnInit {
     { value: AppConstants.Available, text: AppConstants.Available },
     { value: AppConstants.Occupied, text: AppConstants.Occupied },
     { value: AppConstants.Faulted, text: AppConstants.Faulted },
-    { value: AppConstants.Offline, text: AppConstants.Offline }
+    { value: AppConstants.Offline, text: AppConstants.Offline },
   ];
   signalRConnectionId: string | null;
 
   get name(): boolean {
-    return !Helper.isNullOrWhitespace(this.chargerForm.get('name')?.value) && (this.chargerForm.get('name')?.value.length <= 3 || this.chargerForm.get('name')?.value.length > 150);
+    return (
+      !Helper.isNullOrWhitespace(this.chargerForm.get('name')?.value) &&
+      (this.chargerForm.get('name')?.value.length <= 3 ||
+        this.chargerForm.get('name')?.value.length > 150)
+    );
   }
 
   get status(): boolean {
-    return (Helper.isNullOrEmpty(this.chargerPoint.status) || this.chargerPoint.status == 'Offline');
+    return (
+      Helper.isNullOrEmpty(this.chargerPoint.status) ||
+      this.chargerPoint.status == 'Offline'
+    );
   }
 
   JSONData: any;
 
   constructor(
-    private readonly formBuilder: FormBuilder, private readonly httpDataService: HttpDataService,
-    public translateConfigService: TranslateConfigService, public filterService: GridFilterService,
-    private router: Router, private indexedDBService: IndexedDBService,
-    private popUpService: PopUpService, public dialog: MatDialog,
-    private routerExtService: RouterExtService) {
+    private readonly formBuilder: FormBuilder,
+    private readonly httpDataService: HttpDataService,
+    public translateConfigService: TranslateConfigService,
+    public filterService: GridFilterService,
+    private router: Router,
+    private indexedDBService: IndexedDBService,
+    private popUpService: PopUpService,
+    public dialog: MatDialog,
+    private routerExtService: RouterExtService
+  ) {
     this.chargerPoint = new ChargePoint();
   }
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['logTime', 'id', 'connector', 'messageType', 'result', 'rawMessage'];
+  displayedColumns: string[] = [
+    'logTime',
+    'id',
+    'connector',
+    'messageType',
+    'result',
+    'rawMessage',
+  ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   buildChargerForm() {
     this.chargerForm = this.formBuilder.group({
-      name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
+      name: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(150),
+        ],
+      ],
       chargePointId: [null, [Validators.required]],
       numberOfConnectors: [null, [Validators.required]],
       chargerType: [null, [Validators.required]],
@@ -122,50 +150,54 @@ export class ChargerEditComponent implements OnInit {
       vendorId: [null, []],
     });
 
-    this.firmwareForm = this.formBuilder.group({
-      location: [null]
-    }),
-      this.triggerForm = this.formBuilder.group({
+    (this.firmwareForm = this.formBuilder.group({
+      location: [null],
+    })),
+      (this.triggerForm = this.formBuilder.group({
         messageType: [null, [Validators.required]],
-        connectorId: [null, [Validators.required]]
-      }),
-
-    this.chargerMessageForm = this.formBuilder.group({
-      date: [null, [Validators.required]],
-      messageConnectorId: [null, [Validators.required]],
-    })
+        connectorId: [null, [Validators.required]],
+      })),
+      (this.chargerMessageForm = this.formBuilder.group({
+        date: [null, [Validators.required]],
+        messageConnectorId: [null, [Validators.required]],
+      }));
   }
-
-
+  navigateBack() {
+    this.router.navigate([AppConstants.SiteEditUrl]);
+  }
   ngOnInit(): void {
-    this.indexedDBService.getRecordData('PermissionDB', 'permission', 'Charger Management').then((data: any) => {
-			data.previlleges.forEach((pp: any) => {
-        if (pp.key === 'Update Fees') {
-				  this.canUpdateFees = pp.value;
-			  }
-			  if (pp.key === 'Update Chargepoint') {
-				  this.canUpdateChargepoint = pp.value;
-			  }
-        if (pp.key === 'View Connector Details') {
-				  this.canViewConnector = pp.value;
-			  }
-        if (pp.key === 'View Configuration Details') {
-				  this.canViewConfiguration = pp.value;
-			  }
-        if (pp.key === 'Update Configuration Details') {
-				  this.canUpdateConfiguration = pp.value;
-			  }
-        if (pp.key === 'View Operation Details') {
-				  this.canViewOperation = pp.value;
-			  }
-        if (pp.key === 'View Messages') {
-				  this.canViewMessages = pp.value;
-			  }
-			});
-		  }).catch(error => {
-			  console.error(error);
-		  });
-    this.isTransferred = (localStorage.getItem('sitetransferred') === 'true') ? true : false;
+    this.indexedDBService
+      .getRecordData('PermissionDB', 'permission', 'Charger Management')
+      .then((data: any) => {
+        data.previlleges.forEach((pp: any) => {
+          if (pp.key === 'Update Fees') {
+            this.canUpdateFees = pp.value;
+          }
+          if (pp.key === 'Update Chargepoint') {
+            this.canUpdateChargepoint = pp.value;
+          }
+          if (pp.key === 'View Connector Details') {
+            this.canViewConnector = pp.value;
+          }
+          if (pp.key === 'View Configuration Details') {
+            this.canViewConfiguration = pp.value;
+          }
+          if (pp.key === 'Update Configuration Details') {
+            this.canUpdateConfiguration = pp.value;
+          }
+          if (pp.key === 'View Operation Details') {
+            this.canViewOperation = pp.value;
+          }
+          if (pp.key === 'View Messages') {
+            this.canViewMessages = pp.value;
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    this.isTransferred =
+      localStorage.getItem('sitetransferred') === 'true' ? true : false;
     this.dataSource.data = [];
     this.buildChargerForm();
     this.tenantName = localStorage.getItem('tenantName');
@@ -174,7 +206,9 @@ export class ChargerEditComponent implements OnInit {
 
     this.tenantId = this.routerExtService.getRouteValue(AppConstants.TenantID);
     this.siteId = this.routerExtService.getRouteValue(AppConstants.SiteID);
-    this.chargePointId = this.routerExtService.getRouteValue(AppConstants.ChargePointID);
+    this.chargePointId = this.routerExtService.getRouteValue(
+      AppConstants.ChargePointID
+    );
 
     // this.activatedRoute.params.subscribe(params => {
     //   this.tenantId = params['tenantId'];
@@ -190,14 +224,19 @@ export class ChargerEditComponent implements OnInit {
 
     this.pushConnection();
 
-    this.chargerMessageForm.get("messageConnectorId")?.valueChanges.subscribe(x => {
-      console.log(x);
-      this.dataSource.data = [];
-    });
+    this.chargerMessageForm
+      .get('messageConnectorId')
+      ?.valueChanges.subscribe((x) => {
+        console.log(x);
+        this.dataSource.data = [];
+      });
   }
 
   getPushConnection() {
-    return this.httpDataService.pushPost(environment.pushHostURL + AppConstants.pushHostEndpoint, null);
+    return this.httpDataService.pushPost(
+      environment.pushHostURL + AppConstants.pushHostEndpoint,
+      null
+    );
   }
 
   pushConnection() {
@@ -210,22 +249,21 @@ export class ChargerEditComponent implements OnInit {
       // messages: [],
       connectionId: '',
       ready: false,
-      groupName: "c37b75ae-3c04-4b2f-b0dd-bb1b9eb8478f"
+      groupName: 'c37b75ae-3c04-4b2f-b0dd-bb1b9eb8478f',
     };
 
     const config = {
       headers: {
-        'x-ms-signalr-userid': data.username
-      }
+        'x-ms-signalr-userid': data.username,
+      },
     };
     this.getPushConnection().subscribe((res: any) => {
-
       res.accessToken = res.accessToken || res.accessKey;
       res.url = res.url || res.endpoint;
       data.ready = true;
 
       const options = {
-        accessTokenFactory: () => res.accessToken
+        accessTokenFactory: () => res.accessToken,
       };
 
       // Build the SignalRConnection.
@@ -238,20 +276,25 @@ export class ChargerEditComponent implements OnInit {
       this.signalrPushNotification(connection);
 
       connection.onclose(() => {
-      console.log('disconnected the SignalR!');
-      this.popUpService.showMsg(AppConstants.SignalRDisconnected,AppConstants.EmptyUrl,AppConstants.Warning,AppConstants.Warning);
-    });
+        console.log('disconnected the SignalR!');
+        this.popUpService.showMsg(
+          AppConstants.SignalRDisconnected,
+          AppConstants.EmptyUrl,
+          AppConstants.Warning,
+          AppConstants.Warning
+        );
+      });
 
       // estabilsh  the SignalR connection
       console.log('connecting...');
-      connection.start()
+      connection
+        .start()
         .then(() => {
           console.log('connected the SignalR!');
           this.signalRConnectionId = connection.connectionId;
-          console.log(connection.connectionId);    
+          console.log(connection.connectionId);
           this.pushNotificationGroupName(connection);
-        }
-        )
+        })
         .catch(console.error);
     });
   }
@@ -259,74 +302,106 @@ export class ChargerEditComponent implements OnInit {
   signalrPushNotification(connection: signalR.HubConnection) {
     connection.on('chargePointUpdated', (notification) => {
       let chargePointPushObj: any = JSON.parse(notification);
-    let newData = this.notificationObjToLocalObj(chargePointPushObj);
-    console.log(chargePointPushObj);
+      let newData = this.notificationObjToLocalObj(chargePointPushObj);
+      console.log(chargePointPushObj);
     });
   }
 
-
   openPopup() {
     // this.displayStyle = "block";
-    document.getElementById("ShowDetails").style.display = "none";
-    document.getElementById("ShowForm").style.display = "block";
+    document.getElementById('ShowDetails').style.display = 'none';
+    document.getElementById('ShowForm').style.display = 'block';
   }
   closePopup() {
-    this.displayStyle = "none";
+    this.displayStyle = 'none';
   }
   // Getting data based on group name
   pushNotificationGroupName(connection: signalR.HubConnection) {
     let postData = {
       connectionId: connection.connectionId,
-      tennantId: this.tenantId
+      tennantId: this.tenantId,
     };
-    this.postWithConnectionId(postData).subscribe((res: any) => {
-      console.log(res);
-    },
+    this.postWithConnectionId(postData).subscribe(
+      (res: any) => {
+        console.log(res);
+      },
       (error) => {
-        this.popUpService.showMsg(AppConstants.Error, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
-      });
+        this.popUpService.showMsg(
+          AppConstants.Error,
+          AppConstants.EmptyUrl,
+          AppConstants.Error,
+          AppConstants.Error
+        );
+      }
+    );
   }
-  
-  postWithConnectionId(data:any): Observable<any> {
-    return this.httpDataService.pushPost(environment.pushHostURL + '/api/addToGroup', data);
+
+  postWithConnectionId(data: any): Observable<any> {
+    return this.httpDataService.pushPost(
+      environment.pushHostURL + '/api/addToGroup',
+      data
+    );
   }
 
   notificationObjToLocalObj(chargePointPushObj: any) {
     let newData = new ChargePoint();
-    if (this.tenantId.toString() == chargePointPushObj.tenantId && this.siteId.toString() == chargePointPushObj.siteId) {
-
+    if (
+      this.tenantId.toString() == chargePointPushObj.tenantId &&
+      this.siteId.toString() == chargePointPushObj.siteId
+    ) {
       this.chargerPoint.siteId = chargePointPushObj.siteId;
       this.chargerPoint.tenantId = chargePointPushObj.tenantId;
       this.chargerPoint.name = chargePointPushObj.name;
-      this.chargerPoint.numberOfConnectors = chargePointPushObj.numberOfConnectors;
+      this.chargerPoint.numberOfConnectors =
+        chargePointPushObj.numberOfConnectors;
       this.chargerPoint.status = chargePointPushObj.status;
-      this.chargerPoint.availabilityStatus = chargePointPushObj.availabilityStatus;
+      this.chargerPoint.availabilityStatus =
+        chargePointPushObj.availabilityStatus;
       this.chargerPoint.chargerType = chargePointPushObj.chargerType;
       this.chargerPoint.chargePointId = chargePointPushObj.chargePointId;
 
-      chargePointPushObj?.connectors.forEach((currentConnector: Connectors, currentConnectorIndex: number) => {
-        if (currentConnectorIndex == 1) {
-          this.chargerPoint.connector1Id = currentConnector.id;
-          this.chargerPoint.connector1Name = currentConnector.name;
-          this.chargerPoint.connector1AuthorizationCode = currentConnector.authorizationCode;
-          this.chargerPoint.connector1LastMeterTime = new Date(currentConnector.lastMeterTime).toLocaleString('en-US', {timeZone: 'CST'});
-          this.chargerPoint.connector1LastStatusTime = new Date(currentConnector.lastStatusTime).toLocaleString('en-US', {timeZone: 'CST'});
-          this.chargerPoint.connector1Status = currentConnector.status;
-          this.chargerPoint.connector1LastMeter = currentConnector.meter;
+      chargePointPushObj?.connectors.forEach(
+        (currentConnector: Connectors, currentConnectorIndex: number) => {
+          if (currentConnectorIndex == 1) {
+            this.chargerPoint.connector1Id = currentConnector.id;
+            this.chargerPoint.connector1Name = currentConnector.name;
+            this.chargerPoint.connector1AuthorizationCode =
+              currentConnector.authorizationCode;
+            this.chargerPoint.connector1LastMeterTime = new Date(
+              currentConnector.lastMeterTime
+            ).toLocaleString('en-US', { timeZone: 'CST' });
+            this.chargerPoint.connector1LastStatusTime = new Date(
+              currentConnector.lastStatusTime
+            ).toLocaleString('en-US', { timeZone: 'CST' });
+            this.chargerPoint.connector1Status = currentConnector.status;
+            this.chargerPoint.connector1LastMeter = currentConnector.meter;
+          }
+          if (
+            currentConnectorIndex == 2 &&
+            chargePointPushObj.numberOfConnectors >= 2
+          ) {
+            this.chargerPoint.connector2Id = currentConnector.id;
+            this.chargerPoint.connector2Name = currentConnector.name;
+            this.chargerPoint.connector2AuthorizationCode =
+              currentConnector.authorizationCode;
+            this.chargerPoint.connector2LastMeterTime = new Date(
+              currentConnector.lastMeterTime
+            ).toLocaleString('en-US', { timeZone: 'CST' });
+            this.chargerPoint.connector2LastStatusTime = new Date(
+              currentConnector.lastStatusTime
+            ).toLocaleString('en-US', { timeZone: 'CST' });
+            this.chargerPoint.connector2Status = currentConnector.status;
+            this.chargerPoint.connector2LastMeter = currentConnector.meter;
+          }
         }
-        if (currentConnectorIndex == 2 && chargePointPushObj.numberOfConnectors >= 2) {
-          this.chargerPoint.connector2Id = currentConnector.id;
-          this.chargerPoint.connector2Name = currentConnector.name;
-          this.chargerPoint.connector2AuthorizationCode = currentConnector.authorizationCode;
-          this.chargerPoint.connector2LastMeterTime = new Date(currentConnector.lastMeterTime).toLocaleString('en-US', {timeZone: 'CST'});
-          this.chargerPoint.connector2LastStatusTime = new Date(currentConnector.lastStatusTime).toLocaleString('en-US', {timeZone: 'CST'});
-          this.chargerPoint.connector2Status = currentConnector.status;
-          this.chargerPoint.connector2LastMeter = currentConnector.meter;
-        }
-      });
+      );
     }
-    this.chargerForm.get('connector1Status')?.setValue(this.chargerPoint.connector1Status);
-    this.chargerForm.get('connector2Status')?.setValue(this.chargerPoint.connector2Status);
+    this.chargerForm
+      .get('connector1Status')
+      ?.setValue(this.chargerPoint.connector1Status);
+    this.chargerForm
+      .get('connector2Status')
+      ?.setValue(this.chargerPoint.connector2Status);
     return newData;
   }
 
@@ -336,66 +411,108 @@ export class ChargerEditComponent implements OnInit {
   }
 
   getChargePointById(ids: any) {
-    this.httpDataService.getById(AppConstants.APIUrlGetChargePointById, ids).subscribe(
-      (chargePoint: ChargePoint) => {
-        this.chargerPoint.name = chargePoint.name;
-        this.chargerPoint.numberOfConnectors = chargePoint.numberOfConnectors;
-        this.chargerPoint.availabilityStatus = chargePoint.availabilityStatus;
-        this.chargerPoint.status = chargePoint.status;
-        this.chargerPoint.chargePointId = chargePoint.chargePointId;
-        this.chargerPoint.chargerType = chargePoint.chargerType;
-        this.chargerPoint.info = chargePoint.info;
-        this.chargerPoint.connectorType1 = chargePoint.connectorType1;
-        this.chargerPoint.connectorType2 = chargePoint.connectorType2;
-        let dateofCommissioning = chargePoint?.dateofCommissioning ? new Date(chargePoint.dateofCommissioning) : null;
-        if (dateofCommissioning && dateofCommissioning.getFullYear()) {
-          this.chargerPoint.dateofCommissioning = dateofCommissioning.toLocaleString('en-US', {timeZone: 'CST'});
-        } else {
-          this.chargerPoint.dateofCommissioning = '-';
-        }
-        this.chargerPoint.transactionfees = chargePoint.transactionfees;
-        this.chargerPoint.utilityFees = chargePoint.utilityFees;
-        this.chargerPoint.cloudServiceFees = chargePoint.cloudServiceFees;
-        this.chargerPoint.revenueShare = chargePoint.revenueShare;
-        this.chargerPoint.utilityfeesownedbysiteowner = chargePoint.utilityfeesownedbysiteowner;
-        this.chargerPoint.customerId = chargePoint.customerId;
-        this.chargerPoint.vendorId = chargePoint.vendorId;
-        chargePoint?.connectors.forEach((currentConnector: Connectors, currentConnectorIndex: number) => {
-          if (currentConnectorIndex == 1) {
-            this.chargerPoint.connector1Id = currentConnector.id;
-            this.chargerPoint.connector1Name = currentConnector.name;
-            this.chargerPoint.connector1AuthorizationCode = currentConnector.authorizationCode;
-            this.chargerPoint.connector1LastMeterTime = currentConnector?.lastMeterTime ? new Date(currentConnector.lastMeterTime).toLocaleString('en-US', {timeZone: 'CST'}) : '';
-            this.chargerPoint.connector1LastStatusTime = currentConnector?.lastStatusTime ? new Date(currentConnector.lastStatusTime).toLocaleString('en-US', {timeZone: 'CST'}) : '';
-            this.chargerPoint.connector1Status = currentConnector.status;
-            this.chargerPoint.connector1LastMeter = currentConnector.meter;
+    this.httpDataService
+      .getById(AppConstants.APIUrlGetChargePointById, ids)
+      .subscribe(
+        (chargePoint: ChargePoint) => {
+          this.chargerPoint.name = chargePoint.name;
+          this.chargerPoint.numberOfConnectors = chargePoint.numberOfConnectors;
+          this.chargerPoint.availabilityStatus = chargePoint.availabilityStatus;
+          this.chargerPoint.status = chargePoint.status;
+          this.chargerPoint.chargePointId = chargePoint.chargePointId;
+          this.chargerPoint.chargerType = chargePoint.chargerType;
+          this.chargerPoint.info = chargePoint.info;
+          this.chargerPoint.connectorType1 = chargePoint.connectorType1;
+          this.chargerPoint.connectorType2 = chargePoint.connectorType2;
+          let dateofCommissioning = chargePoint?.dateofCommissioning
+            ? new Date(chargePoint.dateofCommissioning)
+            : null;
+          if (dateofCommissioning && dateofCommissioning.getFullYear()) {
+            this.chargerPoint.dateofCommissioning =
+              dateofCommissioning.toLocaleString('en-US', { timeZone: 'CST' });
+          } else {
+            this.chargerPoint.dateofCommissioning = '-';
           }
-          if (currentConnectorIndex == 2 && chargePoint.numberOfConnectors >= 2) {
-            this.chargerPoint.connector2Id = currentConnector.id;
-            this.chargerPoint.connector2Name = currentConnector.name;
-            this.chargerPoint.connector2AuthorizationCode = currentConnector.authorizationCode;
-            this.chargerPoint.connector2LastMeterTime = currentConnector?.lastMeterTime ? new Date(currentConnector.lastMeterTime).toLocaleString('en-US', {timeZone: 'CST'}) : '';
-            this.chargerPoint.connector2LastStatusTime = currentConnector?.lastStatusTime ? new Date(currentConnector.lastStatusTime).toLocaleString('en-US', {timeZone: 'CST'}) : '';
-            this.chargerPoint.connector2Status = currentConnector.status;
-            this.chargerPoint.connector2LastMeter = currentConnector.meter;
-          }
-        });
-        // console.table(this.chargerPoint);
-        this.setChargePoints(this.chargerPoint);
-      },
-      (error) => {
-        if (!Helper.isNullOrWhitespace(error)) {
-          if (!Helper.isNullOrWhitespace(error?.error?.errors)) {
-            const validationErrors = error.error.errors;
-            this.serverError(validationErrors);
-          }
-          else {
-            this.popUpData = this.serverErrorMsgResponse(error.error);
+          this.chargerPoint.transactionfees = chargePoint.transactionfees;
+          this.chargerPoint.utilityFees = chargePoint.utilityFees;
+          this.chargerPoint.cloudServiceFees = chargePoint.cloudServiceFees;
+          this.chargerPoint.revenueShare = chargePoint.revenueShare;
+          this.chargerPoint.utilityfeesownedbysiteowner =
+            chargePoint.utilityfeesownedbysiteowner;
+          this.chargerPoint.customerId = chargePoint.customerId;
+          this.chargerPoint.vendorId = chargePoint.vendorId;
+          chargePoint?.connectors.forEach(
+            (currentConnector: Connectors, currentConnectorIndex: number) => {
+              if (currentConnectorIndex == 1) {
+                this.chargerPoint.connector1Id = currentConnector.id;
+                this.chargerPoint.connector1Name = currentConnector.name;
+                this.chargerPoint.connector1AuthorizationCode =
+                  currentConnector.authorizationCode;
+                this.chargerPoint.connector1LastMeterTime =
+                  currentConnector?.lastMeterTime
+                    ? new Date(currentConnector.lastMeterTime).toLocaleString(
+                        'en-US',
+                        { timeZone: 'CST' }
+                      )
+                    : '';
+                this.chargerPoint.connector1LastStatusTime =
+                  currentConnector?.lastStatusTime
+                    ? new Date(currentConnector.lastStatusTime).toLocaleString(
+                        'en-US',
+                        { timeZone: 'CST' }
+                      )
+                    : '';
+                this.chargerPoint.connector1Status = currentConnector.status;
+                this.chargerPoint.connector1LastMeter = currentConnector.meter;
+              }
+              if (
+                currentConnectorIndex == 2 &&
+                chargePoint.numberOfConnectors >= 2
+              ) {
+                this.chargerPoint.connector2Id = currentConnector.id;
+                this.chargerPoint.connector2Name = currentConnector.name;
+                this.chargerPoint.connector2AuthorizationCode =
+                  currentConnector.authorizationCode;
+                this.chargerPoint.connector2LastMeterTime =
+                  currentConnector?.lastMeterTime
+                    ? new Date(currentConnector.lastMeterTime).toLocaleString(
+                        'en-US',
+                        { timeZone: 'CST' }
+                      )
+                    : '';
+                this.chargerPoint.connector2LastStatusTime =
+                  currentConnector?.lastStatusTime
+                    ? new Date(currentConnector.lastStatusTime).toLocaleString(
+                        'en-US',
+                        { timeZone: 'CST' }
+                      )
+                    : '';
+                this.chargerPoint.connector2Status = currentConnector.status;
+                this.chargerPoint.connector2LastMeter = currentConnector.meter;
+              }
+            }
+          );
+          // console.table(this.chargerPoint);
+          this.setChargePoints(this.chargerPoint);
+        },
+        (error) => {
+          if (!Helper.isNullOrWhitespace(error)) {
+            if (!Helper.isNullOrWhitespace(error?.error?.errors)) {
+              const validationErrors = error.error.errors;
+              this.serverError(validationErrors);
+            } else {
+              this.popUpData = this.serverErrorMsgResponse(error.error);
 
-            this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+              this.popUpService.showMsg(
+                this.popUpData,
+                AppConstants.EmptyUrl,
+                AppConstants.Error,
+                AppConstants.Error
+              );
+            }
           }
         }
-      });
+      );
   }
 
   setChargePoints(chargePoint: ChargePoint) {
@@ -407,72 +524,108 @@ export class ChargerEditComponent implements OnInit {
       chargerType: chargePoint.chargerType,
       connector1Status: chargePoint.connector1Status,
       connector1Meter: chargePoint.connector1LastMeter,
-      connector2Status: chargePoint.connector2Status != null ? chargePoint.connector2Status : null,
-      connector2Meter: chargePoint.connector2LastMeter != null ? chargePoint.connector2LastMeter : null,
-      connectorType1: chargePoint.connectorType1 != null ? chargePoint.connectorType1 : null,
-      connectorType2: chargePoint.connectorType2 != null ? chargePoint.connectorType2 : null,
-      dateofCommissioning: chargePoint.dateofCommissioning ? chargePoint.dateofCommissioning : null,
-      transactionfees: chargePoint.transactionfees ? chargePoint.transactionfees : 0,
+      connector2Status:
+        chargePoint.connector2Status != null
+          ? chargePoint.connector2Status
+          : null,
+      connector2Meter:
+        chargePoint.connector2LastMeter != null
+          ? chargePoint.connector2LastMeter
+          : null,
+      connectorType1:
+        chargePoint.connectorType1 != null ? chargePoint.connectorType1 : null,
+      connectorType2:
+        chargePoint.connectorType2 != null ? chargePoint.connectorType2 : null,
+      dateofCommissioning: chargePoint.dateofCommissioning
+        ? chargePoint.dateofCommissioning
+        : null,
+      transactionfees: chargePoint.transactionfees
+        ? chargePoint.transactionfees
+        : 0,
       utilityFees: chargePoint.utilityFees ? chargePoint.utilityFees : 0,
-      cloudServiceFees: chargePoint.cloudServiceFees ? chargePoint.cloudServiceFees : 0,
+      cloudServiceFees: chargePoint.cloudServiceFees
+        ? chargePoint.cloudServiceFees
+        : 0,
       revenueShare: chargePoint.revenueShare ? chargePoint.revenueShare : 0,
-      utilityfeesownedbysiteowner: chargePoint.utilityfeesownedbysiteowner ? chargePoint.utilityfeesownedbysiteowner : false,
+      utilityfeesownedbysiteowner: chargePoint.utilityfeesownedbysiteowner
+        ? chargePoint.utilityfeesownedbysiteowner
+        : false,
       customerId: chargePoint.customerId ? chargePoint.customerId : null,
-      vendorId: chargePoint.vendorId ? chargePoint.vendorId : null
+      vendorId: chargePoint.vendorId ? chargePoint.vendorId : null,
     });
   }
 
   cancel() {
     // localStorage.removeItem('chargePointId');
-    document.getElementById("ShowDetails").style.display = "block";
-    document.getElementById("ShowForm").style.display = "none";
+    document.getElementById('ShowDetails').style.display = 'block';
+    document.getElementById('ShowForm').style.display = 'none';
     // this.router.navigate([AppConstants.SiteEditUrl]);
   }
 
   updateCharge() {
     this.mapChargePoint();
-    if (this.chargerForm.dirty && this.chargerForm.valid && this.chargerForm.touched) {
+    if (
+      this.chargerForm.dirty &&
+      this.chargerForm.valid &&
+      this.chargerForm.touched
+    ) {
       this.putCharge(this.chargePointById, this.chargerPoint).subscribe(
         (result: any) => {
           this.chargerForm.markAsUntouched();
-          this.popUpService.showMsg(AppConstants.ChargePointUpdatedMsg, AppConstants.SiteEditUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            AppConstants.ChargePointUpdatedMsg,
+            AppConstants.SiteEditUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
           // this.getChargePointById(this.chargePointById);
-          document.getElementById("ShowDetails").style.display = "block";
-          document.getElementById("ShowForm").style.display = "none";
+          document.getElementById('ShowDetails').style.display = 'block';
+          document.getElementById('ShowForm').style.display = 'none';
         },
         (error) => {
           if (!Helper.isNullOrWhitespace(error)) {
             if (!Helper.isNullOrWhitespace(error.error.errors)) {
               const validationErrors = error.error.errors;
               this.serverError(validationErrors);
-            }
-            else {
+            } else {
               this.popUpData = this.serverErrorMsgResponse(error.error);
-              this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+              this.popUpService.showMsg(
+                this.popUpData,
+                AppConstants.EmptyUrl,
+                AppConstants.Error,
+                AppConstants.Error
+              );
             }
-          }
-          else {
+          } else {
             this.popUpData = this.serverErrorMsgResponse(error.error);
-            this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+            this.popUpService.showMsg(
+              this.popUpData,
+              AppConstants.EmptyUrl,
+              AppConstants.Error,
+              AppConstants.Error
+            );
           }
-
-        });
-    }
-    else {
+        }
+      );
+    } else {
       if (this.chargerForm.valid)
-        this.popUpService.showMsg(AppConstants.NoChargerChanges, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        this.popUpService.showMsg(
+          AppConstants.NoChargerChanges,
+          AppConstants.EmptyUrl,
+          AppConstants.Warning,
+          AppConstants.Warning
+        );
     }
   }
 
   serverErrorMsgResponse(error: any): string {
     if (!Helper.isNullOrEmpty(error?.Message))
-      return this.popUpData = error.Message;
+      return (this.popUpData = error.Message);
     else if (!Helper.isNullOrEmpty(error?.message))
-      return this.popUpData = error.message;
+      return (this.popUpData = error.message);
     else if (!Helper.isNullOrEmpty(error?.title))
-      return this.popUpData = error.title;
-    else
-      return this.popUpData = error;
+      return (this.popUpData = error.title);
+    else return (this.popUpData = error);
   }
 
   mapChargePoint() {
@@ -480,17 +633,28 @@ export class ChargerEditComponent implements OnInit {
       this.chargerPoint.siteId = this.siteId.toString();
       this.chargerPoint.tenantId = this.tenantId.toString();
       this.chargerPoint.name = this.chargerForm.get('name')?.value.trim();
-      this.chargerPoint.numberOfConnectors = this.chargerForm.get('numberOfConnectors')?.value;
-      this.chargerPoint.availabilityStatus = this.chargerForm.get('availabilityStatus')?.value;
-      this.chargerPoint.chargerType = this.chargerForm.get('chargerType')?.value;
+      this.chargerPoint.numberOfConnectors =
+        this.chargerForm.get('numberOfConnectors')?.value;
+      this.chargerPoint.availabilityStatus =
+        this.chargerForm.get('availabilityStatus')?.value;
+      this.chargerPoint.chargerType =
+        this.chargerForm.get('chargerType')?.value;
       this.chargerPoint.chargePointId = this.chargePointId;
-      this.chargerPoint.connectorType1 = this.chargerForm.get('connectorType1')?.value;
-      this.chargerPoint.connectorType2 = this.chargerForm.get('connectorType2')?.value;
-      this.chargerPoint.transactionfees = this.chargerForm.get('transactionfees')?.value;
-      this.chargerPoint.utilityFees = this.chargerForm.get('utilityFees')?.value;
-      this.chargerPoint.cloudServiceFees = this.chargerForm.get('cloudServiceFees')?.value;
-      this.chargerPoint.revenueShare = this.chargerForm.get('revenueShare')?.value;
-      this.chargerPoint.utilityfeesownedbysiteowner = this.chargerForm.get('utilityfeesownedbysiteowner')?.value;
+      this.chargerPoint.connectorType1 =
+        this.chargerForm.get('connectorType1')?.value;
+      this.chargerPoint.connectorType2 =
+        this.chargerForm.get('connectorType2')?.value;
+      this.chargerPoint.transactionfees =
+        this.chargerForm.get('transactionfees')?.value;
+      this.chargerPoint.utilityFees =
+        this.chargerForm.get('utilityFees')?.value;
+      this.chargerPoint.cloudServiceFees =
+        this.chargerForm.get('cloudServiceFees')?.value;
+      this.chargerPoint.revenueShare =
+        this.chargerForm.get('revenueShare')?.value;
+      this.chargerPoint.utilityfeesownedbysiteowner = this.chargerForm.get(
+        'utilityfeesownedbysiteowner'
+      )?.value;
       this.chargerPoint.customerId = this.chargerForm.get('customerId')?.value;
       this.chargerPoint.vendorId = this.chargerForm.get('vendorId')?.value;
     }
@@ -504,27 +668,47 @@ export class ChargerEditComponent implements OnInit {
         Object.keys(validationErrors).forEach((prop: any, index: any) => {
           this.popUpData += validationErrors[prop].join(',');
         });
-        this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
-      }
-      else {
+        this.popUpService.showMsg(
+          this.popUpData,
+          AppConstants.EmptyUrl,
+          AppConstants.Error,
+          AppConstants.Error
+        );
+      } else {
         if (serverError.error != null) {
           this.popUpData = this.serverErrorMsgResponse(serverError?.error);
-          this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
-        }
-        else {
+          this.popUpService.showMsg(
+            this.popUpData,
+            AppConstants.EmptyUrl,
+            AppConstants.Error,
+            AppConstants.Error
+          );
+        } else {
           this.popUpData = serverError.statusText;
-          this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+          this.popUpService.showMsg(
+            this.popUpData,
+            AppConstants.EmptyUrl,
+            AppConstants.Error,
+            AppConstants.Error
+          );
         }
       }
-    }
-    else {
+    } else {
       this.popUpData = this.serverErrorMsgResponse(serverError?.error);
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+      this.popUpService.showMsg(
+        this.popUpData,
+        AppConstants.EmptyUrl,
+        AppConstants.Error,
+        AppConstants.Error
+      );
     }
   }
 
   putCharge(ids: any, chargePoint: ChargePoint): Observable<ChargePoint> {
-    return this.httpDataService.put(AppConstants.APIUrlChargeUpdate + ids, chargePoint);
+    return this.httpDataService.put(
+      AppConstants.APIUrlChargeUpdate + ids,
+      chargePoint
+    );
   }
 
   updateConfigure(config: configurationKey) {
@@ -534,18 +718,31 @@ export class ChargerEditComponent implements OnInit {
       siteId: this.siteId,
       key: config.key,
       value: config.value,
-    }
-    this.putUpdateConfiguration(this.chargePointById, updateConfigData).subscribe(
+    };
+    this.putUpdateConfiguration(
+      this.chargePointById,
+      updateConfigData
+    ).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result?.body)) {
-          this.popUpService.showMsg(result?.body, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.UpdateConfigure, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result?.body,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.UpdateConfigure,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   Trigger() {
@@ -554,23 +751,41 @@ export class ChargerEditComponent implements OnInit {
       tenantId: this.tenantId,
       siteId: this.siteId,
       connectorId: this.triggerForm.get('connectorId')?.value,
-      message: this.triggerForm.get('messageType')?.value
-    }
-    if(this.triggerForm.dirty && this.triggerForm.valid && this.triggerForm.touched){
-    this.putTrigger(this.chargePointById, triggerData).subscribe(
-      (result: any) => {
-        if (!Helper.isNullOrEmpty(result?.body)) {
-          this.popUpService.showMsg(result?.body, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+      message: this.triggerForm.get('messageType')?.value,
+    };
+    if (
+      this.triggerForm.dirty &&
+      this.triggerForm.valid &&
+      this.triggerForm.touched
+    ) {
+      this.putTrigger(this.chargePointById, triggerData).subscribe(
+        (result: any) => {
+          if (!Helper.isNullOrEmpty(result?.body)) {
+            this.popUpService.showMsg(
+              result?.body,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+          } else
+            this.popUpService.showMsg(
+              AppConstants.Trigger,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+        },
+        (error) => {
+          this.connectorServerResponse(error);
         }
-        else
-          this.popUpService.showMsg(AppConstants.Trigger, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-      },
-      (error) => {
-        this.connectorServerResponse(error);
-      });
-    }
-    else
-    this.popUpService.showMsg(AppConstants.FillMandatoryFields, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+      );
+    } else
+      this.popUpService.showMsg(
+        AppConstants.FillMandatoryFields,
+        AppConstants.EmptyUrl,
+        AppConstants.Warning,
+        AppConstants.Warning
+      );
   }
 
   connector1InOperative() {
@@ -579,14 +794,24 @@ export class ChargerEditComponent implements OnInit {
     this.getConnectorInOperative(ids).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.InOperative, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.InOperative,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   connector1Operative() {
@@ -595,14 +820,24 @@ export class ChargerEditComponent implements OnInit {
     this.getConnectorOperative(ids).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.Operative, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.Operative,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   connector1Unlock() {
@@ -611,62 +846,99 @@ export class ChargerEditComponent implements OnInit {
       this.getConnectorUnlock(ids).subscribe(
         (result: any) => {
           if (!Helper.isNullOrEmpty(result)) {
-            this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-          }
-          else
-            this.popUpService.showMsg(AppConstants.Unlock, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+            this.popUpService.showMsg(
+              result,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+          } else
+            this.popUpService.showMsg(
+              AppConstants.Unlock,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
         },
         (error) => {
           this.connectorServerResponse(error);
-        });
-    }
-    else {
-      this.popUpData = 'No data for connector 1.'
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        }
+      );
+    } else {
+      this.popUpData = 'No data for connector 1.';
+      this.popUpService.showMsg(
+        this.popUpData,
+        AppConstants.EmptyUrl,
+        AppConstants.Warning,
+        AppConstants.Warning
+      );
     }
   }
 
   connector1Start() {
     const connector1Data = {
       chargePointId: this.chargerPoint.chargePointId,
-      connectorId: this.chargerPoint.connector1Id
-    }
+      connectorId: this.chargerPoint.connector1Id,
+    };
     if (!Helper.hasElements(connector1Data)) {
       this.postConnectorStart(this.chargePointById, connector1Data).subscribe(
         (result: Transaction) => {
           if (!Helper.isNullOrEmpty(result)) {
-            this.popUpService.showMsg(result?.startResult, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-          }
-          else
-            this.popUpService.showMsg(AppConstants.Start, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+            this.popUpService.showMsg(
+              result?.startResult,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+          } else
+            this.popUpService.showMsg(
+              AppConstants.Start,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
         },
         (error) => {
           this.connectorServerResponse(error);
-        });
-    }
-    else {
-      this.popUpData = 'No data for connector 1.'
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        }
+      );
+    } else {
+      this.popUpData = 'No data for connector 1.';
+      this.popUpService.showMsg(
+        this.popUpData,
+        AppConstants.EmptyUrl,
+        AppConstants.Warning,
+        AppConstants.Warning
+      );
     }
   }
 
   connector1Stop() {
-
     const stopData = {
       chargePointId: this.chargerPoint.chargePointId,
-      connectorId: this.chargerPoint.connector1Id
-    }
+      connectorId: this.chargerPoint.connector1Id,
+    };
     this.postConnectorStop(this.chargePointById, stopData).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.Stop, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.Stop,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   connector2InOperative() {
@@ -675,14 +947,24 @@ export class ChargerEditComponent implements OnInit {
     this.getConnectorInOperative(ids).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.InOperative, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.InOperative,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   connector2Operative() {
@@ -691,58 +973,90 @@ export class ChargerEditComponent implements OnInit {
     this.getConnectorOperative(ids).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.Operative, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.Operative,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   connector2Start() {
-
     const connector2Data = {
       chargePointId: this.chargerPoint.chargePointId,
-      connectorId: this.chargerPoint.connector2Id
-    }
+      connectorId: this.chargerPoint.connector2Id,
+    };
     if (!Helper.hasElements(connector2Data)) {
       this.postConnectorStart(this.chargePointById, connector2Data).subscribe(
         (result: any) => {
           if (!Helper.isNullOrEmpty(result)) {
-            this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-          }
-          else
-            this.popUpService.showMsg(AppConstants.Start, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+            this.popUpService.showMsg(
+              result,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+          } else
+            this.popUpService.showMsg(
+              AppConstants.Start,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
         },
         (error) => {
           this.connectorServerResponse(error);
-        });
-    }
-    else {
-      this.popUpData = 'No data for connector 2.'
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        }
+      );
+    } else {
+      this.popUpData = 'No data for connector 2.';
+      this.popUpService.showMsg(
+        this.popUpData,
+        AppConstants.EmptyUrl,
+        AppConstants.Warning,
+        AppConstants.Warning
+      );
     }
   }
 
   connector2Stop() {
-
     const stopData = {
       chargePointId: this.chargerPoint.chargePointId,
-      connectorId: this.chargerPoint.connector2Id
-    }
+      connectorId: this.chargerPoint.connector2Id,
+    };
     this.postConnectorStop(this.chargePointById, stopData).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.Stop, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.Stop,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   connector2Unlock() {
@@ -751,85 +1065,124 @@ export class ChargerEditComponent implements OnInit {
       this.getConnectorUnlock(ids).subscribe(
         (result: any) => {
           if (!Helper.isNullOrEmpty(result)) {
-            this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-          }
-          else
-            this.popUpService.showMsg(AppConstants.Unlock, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-
+            this.popUpService.showMsg(
+              result,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+          } else
+            this.popUpService.showMsg(
+              AppConstants.Unlock,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
         },
         (error) => {
           this.connectorServerResponse(error);
-        });
-    }
-    else {
-      this.popUpData = 'No data for connector 2.'
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        }
+      );
+    } else {
+      this.popUpData = 'No data for connector 2.';
+      this.popUpService.showMsg(
+        this.popUpData,
+        AppConstants.EmptyUrl,
+        AppConstants.Warning,
+        AppConstants.Warning
+      );
     }
   }
 
   UpdateFirmware() {
-
     const fireware = {
       chargePointId: this.chargerPoint.chargePointId,
-      firmwareLocation: this.firmwareForm.get('location')?.value
-    }
+      firmwareLocation: this.firmwareForm.get('location')?.value,
+    };
     this.getUpdateFirmware(this.chargePointById, fireware).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.UpdateFirmware, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.UpdateFirmware,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   Diagnostics() {
     this.getDiagnostics(this.chargePointById).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.Diagnostics, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.Diagnostics,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   Messages() {
     let date = this.chargerMessageForm.get('date')?.value
       ? Helper.getFormattedDate(this.chargerMessageForm.get('date')?.value)
       : null;
-    const connectorId = this.chargerMessageForm.get('messageConnectorId')?.value;
+    const connectorId =
+      this.chargerMessageForm.get('messageConnectorId')?.value;
     const messagesById: any = `${this.chargePointId}/${connectorId}/${date}`;
     if (this.chargerMessageForm.valid) {
       this.getConnectorMessage(messagesById).subscribe(
         (result: any) => {
           if (!Helper.isNullOrEmpty(result?.messages)) {
-            result?.messages.forEach((currentObj: any, currentObjIndex: any) => {
-              currentObj.id = result?.id;
-              currentObj.chargePointId = result?.chargePointId;
-              currentObj.connectorId = result?.connectorId;
-            });
+            result?.messages.forEach(
+              (currentObj: any, currentObjIndex: any) => {
+                currentObj.id = result?.id;
+                currentObj.chargePointId = result?.chargePointId;
+                currentObj.connectorId = result?.connectorId;
+              }
+            );
             this.dataSource.data = result?.messages;
             // this.dataSource.data = [];
             // this.popUpService.showMsg('No response for messages', AppConstants.EmptyUrl);
-          }
-          else {
+          } else {
             // this.popUpService.showMsg(result?.message, AppConstants.EmptyUrl);
             this.dataSource.data = [];
           }
         },
         (error) => {
           this.connectorServerResponse(error);
-        });
-    }
-    else
-      this.popUpService.showMsg(AppConstants.FillMandatoryFields, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        }
+      );
+    } else
+      this.popUpService.showMsg(
+        AppConstants.FillMandatoryFields,
+        AppConstants.EmptyUrl,
+        AppConstants.Warning,
+        AppConstants.Warning
+      );
   }
 
   reset() {
@@ -837,26 +1190,42 @@ export class ChargerEditComponent implements OnInit {
     this.getReset(chargePointById).subscribe(
       (result: any) => {
         if (!Helper.isNullOrEmpty(result)) {
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(AppConstants.Reset, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            AppConstants.Reset,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   jsonPopUp(jsonData: any) {
     let all = JSON.parse(jsonData);
     let payLoad = JSON.parse(all.JsonPayload);
-    Object.keys(all).forEach(prop => {
+    Object.keys(all).forEach((prop) => {
       if (prop == 'JsonPayload') {
         all['JsonPayload'] = '';
-        all['JsonPayload'] = payLoad
+        all['JsonPayload'] = payLoad;
       }
     });
-    this.popUpService.showMsg(all, AppConstants.EmptyUrl, 'JSON Message', AppConstants.Success, 'Json');
+    this.popUpService.showMsg(
+      all,
+      AppConstants.EmptyUrl,
+      'JSON Message',
+      AppConstants.Success,
+      'Json'
+    );
   }
 
   clearCache() {
@@ -864,29 +1233,50 @@ export class ChargerEditComponent implements OnInit {
     this.getClearCache(chargePointById).subscribe(
       (result: any) => {
         if (result.length == 0) {
-          this.popUpService.showMsg('No response for clear', AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else if (!Helper.isNullOrEmpty(result?.message)) {
-          this.popUpService.showMsg(result?.message, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-        }
-        else
-          this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          this.popUpService.showMsg(
+            'No response for clear',
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else if (!Helper.isNullOrEmpty(result?.message)) {
+          this.popUpService.showMsg(
+            result?.message,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        } else
+          this.popUpService.showMsg(
+            result,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
       },
       (error) => {
         this.connectorServerResponse(error);
-      });
+      }
+    );
   }
 
   getChargeConfigure(chargePointById: any): Observable<any> {
-    return this.httpDataService.get(AppConstants.APIUrlChargeConfigure + chargePointById);
+    return this.httpDataService.get(
+      AppConstants.APIUrlChargeConfigure + chargePointById
+    );
   }
 
   getDiagnostics(ids: any): Observable<any> {
-    return this.httpDataService.get(AppConstants.APIUrlConnectorDiagnostics + ids);
+    return this.httpDataService.get(
+      AppConstants.APIUrlConnectorDiagnostics + ids
+    );
   }
 
   getUpdateFirmware(ids: any, firmware: any): Observable<any> {
-    return this.httpDataService.put(AppConstants.APIUrlUpdatefirmware + ids, firmware);
+    return this.httpDataService.put(
+      AppConstants.APIUrlUpdatefirmware + ids,
+      firmware
+    );
   }
 
   getClearCache(chargePointById: any): Observable<any> {
@@ -894,19 +1284,31 @@ export class ChargerEditComponent implements OnInit {
   }
 
   putUpdateConfiguration(ids: any, updateConfigureData: any): Observable<any> {
-    return this.httpDataService.put(AppConstants.APIUrlUpdateConfig + ids, updateConfigureData);
+    return this.httpDataService.put(
+      AppConstants.APIUrlUpdateConfig + ids,
+      updateConfigureData
+    );
   }
 
   putTrigger(ids: any, triggerData: any): Observable<any> {
-    return this.httpDataService.put(AppConstants.APIUrlTrigger + ids, triggerData);
+    return this.httpDataService.put(
+      AppConstants.APIUrlTrigger + ids,
+      triggerData
+    );
   }
 
   postConnectorStart(ids: any, startData: any): Observable<any> {
-    return this.httpDataService.post(AppConstants.APIUrlConnectorStart + ids, startData);
+    return this.httpDataService.post(
+      AppConstants.APIUrlConnectorStart + ids,
+      startData
+    );
   }
 
   postConnectorStop(ids: any, stopData: any): Observable<ChargePoint> {
-    return this.httpDataService.post(AppConstants.APIUrlConnectorStop + ids, stopData);
+    return this.httpDataService.post(
+      AppConstants.APIUrlConnectorStop + ids,
+      stopData
+    );
   }
 
   getConnectorUnlock(ids: any): Observable<ChargePoint> {
@@ -914,11 +1316,15 @@ export class ChargerEditComponent implements OnInit {
   }
 
   getConnectorInOperative(ids: any): Observable<ChargePoint> {
-    return this.httpDataService.get(AppConstants.APIUrlConnectorInOperative + ids);
+    return this.httpDataService.get(
+      AppConstants.APIUrlConnectorInOperative + ids
+    );
   }
 
   getConnectorOperative(ids: any): Observable<ChargePoint> {
-    return this.httpDataService.get(AppConstants.APIUrlConnectorOperative + ids);
+    return this.httpDataService.get(
+      AppConstants.APIUrlConnectorOperative + ids
+    );
   }
 
   getConnectorMessage(messagesById: any): Observable<any> {
@@ -926,27 +1332,40 @@ export class ChargerEditComponent implements OnInit {
   }
 
   getReset(chargePointById: any): Observable<any> {
-    return this.httpDataService.get(AppConstants.APIUrlConnectorReset + chargePointById);
+    return this.httpDataService.get(
+      AppConstants.APIUrlConnectorReset + chargePointById
+    );
   }
 
   selectedTabValue(event: any) {
     if (event.index == 1 && this.chargerPoint.status == AppConstants.Online) {
       this.getChargeConfigure(this.chargePointById).subscribe(
-        (result:ConfigurationModel) => {
-          if (!Helper.isNullOrEmpty(result?.configurationKey) && result?.configurationKey.length > 0) {
+        (result: ConfigurationModel) => {
+          if (
+            !Helper.isNullOrEmpty(result?.configurationKey) &&
+            result?.configurationKey.length > 0
+          ) {
             this.configurations = result.configurationKey;
-          }
-          else if(!Helper.isNullOrEmpty(result)){
-            this.popUpService.showMsg(result, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-          }
-          else
-            this.popUpService.showMsg('No response for configure', AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
+          } else if (!Helper.isNullOrEmpty(result)) {
+            this.popUpService.showMsg(
+              result,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+          } else
+            this.popUpService.showMsg(
+              'No response for configure',
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
         },
         (error) => {
           this.connectorServerResponse(error);
-        });
-    }
-    else if (event.index == 3) {
+        }
+      );
+    } else if (event.index == 3) {
     }
   }
 
@@ -955,7 +1374,7 @@ export class ChargerEditComponent implements OnInit {
   }
 
   serverError(validationErrors: any) {
-    Object.keys(validationErrors).forEach(prop => {
+    Object.keys(validationErrors).forEach((prop) => {
       const formControl = this.chargerForm.get(prop);
       if (formControl) {
         formControl.setErrors({
@@ -977,22 +1396,25 @@ export class ChargerEditComponent implements OnInit {
       if (result) {
         this.httpDataService
           .get(AppConstants.APIUrlDeactivateChargePoint + this.chargePointId)
-          .subscribe((res) => {
-            this.popUpService.showMsg(
-              this.chargePointId + ' Deactivated.',
-              AppConstants.EmptyUrl,
-              AppConstants.Success,
-              AppConstants.Success
-            );
-            this.cancel();
-          }, (err) => {
-            this.popUpService.showMsg(
-              'Deactivation Failed.',
-              AppConstants.EmptyUrl,
-              AppConstants.Error,
-              AppConstants.Error
-            );
-          });
+          .subscribe(
+            (res) => {
+              this.popUpService.showMsg(
+                this.chargePointId + ' Deactivated.',
+                AppConstants.EmptyUrl,
+                AppConstants.Success,
+                AppConstants.Success
+              );
+              this.cancel();
+            },
+            (err) => {
+              this.popUpService.showMsg(
+                'Deactivation Failed.',
+                AppConstants.EmptyUrl,
+                AppConstants.Error,
+                AppConstants.Error
+              );
+            }
+          );
       }
     });
   }

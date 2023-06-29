@@ -5,9 +5,15 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-12 lg-12">
+                <div class="col-md-6 lg-6">
                     <h2 class="h2">Charger Details : {{chargePointId}}</h2>
                 </div>
+                <div class="col-md-6 lg-6 text-end">
+                    <div class="head-right-outer">                     
+                      
+                      <a class="btn-back mat-elevation-z"(click)="navigateBack();" mat-raised-button href="javascript:;"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a>
+                    </div>
+                  </div>
             </div>
             <div id = "ShowDetails">
             <div class="row mt-2 cd-box-1">
