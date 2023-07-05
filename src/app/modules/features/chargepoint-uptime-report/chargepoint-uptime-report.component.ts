@@ -5,6 +5,7 @@ import { HttpDataService } from '@app/shared/services/http-data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { Toast } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chargepoint-uptime-report',
@@ -12,7 +13,6 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./chargepoint-uptime-report.component.css'],
 })
 export class ChargePointUptimeReportComponent {
-
   process = false;
   maxDate = new Date();
   startDate: any = '';
@@ -70,30 +70,33 @@ export class ChargePointUptimeReportComponent {
   }
 
   downloadReport() {
-    let csvData = this.ConvertToCSV(this.dataSource.data, [
-      'chargePointId',
-      'upTimeHours',
-      'downTimeHours',
-      'totalHours',
-      'upTimePercentage',
-    ]);
-    let blob = new Blob(['\ufeff' + csvData], {
-      type: 'text/csv;charset=utf-8;',
-    });
-    let dwldLink = document.createElement('a');
-    let url = URL.createObjectURL(blob);
-    let isSafariBrowser =
-      navigator.userAgent.indexOf('Safari') != -1 &&
-      navigator.userAgent.indexOf('Chrome') == -1;
-    if (isSafariBrowser) {
-      dwldLink.setAttribute('target', '_blank');
+    debugger;
+    if (this.dataSource.data.length > 0) {
+      let csvData = this.ConvertToCSV(this.dataSource.data, [
+        'chargePointId',
+        'upTimeHours',
+        'downTimeHours',
+        'totalHours',
+        'upTimePercentage',
+      ]);
+      let blob = new Blob(['\ufeff' + csvData], {
+        type: 'text/csv;charset=utf-8;',
+      });
+      let dwldLink = document.createElement('a');
+      let url = URL.createObjectURL(blob);
+      let isSafariBrowser =
+        navigator.userAgent.indexOf('Safari') != -1 &&
+        navigator.userAgent.indexOf('Chrome') == -1;
+      if (isSafariBrowser) {
+        dwldLink.setAttribute('target', '_blank');
+      }
+      dwldLink.setAttribute('href', url);
+      dwldLink.setAttribute('download', 'ChargePoint-Uptime-Report.csv');
+      dwldLink.style.visibility = 'hidden';
+      document.body.appendChild(dwldLink);
+      dwldLink.click();
+      document.body.removeChild(dwldLink);
     }
-    dwldLink.setAttribute('href', url);
-    dwldLink.setAttribute('download', 'ChargePoint-Uptime-Report.csv');
-    dwldLink.style.visibility = 'hidden';
-    document.body.appendChild(dwldLink);
-    dwldLink.click();
-    document.body.removeChild(dwldLink);
   }
 
   ConvertToCSV(objArray: any, headerList: any) {

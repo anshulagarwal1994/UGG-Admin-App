@@ -33,8 +33,9 @@
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                  <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                      class="text-success text-sm font-weight-bolder">5%</span>Increase</p>
+                  <!-- <p class="mb-0"><img src="./assets/img/trending_up.svg">
+                    <span
+                      class="text-success text-sm font-weight-bolder">5%</span>Increase</p> -->
                 </div>
               </div>
             </div>
@@ -52,8 +53,8 @@
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                  <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                      class="text-success font-weight-bolder">5%</span>Increase</p>
+                  <!-- <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
+                      class="text-success font-weight-bolder">5%</span>Increase</p> -->
                 </div>
               </div>
             </div>
@@ -70,8 +71,8 @@
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                  <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                  class="text-success font-weight-bolder">5%</span>Increase</p>
+                  <!-- <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
+                  class="text-success font-weight-bolder">5%</span>Increase</p> -->
                 </div>
               </div>
             </div>
@@ -116,39 +117,39 @@
                   <div class="cn-status-inner">
                     <h3>Connectors</h3>
                     <div class="connectors-footer-contect">
-                      <label class="available">
+                      <label class="available" routerLink="/connectors/Online">
                         <span class="material-symbols-outlined">check_circle</span>
                         <p>{{connectorsAvailableCount}}</p>
                         Available
                       </label>
-                      <label class="unavailable">
+                      <label class="unavailable" routerLink="/connectors/Occupied">
                         <span class="material-symbols-outlined">change_circle</span>
                         <p>{{connectorsInUseCount}}</p>
                         Occupied
                       </label>
-                      <label class="occupied">
+                      <label class="occupied" routerLink="/connectors/Unavailable">
                         <span class="material-symbols-outlined">error</span>
                         <p>{{connectorsOfflineCount}}</p>
                         Unavailable
                       </label>
-                      <label class="faulted">
+                      <label class="faulted" routerLink="/connectors/Faulted">
                         <span class="material-symbols-outlined">disabled_by_default</span>
-                        <p>0</p>
+                        <p>{{this.connectorFaultedCount}}</p>
                         Faulted
                       </label>
-                      <label class="preparing">
+                      <label class="preparing" routerLink="/connectors/Preparing">
                         <span class="material-symbols-outlined">ev_charger</span>
-                        <p>0</p>
+                        <p>{{this.connectorPreparingCount}}</p>
                         Preparing
                       </label>
-                      <label class="authorized">
+                      <label class="authorized" routerLink="/connectors/Authorized">
                         <span class="material-symbols-outlined">account_circle</span>
-                        <p>0</p>
+                        <p>{{this.connectorAuthorizeCount}}</p>
                         Authorized
                       </label>
-                      <label class="finishing">
+                      <label class="finishing" routerLink="/connectors/Finishing">
                         <span class="material-symbols-outlined">done_all</span>
-                        <p>0</p>
+                        <p>{{this.connectorFinishingCount}}</p>
                         Finishing
                       </label>
                     </div>
@@ -157,7 +158,49 @@
               </div>
             </div>
           </div>
-          <div class="row mt-5 box-3">
+
+          <div class="row mt-5 box-2">
+            <div class="col-lg-6 box-2-2">
+              <div class="card z-index-2">
+                <div class="card-body pt-0">
+                  <div class="border-radius-lg">              
+                    <div class="chart">
+                      <div *ngIf="piechartData.length" class="chartjs-container">
+                        <canvas id="ChartJs" baseChart [datasets]="piechartData" 
+                        
+                            [options]="piechartOptions" [colors]="piechartColors"
+                            [labels]="piechartLabel"
+                            [legend]="piechartLegend"
+                            [chartType]="'pie'" [plugins]="piechartPlugins">
+                          
+                        </canvas>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 box-2-2">
+              <div class="card z-index-2">
+                <div class="card-body pt-0">
+                  <div class="border-radius-lg">                  
+                    <div class="chart">
+                      <div *ngIf="finacialchartData.length" class="chartjs-container">
+                        <canvas id="ChartJs" baseChart [datasets]="finacialchartData" [labels]="finacialchartLabel"
+                            [options]="finacialchartOptions" [colors]="finacialchartColors" [legend]="finacialchartLegend"
+                            [chartType]="'bar'" [plugins]="finacialchartPlugins">
+                          
+                        </canvas>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+
+          <!-- <div class="row mt-5 box-3">
             <div class="col-lg-3 col-md-3 box-3-1">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
@@ -242,7 +285,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="row mt-5 box-4">
             <div class="col-lg-12 col-md-12">
               <div class="card z-index-2">
@@ -282,6 +325,9 @@
             </div>
           </div>
         </div>
+        
+
+
       </div>
       <footer class="footer mt-4">
         <div class="container-fluid">

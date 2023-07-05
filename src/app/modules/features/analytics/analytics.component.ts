@@ -15,14 +15,11 @@ import { Router } from '@angular/router';
 import { RoleType } from '@app/shared/services/roles.enum';
 import { RouterExtService } from '@app/shared/services/routerExt.service';
 
-
-
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.css'],
 })
-
 export class AnalyticsComponent implements OnInit {
   // dtOptions: DataTables.Settings = {};
 
@@ -39,11 +36,16 @@ export class AnalyticsComponent implements OnInit {
   tenantCount: number = 0;
   sitesCount: number = 0;
   chargePointsCount: number = 0;
+  connectorFinishingCount: number = 0;
+  connectorFaultedCount: number = 0;
+  connectorAuthorizeCount: number = 0;
+  connectorPreparingCount: number = 0;
   connectorsAvailableCount: number = 0;
   connectorsInUseCount: number = 0;
-  displayStyle = "none";
+  displayStyle = 'none';
   connectorsOfflineCount: number = 0;
   connectorsUnavailableCount: number = 0;
+
   failedTransactionCount: any = 0;
   successfulTransactionCount: any = 0;
   totalAmount: any = 0;
@@ -53,6 +55,53 @@ export class AnalyticsComponent implements OnInit {
   onlineSiteChargers: any = [];
   offlineChargers: any = [];
   offlineSiteChargers: any = [];
+  //pie
+  piechartData: ChartDataSets[] = [];
+  piechartLabel: Label[] = [];
+  piechartLegend = false;
+  piechartOptions: ChartOptions = {
+    responsive: true,
+  };
+  piechartColors: Color[] = [];
+  // piechartColors: Color[] = [
+  //   {
+  //     // Red
+  //     backgroundColor: 'rgba(255, 99, 132, 0.4)',
+  //      borderColor: 'rgba(255, 99, 132, 1)',
+  //   },
+  //   {
+  //     // Orange
+  //     backgroundColor: 'rgba(255, 159, 64, 0.4)',
+  //     borderColor: 'rgba(255, 159, 64, 1)',
+  //   },
+  //   {
+  //     // Blue
+  //     backgroundColor: 'rgba(54, 162, 235, 0.4)',
+  //     borderColor: 'rgba(54, 162, 235, 1)',
+  //   },
+  //   {
+  //     // Purple
+  //     backgroundColor: 'rgba(153, 102, 255, 0.4)',
+  //     borderColor: 'rgba(153, 102, 255, 1)',
+  //   },
+  //   {
+  //     // Green
+  //     backgroundColor: 'rgba(75, 192, 192, 0.4)',
+  //     borderColor: 'rgba(75, 192, 192, 1)',
+  //   },
+  //   {
+  //     // Yellow
+  //     backgroundColor: 'rgba(255, 206, 86, 0.4)',
+  //     borderColor: 'rgba(255, 206, 86, 1)',
+  //   },
+  //   {
+  //     // Green
+  //     backgroundColor: 'rgba(75, 192, 192, 0.4)',
+  //     borderColor: 'rgba(75, 192, 192, 1)',
+  //   },
+  // ];
+  piechartPlugins: any = [];
+  // current
   chartData: ChartDataSets[] = [];
   chartLabel: Label[] = [];
   chartLegend = false;
@@ -92,6 +141,47 @@ export class AnalyticsComponent implements OnInit {
     },
   ];
   chartPlugins: any = [];
+  //financial
+  finacialchartData: ChartDataSets[] = [];
+  finacialchartLabel: Label[] = [];
+  finacialchartLegend = false;
+  finacialchartOptions: ChartOptions = {
+    responsive: true,
+  };
+  finacialchartColors: Color[] = [
+    {
+      // Red
+      backgroundColor: 'rgba(255, 99, 132, 0.4)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+    },
+    {
+      // Orange
+      backgroundColor: 'rgba(255, 159, 64, 0.4)',
+      borderColor: 'rgba(255, 159, 64, 1)',
+    },
+    {
+      // Blue
+      backgroundColor: 'rgba(54, 162, 235, 0.4)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+    },
+    {
+      // Purple
+      backgroundColor: 'rgba(153, 102, 255, 0.4)',
+      borderColor: 'rgba(153, 102, 255, 1)',
+    },
+    {
+      // Green
+      backgroundColor: 'rgba(75, 192, 192, 0.4)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+    },
+    {
+      // Yellow
+      backgroundColor: 'rgba(255, 206, 86, 0.4)',
+      borderColor: 'rgba(255, 206, 86, 1)',
+    },
+  ];
+  finacialchartPlugins: any = [];
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = [
     'siteName',
@@ -135,12 +225,10 @@ export class AnalyticsComponent implements OnInit {
     private httpDataService: HttpDataService,
     private cdref: ChangeDetectorRef,
     private routerExtService: RouterExtService,
-    public router: Router,
-  ) { }
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
-
-   
     // let table = new DataTable('#myTable');
     this.getTenantNames();
     const sessionRole = localStorage.getItem('role') || '';
@@ -157,14 +245,55 @@ export class AnalyticsComponent implements OnInit {
             console.log('connected to SignalR!');
             console.log('connectionId ', this.connection.connectionId);
             this.connection.on('targetupdate', (data: any) => {
-              console.log(data);
+              console.log('data kruti', data);
               this.tenantCount = data.Tenants;
-              console.log("tenantCount = ", this.tenantCount)
+              console.log('tenantCount = ', this.tenantCount);
               // this.sitesCount = data.Sites;
               // this.chargePointsCount = data.ChargePoints;
               this.connectorsAvailableCount = data.Connectors_Available;
               this.connectorsInUseCount = data.Connectors_InUse;
               this.connectorsOfflineCount = data.Connectors_Offline;
+              this.connectorFinishingCount = data.connectors_Finishing;
+              this.connectorFaultedCount = data.connectors_Faulted;
+              this.connectorAuthorizeCount = data.connectors_Authorize;
+              this.connectorPreparingCount = data.connectors_Preparing;
+
+              this.piechartData = [
+                {
+                  data: [
+                    this.connectorsAvailableCount,
+                    this.connectorsOfflineCount,
+                    this.connectorPreparingCount,
+                    this.connectorFinishingCount,
+                    this.connectorsInUseCount,
+                    this.connectorFaultedCount,
+                    this.connectorAuthorizeCount,
+                  ],
+                },
+              ];
+              this.piechartColors = [
+                {
+                  backgroundColor: [
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(153, 102, 255,0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(238, 130, 238,0.6)',
+                    'rgba(180, 180, 180,0.6)',
+                  ],
+                  borderWidth: 0,
+                },
+              ];
+              this.piechartLabel = [
+                'Available',
+                'Unavailable',
+                'Preparing',
+                'Finishing',
+                'Occupied',
+                'Faulted',
+                'Authorized',
+              ];
             });
           })
           .catch((err: any) =>
@@ -179,28 +308,68 @@ export class AnalyticsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  
-  
   openPopup() {
-    this.displayStyle = "block";
+    this.displayStyle = 'block';
   }
   closePopup() {
-    this.displayStyle = "none";
+    this.displayStyle = 'none';
   }
 
   getCardCount(tenantId: any) {
     this.httpDataService
       .get(AppConstants.APIUrlDashboardCard + '?tenantId=' + tenantId)
       .subscribe((res) => {
-        console.log("res",res);
-        
+        console.log('res kruti', res);
+
         this.tenantCount = res.tenants;
         this.sitesCount = res.sites;
         this.chargePointsCount = res.chargePoints;
         this.connectorsAvailableCount = res.connectors_Available;
         this.connectorsInUseCount = res.connectors_InUse;
         this.connectorsOfflineCount = res.connectors_Offline;
+        this.connectorFinishingCount = res.connectors_Finishing;
+        this.connectorFaultedCount = res.connectors_Faulted;
+        this.connectorAuthorizeCount = res.connectors_Authorize;
+        this.connectorPreparingCount = res.connectors_Preparing;
+
         this.countprocess = false;
+
+        this.piechartData = [
+          {
+            data: [
+              this.connectorsAvailableCount,
+              this.connectorsOfflineCount,
+              this.connectorPreparingCount,
+              this.connectorFinishingCount,
+              this.connectorsInUseCount,
+              this.connectorFaultedCount,
+              this.connectorAuthorizeCount,
+            ],
+          },
+        ];
+        this.piechartColors = [
+          {
+            backgroundColor: [
+              'rgba(255, 159, 64, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(153, 102, 255,0.6)',
+              'rgba(75, 192, 192, 0.6)',
+              'rgba(255, 206, 86, 0.6)',
+              'rgba(238, 130, 238,0.6)',
+              'rgba(180, 180, 180,0.6)',
+            ],
+            borderWidth: 0,
+          },
+        ];
+        this.piechartLabel = [
+          'Available',
+          'Unavailable',
+          'Preparing',
+          'Finishing',
+          'Occupied',
+          'Faulted',
+          'Authorized',
+        ];
       });
     this.httpDataService
       .get(AppConstants.APIUrlGetUnavailableChargers)
@@ -226,7 +395,10 @@ export class AnalyticsComponent implements OnInit {
       .subscribe((res: Tenant[]) => {
         this.tenants = res.sort(this.SortArray);
         if (this.tenants.length) {
-          localStorage.setItem('selectedTenantId', this.tenants[0].tenantId.toString());
+          localStorage.setItem(
+            'selectedTenantId',
+            this.tenants[0].tenantId.toString()
+          );
           this.tenantSelection(this.tenants[0]);
           this.getCardCount(this.tenants[0].tenantId);
         }
@@ -234,8 +406,8 @@ export class AnalyticsComponent implements OnInit {
   }
 
   tenantSelection(tenant: any) {
-    console.log("Here In this");
-    
+    console.log('Here In this');
+
     this.greenprocess = true;
     this.countprocess = true;
     this.dataSource.data = [];
@@ -250,7 +422,10 @@ export class AnalyticsComponent implements OnInit {
           this.sites = res;
           this.selectedTenant = tenant;
           this.chargePoints = [];
-          localStorage.setItem('selectedTenantId', JSON.stringify(tenant.tenantId));
+          localStorage.setItem(
+            'selectedTenantId',
+            JSON.stringify(tenant.tenantId)
+          );
           this.getCardCount(tenant.tenantId);
           this.getChargerData();
           this.getOnlineChargers();
@@ -260,6 +435,7 @@ export class AnalyticsComponent implements OnInit {
             this.endDate.getTime() - 90 * 24 * 60 * 60 * 1000
           );
           this.getStatistics();
+          this.getfinancialStatistics();
         },
         (error) => {
           console.log(error);
@@ -271,11 +447,11 @@ export class AnalyticsComponent implements OnInit {
     this.httpDataService
       .get(
         AppConstants.APIUrlChargePointsById +
-        this.selectedTenant.tenantId +
-        '/' +
-        site.siteId +
-        '/' +
-        false
+          this.selectedTenant.tenantId +
+          '/' +
+          site.siteId +
+          '/' +
+          false
       )
       .subscribe(
         (res) => {
@@ -304,28 +480,34 @@ export class AnalyticsComponent implements OnInit {
     this.selectedChargePoint = chargepoint;
   }
 
-  getStatistics() {
+  getfinancialStatistics() {
     if (this.startDate && this.endDate) {
-      this.chartData = [];
-      this.chartLabel = [];
+      this.finacialchartData = [];
+      this.finacialchartLabel = [];
       this.httpDataService
         .get(
           AppConstants.APIUrlGetStatistics +
-          this.selectedTenant.tenantId +
-          '/' +
-          Helper.getFormattedDate(this.startDate) +
-          '/' +
-          Helper.getFormattedDate(this.endDate)
+            this.selectedTenant.tenantId +
+            '/' +
+            Helper.getFormattedDate(this.startDate) +
+            '/' +
+            Helper.getFormattedDate(this.endDate)
         )
         .subscribe(
           (res) => {
-            this.failedTransactionCount = res?.data?.failedTransactionCount ? res?.data?.failedTransactionCount : 0;
-            this.successfulTransactionCount =
-              res?.data?.successfulTransactionCount ? res?.data?.successfulTransactionCount : 0;
-            this.totalAmount = res?.data?.totalAmount ? parseFloat(res?.data?.totalAmount).toFixed(2) : 0;
-            this.totalUnitsConsumed = res?.data?.totalUnitsConsumed ? parseFloat(
-              res?.data?.totalUnitsConsumed
-            ).toFixed(2) : 0;
+            this.failedTransactionCount = res?.data?.failedTransactionCount
+              ? res?.data?.failedTransactionCount
+              : 0;
+            this.successfulTransactionCount = res?.data
+              ?.successfulTransactionCount
+              ? res?.data?.successfulTransactionCount
+              : 0;
+            this.totalAmount = res?.data?.totalAmount
+              ? parseFloat(res?.data?.totalAmount).toFixed(2)
+              : 0;
+            this.totalUnitsConsumed = res?.data?.totalUnitsConsumed
+              ? parseFloat(res?.data?.totalUnitsConsumed).toFixed(2)
+              : 0;
           },
           (error) => {
             console.log(error);
@@ -348,11 +530,127 @@ export class AnalyticsComponent implements OnInit {
       this.httpDataService
         .get(
           AppConstants.APIUrlGetGraphData +
-          Helper.getFormattedDate(this.startDate) +
-          '/' +
-          Helper.getFormattedDate(this.endDate) +
-          '/' +
-          this.selectedTenant.tenantId
+            Helper.getFormattedDate(this.startDate) +
+            '/' +
+            Helper.getFormattedDate(this.endDate) +
+            '/' +
+            this.selectedTenant.tenantId
+        )
+        .subscribe(
+          (res) => {
+            let totalAmountData: any = [];
+            let totalTransactionsData: any = [];
+            let newUserData: any = [];
+            let newGuestUserData: any = [];
+            res?.data.forEach((element: any, index: number) => {
+              this.finacialchartLabel.push(element.transactionDate);
+              totalAmountData.push(parseFloat(element.totalAmount).toFixed(2));
+              totalTransactionsData.push(element.totalTransactions);
+              newUserData.push(element.newUser);
+              newGuestUserData.push(element.newGuestUser);
+              if (res.data.length - 1 === index) {
+                if (this.isMasterAdmin) {
+                  this.finacialchartData = [
+                    {
+                      label: 'FTotal Revenue',
+                      data: totalAmountData,
+                      borderWidth: 1,
+                    },
+                    {
+                      label: 'FTransactions',
+                      data: totalTransactionsData,
+                      borderWidth: 1,
+                    },
+                    {
+                      label: 'FRegistered User',
+                      data: newUserData,
+                      borderWidth: 1,
+                    },
+                    {
+                      label: 'FGuest User',
+                      data: newGuestUserData,
+                      borderWidth: 1,
+                    },
+                  ];
+                } else {
+                  this.chartData = [
+                    {
+                      label: 'FTotal Revenue',
+                      data: totalAmountData,
+                      borderWidth: 1,
+                    },
+                    {
+                      label: 'FTransactions',
+                      data: totalTransactionsData,
+                      borderWidth: 1,
+                    },
+                  ];
+                }
+              }
+            });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
+  }
+
+  getStatistics() {
+    if (this.startDate && this.endDate) {
+      this.chartData = [];
+      this.chartLabel = [];
+      this.httpDataService
+        .get(
+          AppConstants.APIUrlGetStatistics +
+            this.selectedTenant.tenantId +
+            '/' +
+            Helper.getFormattedDate(this.startDate) +
+            '/' +
+            Helper.getFormattedDate(this.endDate)
+        )
+        .subscribe(
+          (res) => {
+            this.failedTransactionCount = res?.data?.failedTransactionCount
+              ? res?.data?.failedTransactionCount
+              : 0;
+            this.successfulTransactionCount = res?.data
+              ?.successfulTransactionCount
+              ? res?.data?.successfulTransactionCount
+              : 0;
+            this.totalAmount = res?.data?.totalAmount
+              ? parseFloat(res?.data?.totalAmount).toFixed(2)
+              : 0;
+            this.totalUnitsConsumed = res?.data?.totalUnitsConsumed
+              ? parseFloat(res?.data?.totalUnitsConsumed).toFixed(2)
+              : 0;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      this.httpDataService
+        .post(AppConstants.APIUrlGetRegisteredUsers, {
+          // tenantId: this.selectedTenant.tenantId,
+          startDate: Helper.getFormattedDate(this.startDate),
+          endDate: Helper.getFormattedDate(this.endDate),
+        })
+        .subscribe(
+          (res) => {
+            this.registeredUser = res;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      this.httpDataService
+        .get(
+          AppConstants.APIUrlGetGraphData +
+            Helper.getFormattedDate(this.startDate) +
+            '/' +
+            Helper.getFormattedDate(this.endDate) +
+            '/' +
+            this.selectedTenant.tenantId
         )
         .subscribe(
           (res) => {
@@ -424,7 +722,14 @@ export class AnalyticsComponent implements OnInit {
   getChargerData() {
     this.dataSource.data = [];
     this.httpDataService
-      .get(AppConstants.APIUrlGetChargerData + this.selectedTenant.tenantId + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize)
+      .get(
+        AppConstants.APIUrlGetChargerData +
+          this.selectedTenant.tenantId +
+          '/' +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize
+      )
       .subscribe(
         (res) => {
           this.dataSource.data = res.list;
@@ -468,12 +773,17 @@ export class AnalyticsComponent implements OnInit {
   }
 
   goToSite() {
-    localStorage.setItem('parentTenantRequest', this.selectedTenant.isRequestRaised);
+    localStorage.setItem(
+      'parentTenantRequest',
+      this.selectedTenant.isRequestRaised
+    );
     localStorage.setItem('tenantName', this.selectedTenant.name);
     localStorage.setItem('tenantId', this.selectedTenant.tenantId);
     this.routerExtService.clearRouteValue();
-    this.routerExtService.setRouteValue(AppConstants.TenantID, this.selectedTenant.tenantId.toString());
+    this.routerExtService.setRouteValue(
+      AppConstants.TenantID,
+      this.selectedTenant.tenantId.toString()
+    );
     this.router.navigate([AppConstants.TenantDetailPage]);
   }
-
 }

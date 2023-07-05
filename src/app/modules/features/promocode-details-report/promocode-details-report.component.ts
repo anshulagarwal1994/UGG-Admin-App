@@ -1,9 +1,5 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Helper from '@app/shared/utility/Helper';
 import { AppConstants } from 'src/app/constants';
 import { HttpDataService } from '@app/shared/services/http-data.service';
@@ -20,7 +16,6 @@ import { ChargePoint } from '@app/models/chargepoint.model';
   styleUrls: ['./promocode-details-report.component.css'],
 })
 export class PromocodeDetailsReportComponent {
-
   process = false;
   maxDate = new Date();
   tenants: Tenant[];
@@ -39,7 +34,7 @@ export class PromocodeDetailsReportComponent {
     'chargePoint',
     'customerId',
     'noofTimesUsed',
-    'promocode'
+    'promocode',
   ];
   @ViewChild(MatPaginator, { static: false })
   set paginator(value: MatPaginator) {
@@ -238,80 +233,102 @@ export class PromocodeDetailsReportComponent {
     if (this.promocodeForm.valid) {
       this.process = true;
       this.dataSource.data = [];
-      const tindex = this.promocodeForm.get('tenants')?.value.indexOf('select-all');
+      const tindex = this.promocodeForm
+        .get('tenants')
+        ?.value.indexOf('select-all');
       if (tindex > -1) {
         this.promocodeForm.get('tenants')?.value.splice(tindex, 1);
       }
-      const sindex = this.promocodeForm.get('sites')?.value.indexOf('select-all');
+      const sindex = this.promocodeForm
+        .get('sites')
+        ?.value.indexOf('select-all');
       if (sindex > -1) {
         this.promocodeForm.get('sites')?.value.splice(sindex, 1);
       }
-      const cindex = this.promocodeForm.get('chargePoints')?.value.indexOf('select-all');
+      const cindex = this.promocodeForm
+        .get('chargePoints')
+        ?.value.indexOf('select-all');
       if (cindex > -1) {
         this.promocodeForm.get('chargePoints')?.value.splice(cindex, 1);
       }
       this.httpDataService
-      .post(AppConstants.APIUrlGetPromoCodeDetails, {
-        tenants: "'" + this.promocodeForm.get('tenants')?.value.join("','") + "'",
-        sites: "'" + this.promocodeForm.get('sites')?.value.join("','") + "'",
-        // chargepoints: "'" + this.promocodeForm.get('chargePoints')?.value.join("','") + "'",
-        chargepoints: this.promocodeForm.get('chargePoints')?.value.join(","),
-        transactionStartDate: Helper.getFormattedDate(
-          this.promocodeForm.get('startDate')?.value
-        ),
-        transactionEndDate: Helper.getFormattedDate(
-          this.promocodeForm.get('endDate')?.value
-        ),
-      })
-      .subscribe(
-        (res) => {
-          this.dataSource.data = res.data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.cdref.detectChanges();
-          this.process = false;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        .post(AppConstants.APIUrlGetPromoCodeDetails, {
+          tenants:
+            "'" + this.promocodeForm.get('tenants')?.value.join("','") + "'",
+          sites: "'" + this.promocodeForm.get('sites')?.value.join("','") + "'",
+          // chargepoints: "'" + this.promocodeForm.get('chargePoints')?.value.join("','") + "'",
+          chargepoints: this.promocodeForm.get('chargePoints')?.value.join(','),
+          transactionStartDate: Helper.getFormattedDate(
+            this.promocodeForm.get('startDate')?.value
+          ),
+          transactionEndDate: Helper.getFormattedDate(
+            this.promocodeForm.get('endDate')?.value
+          ),
+        })
+        .subscribe(
+          (res) => {
+            this.dataSource.data = res.data;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.cdref.detectChanges();
+            this.process = false;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
   downloadReport() {
-    let csvData = this.ConvertToCSV(this.dataSource.data, ['tenant',
-    'site',
-    'chargePoint',
-    'customerId',
-    'noofTimesUsed',
-    'promocode']);
-    let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
-    let dwldLink = document.createElement("a");
-    let url = URL.createObjectURL(blob);
-    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-    if (isSafariBrowser) {
-        dwldLink.setAttribute("target", "_blank");
+    if (this.dataSource.data.length > 0) {
+      let csvData = this.ConvertToCSV(this.dataSource.data, [
+        'tenant',
+        'site',
+        'chargePoint',
+        'customerId',
+        'noofTimesUsed',
+        'promocode',
+      ]);
+      let blob = new Blob(['\ufeff' + csvData], {
+        type: 'text/csv;charset=utf-8;',
+      });
+      let dwldLink = document.createElement('a');
+      let url = URL.createObjectURL(blob);
+      let isSafariBrowser =
+        navigator.userAgent.indexOf('Safari') != -1 &&
+        navigator.userAgent.indexOf('Chrome') == -1;
+      if (isSafariBrowser) {
+        dwldLink.setAttribute('target', '_blank');
+      }
+      dwldLink.setAttribute('href', url);
+      dwldLink.setAttribute('download', 'PromoCode-Details-Report.csv');
+      dwldLink.style.visibility = 'hidden';
+      document.body.appendChild(dwldLink);
+      dwldLink.click();
+      document.body.removeChild(dwldLink);
     }
-    dwldLink.setAttribute("href", url);
-    dwldLink.setAttribute("download", "PromoCode-Details-Report.csv");
-    dwldLink.style.visibility = "hidden";
-    document.body.appendChild(dwldLink);
-    dwldLink.click();
-    document.body.removeChild(dwldLink);
   }
 
   ConvertToCSV(objArray: any, headerList: any) {
     let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'Sr. No.,';
-    let newHeaders = ['Organization','Site', 'ChargePoint', 'Customer ID', 'No. of Times Used', 'Promocode'];
+    let newHeaders = [
+      'Organization',
+      'Site',
+      'ChargePoint',
+      'Customer ID',
+      'No. of Times Used',
+      'Promocode',
+    ];
     for (let index in newHeaders) {
       row += newHeaders[index] + ',';
     }
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (let i = 0; i < array.length; i++) {
-      let line = (i + 1) + '';
+      let line = i + 1 + '';
       for (let index in headerList) {
         let head = headerList[index];
         line += ',' + this.strRep(array[i][head]);
@@ -323,17 +340,14 @@ export class PromocodeDetailsReportComponent {
 
   strRep(data: any) {
     console.log(typeof data);
-    if(typeof data == 'string') {
-      let newData = data.replace(/,/g, " ");
-       return newData;
-    }
-    else if(typeof data == 'object') {
-      return "-";
-    }
-    else if(typeof data == 'number') {
-      return  data.toString();
-    }
-    else {
+    if (typeof data == 'string') {
+      let newData = data.replace(/,/g, ' ');
+      return newData;
+    } else if (typeof data == 'object') {
+      return '-';
+    } else if (typeof data == 'number') {
+      return data.toString();
+    } else {
       return data;
     }
   }

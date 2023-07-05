@@ -12,7 +12,6 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./financial-revenue-report.component.css'],
 })
 export class FinancialRevenueReportComponent {
-
   process = false;
   maxDate = new Date();
   startDate: any = '';
@@ -30,7 +29,7 @@ export class FinancialRevenueReportComponent {
     'netRevenue',
     'revenueShare',
     'cloudServiceFees',
-    'amountOwed'
+    'amountOwed',
   ];
   @ViewChild(MatPaginator, { static: false })
   set paginator(value: MatPaginator) {
@@ -55,66 +54,94 @@ export class FinancialRevenueReportComponent {
       this.process = true;
       this.dataSource.data = [];
       this.httpDataService
-      .get(AppConstants.APIUrlGetFinancialRevenue + Helper.getFormattedDate(this.startDate) + '/' + Helper.getFormattedDate(this.endDate))
-      .subscribe(
-        (res) => {
-          res.data.forEach((d: any) => {
-            let transactionDate = new Date(d.transactionDate);
-            d.transactionDate = transactionDate.toLocaleString('en-US', {timeZone: 'CST'});
-          });
-          this.dataSource.data = res.data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.cdref.detectChanges();
-          this.process = false;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        .get(
+          AppConstants.APIUrlGetFinancialRevenue +
+            Helper.getFormattedDate(this.startDate) +
+            '/' +
+            Helper.getFormattedDate(this.endDate)
+        )
+        .subscribe(
+          (res) => {
+            res.data.forEach((d: any) => {
+              let transactionDate = new Date(d.transactionDate);
+              d.transactionDate = transactionDate.toLocaleString('en-US', {
+                timeZone: 'CST',
+              });
+            });
+            this.dataSource.data = res.data;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.cdref.detectChanges();
+            this.process = false;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
   downloadReport() {
-    let csvData = this.ConvertToCSV(this.dataSource.data, ['tenant',
-    'site',
-    'chargePoint',
-    'transactionDate',
-    'kwh',
-    'amount',
-    'transactionfees',
-    'utilityFees',
-    'netRevenue',
-    'revenueShare',
-    'cloudServiceFees',
-    'amountOwed']);
-    let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
-    let dwldLink = document.createElement("a");
-    let url = URL.createObjectURL(blob);
-    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-    if (isSafariBrowser) {
-        dwldLink.setAttribute("target", "_blank");
+    if (this.dataSource.data.length > 0) {
+      let csvData = this.ConvertToCSV(this.dataSource.data, [
+        'tenant',
+        'site',
+        'chargePoint',
+        'transactionDate',
+        'kwh',
+        'amount',
+        'transactionfees',
+        'utilityFees',
+        'netRevenue',
+        'revenueShare',
+        'cloudServiceFees',
+        'amountOwed',
+      ]);
+      let blob = new Blob(['\ufeff' + csvData], {
+        type: 'text/csv;charset=utf-8;',
+      });
+      let dwldLink = document.createElement('a');
+      let url = URL.createObjectURL(blob);
+      let isSafariBrowser =
+        navigator.userAgent.indexOf('Safari') != -1 &&
+        navigator.userAgent.indexOf('Chrome') == -1;
+      if (isSafariBrowser) {
+        dwldLink.setAttribute('target', '_blank');
+      }
+      dwldLink.setAttribute('href', url);
+      dwldLink.setAttribute('download', 'Financial-Revenue-Report.csv');
+      dwldLink.style.visibility = 'hidden';
+      document.body.appendChild(dwldLink);
+      dwldLink.click();
+      document.body.removeChild(dwldLink);
     }
-    dwldLink.setAttribute("href", url);
-    dwldLink.setAttribute("download", "Financial-Revenue-Report.csv");
-    dwldLink.style.visibility = "hidden";
-    document.body.appendChild(dwldLink);
-    dwldLink.click();
-    document.body.removeChild(dwldLink);
   }
 
   ConvertToCSV(objArray: any, headerList: any) {
     let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'Sr. No.,';
-    let newHeaders = ['Organization','Site', 'ChargePoint', 'Date', 'Consumed', 'Amount', 'Transaction Fees', 'Utility Fees', 'Revenue', 'Revenue Share', 'Cloud Service Fees', 'Amount Owed'];
+    let newHeaders = [
+      'Organization',
+      'Site',
+      'ChargePoint',
+      'Date',
+      'Consumed',
+      'Amount',
+      'Transaction Fees',
+      'Utility Fees',
+      'Revenue',
+      'Revenue Share',
+      'Cloud Service Fees',
+      'Amount Owed',
+    ];
     for (let index in newHeaders) {
       row += newHeaders[index] + ',';
     }
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (let i = 0; i < array.length; i++) {
-      let line = (i + 1) + '';
+      let line = i + 1 + '';
       for (let index in headerList) {
         let head = headerList[index];
         line += ',' + this.strRep(array[i][head]);
@@ -126,19 +153,15 @@ export class FinancialRevenueReportComponent {
 
   strRep(data: any) {
     console.log(typeof data);
-    if(typeof data == 'string') {
-      let newData = data.replace(/,/g, " ");
-       return newData;
-    }
-    else if(typeof data == 'object') {
-      return "-";
-    }
-    else if(typeof data == 'number') {
-      return  data.toString();
-    }
-    else {
+    if (typeof data == 'string') {
+      let newData = data.replace(/,/g, ' ');
+      return newData;
+    } else if (typeof data == 'object') {
+      return '-';
+    } else if (typeof data == 'number') {
+      return data.toString();
+    } else {
       return data;
     }
   }
-
 }

@@ -12,17 +12,12 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./driver-registration-report.component.css'],
 })
 export class DriverRegistrationReportComponent {
-
   process = false;
   maxDate = new Date();
   startDate: any = '';
   endDate: any = '';
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = [
-    'name',
-    'email',
-    'mobile'
-  ];
+  displayedColumns: string[] = ['name', 'email', 'mobile'];
   @ViewChild(MatPaginator, { static: false })
   set paginator(value: MatPaginator) {
     if (this.dataSource) {
@@ -46,54 +41,64 @@ export class DriverRegistrationReportComponent {
       this.process = true;
       this.dataSource.data = [];
       this.httpDataService
-      .post(AppConstants.APIUrlGetDriverRegistration, {
-        startDate: Helper.getFormattedDate(this.startDate),
-        endDate: Helper.getFormattedDate(this.endDate),
-      })
-      .subscribe(
-        (res) => {
-          this.dataSource.data = res;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.cdref.detectChanges();
-          this.process = false;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+        .post(AppConstants.APIUrlGetDriverRegistration, {
+          startDate: Helper.getFormattedDate(this.startDate),
+          endDate: Helper.getFormattedDate(this.endDate),
+        })
+        .subscribe(
+          (res) => {
+            this.dataSource.data = res;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.cdref.detectChanges();
+            this.process = false;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
     }
   }
 
   downloadReport() {
-    let csvData = this.ConvertToCSV(this.dataSource.data, ['name','email', 'mobile']);
-    let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
-    let dwldLink = document.createElement("a");
-    let url = URL.createObjectURL(blob);
-    let isSafariBrowser = navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
-    if (isSafariBrowser) {
-        dwldLink.setAttribute("target", "_blank");
+    if (this.dataSource.data.length > 0) {
+      let csvData = this.ConvertToCSV(this.dataSource.data, [
+        'name',
+        'email',
+        'mobile',
+      ]);
+      let blob = new Blob(['\ufeff' + csvData], {
+        type: 'text/csv;charset=utf-8;',
+      });
+      let dwldLink = document.createElement('a');
+      let url = URL.createObjectURL(blob);
+      let isSafariBrowser =
+        navigator.userAgent.indexOf('Safari') != -1 &&
+        navigator.userAgent.indexOf('Chrome') == -1;
+      if (isSafariBrowser) {
+        dwldLink.setAttribute('target', '_blank');
+      }
+      dwldLink.setAttribute('href', url);
+      dwldLink.setAttribute('download', 'Driver-Registration-Report.csv');
+      dwldLink.style.visibility = 'hidden';
+      document.body.appendChild(dwldLink);
+      dwldLink.click();
+      document.body.removeChild(dwldLink);
     }
-    dwldLink.setAttribute("href", url);
-    dwldLink.setAttribute("download", "Driver-Registration-Report.csv");
-    dwldLink.style.visibility = "hidden";
-    document.body.appendChild(dwldLink);
-    dwldLink.click();
-    document.body.removeChild(dwldLink);
   }
 
   ConvertToCSV(objArray: any, headerList: any) {
     let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
     let row = 'Sr. No.,';
-    let newHeaders = ['Name','Email', 'Mobile'];
+    let newHeaders = ['Name', 'Email', 'Mobile'];
     for (let index in newHeaders) {
       row += newHeaders[index] + ',';
     }
     row = row.slice(0, -1);
     str += row + '\r\n';
     for (let i = 0; i < array.length; i++) {
-      let line = (i + 1) + '';
+      let line = i + 1 + '';
       for (let index in headerList) {
         let head = headerList[index];
         line += ',' + this.strRep(array[i][head]);
@@ -105,19 +110,15 @@ export class DriverRegistrationReportComponent {
 
   strRep(data: any) {
     console.log(typeof data);
-    if(typeof data == 'string') {
-      let newData = data.replace(/,/g, " ");
-       return newData;
-    }
-    else if(typeof data == 'object') {
-      return "-";
-    }
-    else if(typeof data == 'number') {
-      return  data.toString();
-    }
-    else {
+    if (typeof data == 'string') {
+      let newData = data.replace(/,/g, ' ');
+      return newData;
+    } else if (typeof data == 'object') {
+      return '-';
+    } else if (typeof data == 'number') {
+      return data.toString();
+    } else {
       return data;
     }
   }
-
 }
