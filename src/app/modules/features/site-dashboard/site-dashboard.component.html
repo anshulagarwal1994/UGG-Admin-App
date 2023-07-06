@@ -91,37 +91,37 @@
               <div class="cn-status-inner">
                 <h3>Connectors</h3>
                 <div class="connectors-footer-contect">
-                  <label class="available">
+                  <label class="available" routerLink="/connectors/Online">
                     <span class="material-symbols-outlined">check_circle</span>
                     <p>{{ siteCards.connectors_Available }}</p>
                     Available
                   </label>
-                  <label class="unavailable">
+                  <label class="unavailable"  routerLink="/connectors/Occupied">
                     <span class="material-symbols-outlined">change_circle</span>
                     <p>{{ siteCards.connectors_InUse }}</p>
                     Occupied
                   </label>
-                  <label class="occupied">
+                  <label class="occupied" routerLink="/connectors/Unavailable">
                     <span class="material-symbols-outlined">error</span>
                     <p>{{ siteCards.connectors_Offline }}</p>
                     Unavailable
                   </label>
-                  <label class="faulted">
+                  <label class="faulted"  routerLink="/connectors/Faulted" >
                     <span class="material-symbols-outlined">disabled_by_default</span>
                     <p>{{ siteCards.connectors_Faulted }}</p>
                     Faulted
                   </label>
-                  <label class="preparing">
+                  <label class="preparing"routerLink="/connectors/Preparing">
                     <span class="material-symbols-outlined">ev_charger</span>
                     <p>{{ siteCards.connectors_Preparing }}</p>
                     Preparing
                   </label>
-                  <label class="authorized">
+                  <label class="authorized"  routerLink="/connectors/Authorized">
                     <span class="material-symbols-outlined">account_circle</span>
                     <p>{{ siteCards.connectors_Authorize }}</p>
                     Authorized
                   </label>
-                  <label class="finishing">
+                  <label class="finishing" routerLink="/connectors/Finishing">
                     <span class="material-symbols-outlined">done_all</span>
                     <p>{{ siteCards.connectors_Finishing }}</p>
                     Finishing
@@ -157,7 +157,7 @@
             </mat-button-toggle-group>
             <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z icon-right"  mat-raised-button data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Filter<span class="material-symbols-outlined">keyboard_arrow_down</span></a>
             <a *ngIf="tenantId != undefined && canCreateSite" class="btn-border mat-elevation-z" mat-raised-button href="javascript:;" (click) = "newSite()">Add New Site<span class="material-symbols-outlined">add</span></a>
-            <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a>
+            <!-- <a class="btn-back mat-elevation-z" mat-raised-button href="javascript:;"><span class="material-symbols-outlined">keyboard_backspace</span> Back</a> -->
             
 
 

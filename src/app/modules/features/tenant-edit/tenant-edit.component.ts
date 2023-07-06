@@ -1,5 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpDataService } from 'src/app/shared/services/http-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,7 +32,7 @@ import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dial
 @Component({
   selector: 'app-tenant-edit',
   templateUrl: './tenant-edit.component.html',
-  styleUrls: ['./tenant-edit.component.css']
+  styleUrls: ['./tenant-edit.component.css'],
 })
 export class TenantEditComponent implements OnInit {
   tenantForm: FormGroup;
@@ -44,16 +50,16 @@ export class TenantEditComponent implements OnInit {
   parentTenantRequest = false;
   deletedRecords = false;
   process = true;
-  Prename = "";
-  Precompany = "";
-  Prestreet = "";
-  Prestate = "";
-  Precity = "";
-  Precountry = "";
-  Preemail = "";
-  Prephone = "";
-  PrezipCode = "";
-  Prestatus = "";
+  Prename = '';
+  Precompany = '';
+  Prestreet = '';
+  Prestate = '';
+  Precity = '';
+  Precountry = '';
+  Preemail = '';
+  Prephone = '';
+  PrezipCode = '';
+  Prestatus = '';
   dialogRef: MatDialogRef<any>;
   // countryList : any  = (Country  as  any).default;
   public tenantConstants = TenantConstants;
@@ -64,70 +70,109 @@ export class TenantEditComponent implements OnInit {
   pageNumber: number = 0;
   pageSize: number = 5;
   totalCount: number = 0;
-  @ViewChild(MatPaginator, {static: true})
+  @ViewChild(MatPaginator, { static: true })
   set paginator(value: MatPaginator) {
-    if (this.dataSource){
+    if (this.dataSource) {
       this.dataSource.paginator = value;
     }
   }
-  @ViewChild(MatSort, {static: false})
+  @ViewChild(MatSort, { static: false })
   set sort(value: MatSort) {
-    if (this.dataSource){
+    if (this.dataSource) {
       this.dataSource.sort = value;
     }
   }
-  position:string = 'above';
+  position: string = 'above';
 
   countryList = [
     {
-      "country": "Canada"
+      country: 'Canada',
     },
     {
-      "country": "Mexico"
+      country: 'Mexico',
     },
     {
-      "country": "United States"
+      country: 'United States',
     },
   ];
 
   get name(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('name')?.value) && (this.tenantForm.get('name')?.value.length <= 3 || this.tenantForm.get('name')?.value.length > 150);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('name')?.value) &&
+      (this.tenantForm.get('name')?.value.length <= 3 ||
+        this.tenantForm.get('name')?.value.length > 150)
+    );
   }
 
   get email(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('email')?.value) && this.tenantForm.get('email')?.errors?.email;
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('email')?.value) &&
+      this.tenantForm.get('email')?.errors?.email
+    );
   }
 
   get companyName(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('company')?.value) && (this.tenantForm.get('company')?.value.length <= 3 || this.tenantForm.get('company')?.value.length > 150);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('company')?.value) &&
+      (this.tenantForm.get('company')?.value.length <= 3 ||
+        this.tenantForm.get('company')?.value.length > 150)
+    );
   }
 
   get phone(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('phone')?.value) && (this.tenantForm.get('phone')?.value.length <= 10 || this.tenantForm.get('phone')?.value.length > 15);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('phone')?.value) &&
+      (this.tenantForm.get('phone')?.value.length <= 10 ||
+        this.tenantForm.get('phone')?.value.length > 15)
+    );
   }
 
   get country(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('country')?.value) && (this.tenantForm.get('country')?.value.length <= 3 || this.tenantForm.get('country')?.value.length > 100);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('country')?.value) &&
+      (this.tenantForm.get('country')?.value.length <= 3 ||
+        this.tenantForm.get('country')?.value.length > 100)
+    );
   }
 
   get city(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('city')?.value) && (this.tenantForm.get('city')?.value.length <= 2 || this.tenantForm.get('city')?.value.length > 100);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('city')?.value) &&
+      (this.tenantForm.get('city')?.value.length <= 2 ||
+        this.tenantForm.get('city')?.value.length > 100)
+    );
   }
 
   get state(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('state')?.value) && (this.tenantForm.get('state')?.value.length <= 2 || this.tenantForm.get('state')?.value.length > 100);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('state')?.value) &&
+      (this.tenantForm.get('state')?.value.length <= 2 ||
+        this.tenantForm.get('state')?.value.length > 100)
+    );
   }
 
   get street(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('street')?.value) && (this.tenantForm.get('street')?.value.length <= 1 || this.tenantForm.get('street')?.value.length > 250);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('street')?.value) &&
+      (this.tenantForm.get('street')?.value.length <= 1 ||
+        this.tenantForm.get('street')?.value.length > 250)
+    );
   }
 
   get zip(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('zipCode')?.value) && (this.tenantForm.get('zipCode')?.value.length <= 5 || this.tenantForm.get('zipCode')?.value.length > 11);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('zipCode')?.value) &&
+      (this.tenantForm.get('zipCode')?.value.length <= 5 ||
+        this.tenantForm.get('zipCode')?.value.length > 11)
+    );
   }
 
   get address(): boolean {
-    return !Helper.isNullOrWhitespace(this.tenantForm.get('street')?.value) && (this.tenantForm.get('street')?.value.length <= 15 || this.tenantForm.get('street')?.value.length > 250);
+    return (
+      !Helper.isNullOrWhitespace(this.tenantForm.get('street')?.value) &&
+      (this.tenantForm.get('street')?.value.length <= 15 ||
+        this.tenantForm.get('street')?.value.length > 250)
+    );
   }
 
   //Grid columns
@@ -137,14 +182,15 @@ export class TenantEditComponent implements OnInit {
       columnProp: AppConstants.FilterHeader_Name,
       type: 'text',
       options: [] as string[],
-      modelValue: ''
-    }, {
+      modelValue: '',
+    },
+    {
       name: AppConstants.FilterHeader_Location,
       columnProp: AppConstants.FilterHeader_Location,
       type: 'text',
       options: [] as string[],
-      modelValue: ''
-    }
+      modelValue: '',
+    },
   ];
 
   filterValues: any = {};
@@ -159,21 +205,31 @@ export class TenantEditComponent implements OnInit {
   locationValues: any[];
   location: any[];
   popUpData: string;
-  
+
   constructor(
-    private readonly formBuilder: FormBuilder, private httpDataService: HttpDataService, public dialog: MatDialog,
-    private toastr: ToastrService, private activatedRoute: ActivatedRoute,private translate: TranslateService,
-    public translateConfigService: TranslateConfigService, public filterService: GridFilterService,
-    private dialogService: DialogService, private router: Router, private popUpService: PopUpService,
-    private routerExtService: RouterExtService, private indexedDBService: IndexedDBService) {
+    private readonly formBuilder: FormBuilder,
+    private httpDataService: HttpDataService,
+    public dialog: MatDialog,
+    private toastr: ToastrService,
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService,
+    public translateConfigService: TranslateConfigService,
+    public filterService: GridFilterService,
+    private dialogService: DialogService,
+    private router: Router,
+    private popUpService: PopUpService,
+    private routerExtService: RouterExtService,
+    private indexedDBService: IndexedDBService
+  ) {
     this.tenant = new Tenant();
   }
-
 
   private _filter(value: string, input: string[]): string[] {
     const filterValue = value.toString().toLowerCase();
 
-    return input?.filter(v => v?.toString().toLowerCase().indexOf(filterValue) === 0);
+    return input?.filter(
+      (v) => v?.toString().toLowerCase().indexOf(filterValue) === 0
+    );
   }
 
   ngAfterViewInit() {
@@ -193,25 +249,91 @@ export class TenantEditComponent implements OnInit {
   buildTenantForm() {
     this.tenantForm = this.formBuilder.group({
       //name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(AppConstants.fullNamePattern)]],
-      name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(AppConstants.addressPattern)]],
-      street: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(250), Validators.pattern(AppConstants.addressPattern)]],
+      name: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(150),
+          Validators.pattern(AppConstants.addressPattern),
+        ],
+      ],
+      street: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(250),
+          Validators.pattern(AppConstants.addressPattern),
+        ],
+      ],
       //company: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(AppConstants.fullNamePattern)]],
-      company: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(150), Validators.pattern(AppConstants.addressPattern)]],
-      email: [null, [Validators.email, Validators.required, this.validateEmailId]],
-      phone: [null, [Validators.required, Validators.pattern(AppConstants.numberPattern), Validators.minLength(10), Validators.maxLength(15)]],
-      state: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100), Validators.pattern(AppConstants.addressPattern)]],
-      city: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(100), Validators.pattern(AppConstants.addressPattern)]],
+      company: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(150),
+          Validators.pattern(AppConstants.addressPattern),
+        ],
+      ],
+      email: [
+        null,
+        [Validators.email, Validators.required, this.validateEmailId],
+      ],
+      phone: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(AppConstants.numberPattern),
+          Validators.minLength(10),
+          Validators.maxLength(15),
+        ],
+      ],
+      state: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(100),
+          Validators.pattern(AppConstants.addressPattern),
+        ],
+      ],
+      city: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(100),
+          Validators.pattern(AppConstants.addressPattern),
+        ],
+      ],
       //state: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(AppConstants.stringPattern)]],
       //city: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(100), Validators.pattern(AppConstants.stringPattern)]],
-      country: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      zipCode: [null, [Validators.required, Validators.pattern(AppConstants.numberPattern), Validators.minLength(5), Validators.maxLength(6)]],
-      status: [null]
+      country: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+        ],
+      ],
+      zipCode: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(AppConstants.numberPattern),
+          Validators.minLength(5),
+          Validators.maxLength(6),
+        ],
+      ],
+      status: [null],
     });
   }
 
-  validateEmailId(control: AbstractControl): {[key: string]: any} | null  {
+  validateEmailId(control: AbstractControl): { [key: string]: any } | null {
     if (control.value && Helper.isValidEmail(control.value) == false) {
-      return { 'invalidEmailAddress': true };
+      return { invalidEmailAddress: true };
     }
     return null;
   }
@@ -224,8 +346,8 @@ export class TenantEditComponent implements OnInit {
     }
   }
 
-  sorting(){
-  const sortState: Sort = {active: 'name', direction: 'desc'};
+  sorting() {
+    const sortState: Sort = { active: 'name', direction: 'desc' };
     this.sort.active = sortState.active;
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
@@ -233,36 +355,43 @@ export class TenantEditComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.removeItem('parentSiteRequest');
-    this.indexedDBService.getRecordData('PermissionDB', 'permission', 'Tenant Management').then((data: any) => {
-      data.previlleges.forEach((pp: any) => {
-        if (pp.key === 'Update Tenant') {
-          this.canUpdateTenant = pp.value;
-        }
+    this.indexedDBService
+      .getRecordData('PermissionDB', 'permission', 'Tenant Management')
+      .then((data: any) => {
+        data.previlleges.forEach((pp: any) => {
+          if (pp.key === 'Update Tenant') {
+            this.canUpdateTenant = pp.value;
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    }).catch(error => {
-      console.error(error);
-    });
-    this.indexedDBService.getRecordData('PermissionDB', 'permission', 'Site Management').then((data: any) => {
-      data.previlleges.forEach((pp: any) => {
-        if (pp.key === 'Create Site') {
-          this.canCreateSite = pp.value;
-        }
-        if (pp.key === 'Transfer Site') {
-          this.canTransferSite = pp.value;
-        }
-        if (pp.key === 'Delete Site') {
-          this.canDeleteSite = pp.value;
-        }
+    this.indexedDBService
+      .getRecordData('PermissionDB', 'permission', 'Site Management')
+      .then((data: any) => {
+        data.previlleges.forEach((pp: any) => {
+          if (pp.key === 'Create Site') {
+            this.canCreateSite = pp.value;
+          }
+          if (pp.key === 'Transfer Site') {
+            this.canTransferSite = pp.value;
+          }
+          if (pp.key === 'Delete Site') {
+            this.canDeleteSite = pp.value;
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    }).catch(error => {
-      console.error(error);
-    });
     if (localStorage.getItem('parentTenantRequest')) {
-      this.parentTenantRequest = (localStorage.getItem('parentTenantRequest') === 'true') ? true : false;
+      this.parentTenantRequest =
+        localStorage.getItem('parentTenantRequest') === 'true' ? true : false;
     }
     this.tenantName = localStorage.getItem('tenantName');
     this.dataSource.data = [];
-    this.translateConfigService.localEvent.subscribe(data =>{
+    this.translateConfigService.localEvent.subscribe((data) => {
       this.translator();
     });
     this.buildTenantForm();
@@ -275,59 +404,78 @@ export class TenantEditComponent implements OnInit {
   }
 
   getTenantById() {
-    this.httpDataService.getById(AppConstants.APIUrlGetTenantById, this.tenantId).subscribe(
-      (result: Tenant) => {
-        this.setTenant(result);
-        this.getSites(this.tenantId);
-        // Overrride default filter behaviour of Material Datatable
-        this.dataSource.filterPredicate = this.filterService.createFilter();
+    this.httpDataService
+      .getById(AppConstants.APIUrlGetTenantById, this.tenantId)
+      .subscribe(
+        (result: Tenant) => {
+          this.setTenant(result);
+          this.getSites(this.tenantId);
+          // Overrride default filter behaviour of Material Datatable
+          this.dataSource.filterPredicate = this.filterService.createFilter();
 
-        if (result.status == AppConstants.Pending)
-          this.signUpInviteFlag = true;
-          else
-          this.signUpInviteFlag = false;
-      },
-      (error) => {
-        if (!Helper.isNullOrWhitespace(error)) {
-          if (!Helper.isNullOrWhitespace(error.error.errors)) {
-            const validationErrors = error.error.errors;
-            this.serverError(validationErrors);
-          }
-          else {
-            this.popUpData = this.serverErrorMsgResponse(error.error);
-            this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+          if (result.status == AppConstants.Pending)
+            this.signUpInviteFlag = true;
+          else this.signUpInviteFlag = false;
+        },
+        (error) => {
+          if (!Helper.isNullOrWhitespace(error)) {
+            if (!Helper.isNullOrWhitespace(error.error.errors)) {
+              const validationErrors = error.error.errors;
+              this.serverError(validationErrors);
+            } else {
+              this.popUpData = this.serverErrorMsgResponse(error.error);
+              this.popUpService.showMsg(
+                this.popUpData,
+                AppConstants.EmptyUrl,
+                AppConstants.Error,
+                AppConstants.Error
+              );
+            }
           }
         }
-      }
-    );
+      );
   }
 
   getSiteNameAutoComplete() {
-    this.siteNameValues = this.filterService.getFilterObject(this.dataSource.data, AppConstants.FilterHeader_Name);
+    this.siteNameValues = this.filterService.getFilterObject(
+      this.dataSource.data,
+      AppConstants.FilterHeader_Name
+    );
     this.filteredBySiteName = this.siteNameControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value, this.siteNameValues))
+      map((value) => this._filter(value, this.siteNameValues))
     );
   }
 
   getLocationAutoComplete() {
-    this.locationValues = this.filterService.getFilterObject(this.dataSource.data, AppConstants.FilterHeader_Location);
+    this.locationValues = this.filterService.getFilterObject(
+      this.dataSource.data,
+      AppConstants.FilterHeader_Location
+    );
     this.filteredByLocation = this.locationControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value, this.locationValues))
+      map((value) => this._filter(value, this.locationValues))
     );
   }
 
   // Called on Filter change
   filterChange(filter: any, event: any) {
     if (event.option != undefined) {
-      this.filterValues[filter?.columnProp] = event.option.value.toString().trim().toLowerCase();
-    }
-    else {
+      this.filterValues[filter?.columnProp] = event.option.value
+        .toString()
+        .trim()
+        .toLowerCase();
+    } else {
       if (!Helper.isNullOrEmpty(this.siteNameControl.value))
-        this.filterValues[filter?.columnProp] = this.siteNameControl.value.toString().trim().toLowerCase();
+        this.filterValues[filter?.columnProp] = this.siteNameControl.value
+          .toString()
+          .trim()
+          .toLowerCase();
       else if (!Helper.isNullOrEmpty(this.locationControl.value))
-        this.filterValues[filter?.columnProp] = this.locationControl.value.toString().trim().toLowerCase();
+        this.filterValues[filter?.columnProp] = this.locationControl.value
+          .toString()
+          .trim()
+          .toLowerCase();
     }
 
     this.dataSource.filter = JSON.stringify(this.filterValues);
@@ -340,27 +488,26 @@ export class TenantEditComponent implements OnInit {
   resetFilters() {
     this.siteNameControl.setValue('');
     this.locationControl.setValue('');
-    this.filterValues = {}
+    this.filterValues = {};
     this.filterSelectObj.forEach((value: any, key: any) => {
       value.modelValue = undefined;
-    })
-    this.dataSource.filter = "";
+    });
+    this.dataSource.filter = '';
   }
 
-  translator(){
-    this.translate.get('singleBinding.itemPage').subscribe(data=>{
+  translator() {
+    this.translate.get('singleBinding.itemPage').subscribe((data) => {
       this.paginator._intl.itemsPerPageLabel = data;
       this.paginator.ngOnInit();
     });
   }
-  
-  showEditForm(){
-    document.getElementById("Description").style.display = "none";
-    document.getElementById("EditForm").style.display = "block";
+
+  showEditForm() {
+    document.getElementById('Description').style.display = 'none';
+    document.getElementById('EditForm').style.display = 'block';
   }
   setTenant(tenant: Tenant) {
-    console.log("Tenants = ",tenant
-    );
+    console.log('Tenants = ', tenant);
 
     this.Prename = tenant.name;
     this.Precompany = tenant.company;
@@ -371,8 +518,8 @@ export class TenantEditComponent implements OnInit {
     this.Preemail = tenant.email;
     this.Prephone = tenant.phone;
     this.PrezipCode = tenant.address.zipcode;
-    this.Prestatus = tenant.status
-    
+    this.Prestatus = tenant.status;
+
     this.tenantForm.setValue({
       name: tenant.name,
       company: tenant.company,
@@ -383,37 +530,60 @@ export class TenantEditComponent implements OnInit {
       email: tenant.email,
       phone: tenant.phone,
       zipCode: tenant.address.zipcode,
-      status: tenant.status
+      status: tenant.status,
     });
   }
 
   updateTenant() {
     this.mapTenant();
-    if (this.tenantForm.dirty && this.tenantForm.valid && this.tenantForm.touched) {
-      this.httpDataService.put(AppConstants.APIUrlTenantUpdate + this.tenantId, {...this.tenant, type: 'Customer'}).subscribe(
-        (result:any) => {
-          this.tenantForm.markAsUntouched();
-          this.popUpService.showMsg(AppConstants.TenantUpdated,AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-          this.getTenantById();
-          document.getElementById("Description").style.display = "block";
-          document.getElementById("EditForm").style.display = "none";
-        },
-        (error) => {
-          if (!Helper.isNullOrWhitespace(error)) {
-            if (!Helper.isNullOrWhitespace(error.error.errors)) {
-              const validationErrors = error.error.errors;
-              this.serverError(validationErrors);
-            }
-            else {
-              this.popUpData = this.serverErrorMsgResponse(error.error);
-              this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
+    if (
+      this.tenantForm.dirty &&
+      this.tenantForm.valid &&
+      this.tenantForm.touched
+    ) {
+      this.httpDataService
+        .put(AppConstants.APIUrlTenantUpdate + this.tenantId, {
+          ...this.tenant,
+          type: 'Customer',
+        })
+        .subscribe(
+          (result: any) => {
+            this.tenantForm.markAsUntouched();
+            this.popUpService.showMsg(
+              AppConstants.TenantUpdated,
+              AppConstants.EmptyUrl,
+              AppConstants.Success,
+              AppConstants.Success
+            );
+            this.getTenantById();
+            document.getElementById('Description').style.display = 'block';
+            document.getElementById('EditForm').style.display = 'none';
+          },
+          (error) => {
+            if (!Helper.isNullOrWhitespace(error)) {
+              if (!Helper.isNullOrWhitespace(error.error.errors)) {
+                const validationErrors = error.error.errors;
+                this.serverError(validationErrors);
+              } else {
+                this.popUpData = this.serverErrorMsgResponse(error.error);
+                this.popUpService.showMsg(
+                  this.popUpData,
+                  AppConstants.EmptyUrl,
+                  AppConstants.Error,
+                  AppConstants.Error
+                );
+              }
             }
           }
-        });
-    }
-    else {
+        );
+    } else {
       if (this.tenantForm.valid) {
-        this.popUpService.showMsg(AppConstants.NoTenantChanges, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
+        this.popUpService.showMsg(
+          AppConstants.NoTenantChanges,
+          AppConstants.EmptyUrl,
+          AppConstants.Warning,
+          AppConstants.Warning
+        );
       }
     }
   }
@@ -433,8 +603,8 @@ export class TenantEditComponent implements OnInit {
   }
 
   cancel() {
-    document.getElementById("Description").style.display = "block";
-    document.getElementById("EditForm").style.display = "none";
+    document.getElementById('Description').style.display = 'block';
+    document.getElementById('EditForm').style.display = 'none';
     // this.router.navigate([AppConstants.NavigateTenants]);
   }
 
@@ -452,33 +622,60 @@ export class TenantEditComponent implements OnInit {
   getSites(tenantId: Guid) {
     this.process = true;
     this.dataSource.data = [];
-    this.httpDataService.get(AppConstants.APIUrlGetSites + tenantId + '/' + this.deletedRecords + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize).subscribe((res) => {
-      let data: any = [];
-      if (res && res.list && res.list.length + 1) {
-        data = res.list;
-      } else {
-        data = res;
-      }
-      data.forEach((currentObj: any, currentObjIndex: any) => {
-        currentObj.location = currentObj.address.city + ', ' + currentObj.address.state + ', ' + currentObj.address.country;
-      });
-      this.dataSource.data = data;
-      this.totalCount = (res && res.list && res.list.length) ? res.totalCount : res.length;
-      this.sites = data;
-      this.getSiteNameAutoComplete();
-      this.getLocationAutoComplete();
-      this.process = false;
-    },
-      (error) => {
-        if (!Helper.isNullOrWhitespace(error.error)) {
-          this.popUpData = this.serverErrorMsgResponse(error.error);
+    this.httpDataService
+      .get(
+        AppConstants.APIUrlGetSites +
+          tenantId +
+          '/' +
+          this.deletedRecords +
+          '/' +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize
+      )
+      .subscribe(
+        (res) => {
+          let data: any = [];
+          if (res && res.list && res.list.length + 1) {
+            data = res.list;
+          } else {
+            data = res;
+          }
+          data.forEach((currentObj: any, currentObjIndex: any) => {
+            currentObj.location =
+              currentObj.address.city +
+              ', ' +
+              currentObj.address.state +
+              ', ' +
+              currentObj.address.country;
+          });
+          this.dataSource.data = data;
+          this.totalCount =
+            res && res.list && res.list.length ? res.totalCount : res.length;
+          this.sites = data;
+          this.getSiteNameAutoComplete();
+          this.getLocationAutoComplete();
+          this.process = false;
+        },
+        (error) => {
+          if (!Helper.isNullOrWhitespace(error.error)) {
+            this.popUpData = this.serverErrorMsgResponse(error.error);
+          }
+          this.popUpService.showMsg(
+            this.popUpData,
+            AppConstants.EmptyUrl,
+            AppConstants.Warning,
+            AppConstants.Warning
+          );
         }
-        this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Warning, AppConstants.Warning);
-      });
+      );
   }
 
   navigateSite() {
-    this.routerExtService.setRouteValue(AppConstants.TenantID, this.tenantId.toString());
+    this.routerExtService.setRouteValue(
+      AppConstants.TenantID,
+      this.tenantId.toString()
+    );
     this.router.navigate([AppConstants.SiteCreationUrl]);
   }
 
@@ -488,44 +685,66 @@ export class TenantEditComponent implements OnInit {
     }
     const ids: any = `${this.tenantId}/${site.siteId}`;
     this.routerExtService.clearRouteValue();
-    this.routerExtService.setRouteValue(AppConstants.TenantID, this.tenantId.toString());
-    this.routerExtService.setRouteValue(AppConstants.SiteID, site.siteId.toString());
-    this.routerExtService.setRouteValue(AppConstants.siteName, site.name.toString());
+    this.routerExtService.setRouteValue(
+      AppConstants.TenantID,
+      this.tenantId.toString()
+    );
+    this.routerExtService.setRouteValue(
+      AppConstants.SiteID,
+      site.siteId.toString()
+    );
+    this.routerExtService.setRouteValue(
+      AppConstants.siteName,
+      site.name.toString()
+    );
     //this.router.navigate([AppConstants.SiteEditUrl + ids]);
     this.router.navigate([AppConstants.SiteEditUrl]);
   }
 
   signUpInvite() {
-    this.httpDataService.getById(AppConstants.APIUrlSignUpInvite, this.tenantId).subscribe((res) => {
-      this.popUpData = res;
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Success, AppConstants.Success);
-    },
-    (error) => {
-      if (!Helper.isNullOrWhitespace(error.error)) {
-        this.popUpData = this.serverErrorMsgResponse(error.error);
-      }
-      this.popUpService.showMsg(this.popUpData, AppConstants.EmptyUrl, AppConstants.Error, AppConstants.Error);
-    });
+    this.httpDataService
+      .getById(AppConstants.APIUrlSignUpInvite, this.tenantId)
+      .subscribe(
+        (res) => {
+          this.popUpData = res;
+          this.popUpService.showMsg(
+            this.popUpData,
+            AppConstants.EmptyUrl,
+            AppConstants.Success,
+            AppConstants.Success
+          );
+        },
+        (error) => {
+          if (!Helper.isNullOrWhitespace(error.error)) {
+            this.popUpData = this.serverErrorMsgResponse(error.error);
+          }
+          this.popUpService.showMsg(
+            this.popUpData,
+            AppConstants.EmptyUrl,
+            AppConstants.Error,
+            AppConstants.Error
+          );
+        }
+      );
   }
-  
+
   serverErrorMsgResponse(error: any): string {
     if (!Helper.isNullOrEmpty(error.Message))
-      return this.popUpData = error.Message;
+      return (this.popUpData = error.Message);
     else if (!Helper.isNullOrEmpty(error.message))
-      return this.popUpData = error.message;
+      return (this.popUpData = error.message);
     else if (!Helper.isNullOrEmpty(error.title))
-      return this.popUpData = error.title;
-    else
-      return this.popUpData = error;
+      return (this.popUpData = error.title);
+    else return (this.popUpData = error);
   }
 
   serverError(validationErrors: any) {
-    Object.keys(validationErrors).forEach(prop =>{
+    Object.keys(validationErrors).forEach((prop) => {
       const formControl = this.tenantForm.get(prop);
-      if(formControl){
-        formControl.setErrors({                
-          serverError:validationErrors[prop].join(','),
-        })
+      if (formControl) {
+        formControl.setErrors({
+          serverError: validationErrors[prop].join(','),
+        });
       }
     });
   }
@@ -545,7 +764,7 @@ export class TenantEditComponent implements OnInit {
             tenantId: this.tenantId,
             tenantName: this.tenantName,
             siteId: site.siteId,
-            siteName: site.name
+            siteName: site.name,
           })
           .subscribe((res) => {
             this.getSites(this.tenantId);
@@ -559,7 +778,8 @@ export class TenantEditComponent implements OnInit {
       width: '600px',
       panelClass: 'confirm-dialog-container',
       data: {
-        title: 'Are you sure, you want to cancel the request for deleting the site ?',
+        title:
+          'Are you sure, you want to cancel the request for deleting the site ?',
       },
     });
     this.dialogRef.afterClosed().subscribe((result) => {

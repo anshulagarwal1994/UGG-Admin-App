@@ -17,7 +17,7 @@ import { ChargePoint } from '@app/models/chargepoint.model';
 import { HttpDataService } from '@app/shared/services/http-data.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dialog.component';
-import { DataService } from '../../../shared/services/data.service'
+import { DataService } from '../../../shared/services/data.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,7 +26,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./promo-code.component.css'],
 })
 export class PromoCodeComponent implements OnInit {
-
   showDeleted = false;
   promoExistErr = false;
   viewRecord = false;
@@ -59,15 +58,15 @@ export class PromoCodeComponent implements OnInit {
     'status',
     'action',
   ];
-  @ViewChild(MatPaginator, {static: true})
+  @ViewChild(MatPaginator, { static: true })
   set paginator(value: MatPaginator) {
-    if (this.dataSource){
+    if (this.dataSource) {
       this.dataSource.paginator = value;
     }
   }
-  @ViewChild(MatSort, {static: false})
+  @ViewChild(MatSort, { static: false })
   set sort(value: MatSort) {
-    if (this.dataSource){
+    if (this.dataSource) {
       this.dataSource.sort = value;
     }
   }
@@ -103,8 +102,11 @@ export class PromoCodeComponent implements OnInit {
   }
 
   sendDetails(object: any, action: string) {
-    localStorage.setItem('promocodedetails', JSON.stringify({...object, action: action}));
-    this.dataService.changeMessage({...object, action: action});
+    localStorage.setItem(
+      'promocodedetails',
+      JSON.stringify({ ...object, action: action })
+    );
+    this.dataService.changeMessage({ ...object, action: action });
     this.router.navigate(['/promo-code-details']);
   }
 
@@ -150,7 +152,7 @@ export class PromoCodeComponent implements OnInit {
       radioGroup: [null, []],
     });
     this.errors = [];
-    this.promoCodeControl.valueChanges.subscribe(value => {
+    this.promoCodeControl.valueChanges.subscribe((value) => {
       this.filterPromocode = value;
       this.getPromoCodes();
     });
@@ -227,49 +229,64 @@ export class PromoCodeComponent implements OnInit {
     let URL = '';
     if (this.filterPromocode) {
       URL = this.showDeleted
-      ? AppConstants.APIUrlDeletedPromocodeList + Number(this.pageNumber + 1) + '/' + this.pageSize + '?promocodename=' + this.filterPromocode
-      : AppConstants.APIUrlPromocodeList + Number(this.pageNumber + 1) + '/' + this.pageSize + '?promocodename=' + this.filterPromocode
+        ? AppConstants.APIUrlDeletedPromocodeList +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize +
+          '?promocodename=' +
+          this.filterPromocode
+        : AppConstants.APIUrlPromocodeList +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize +
+          '?promocodename=' +
+          this.filterPromocode;
     } else {
       URL = this.showDeleted
-      ? AppConstants.APIUrlDeletedPromocodeList + Number(this.pageNumber + 1) + '/' + this.pageSize
-      : AppConstants.APIUrlPromocodeList + Number(this.pageNumber + 1) + '/' + this.pageSize
+        ? AppConstants.APIUrlDeletedPromocodeList +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize
+        : AppConstants.APIUrlPromocodeList +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize;
     }
-    this.httpDataService
-      .get(URL)
-      .subscribe((res) => {
-        let data: any = [];
-        if (res && res.list && res.list.length + 1) {
-          data = res.list;
+    this.httpDataService.get(URL).subscribe((res) => {
+      let data: any = [];
+      if (res && res.list && res.list.length + 1) {
+        data = res.list;
+      } else {
+        data = res;
+      }
+      data.forEach((element: any) => {
+        let startdate = new Date(element.validityStartDate);
+        let enddate = new Date(element.validityEndDate);
+        if (startdate.getFullYear()) {
+          let year = startdate.getFullYear();
+          let month = (1 + startdate.getMonth()).toString().padStart(2, '0');
+          let day = startdate.getDate().toString().padStart(2, '0');
+          element.validityStartDate = month + '/' + day + '/' + year;
         } else {
-          data = res;
+          element.validityStartDate = '-';
         }
-        data.forEach((element: any) => {
-          let startdate = new Date(element.validityStartDate);
-          let enddate = new Date(element.validityEndDate);
-          if (startdate.getFullYear()) {
-            let year = startdate.getFullYear();
-            let month = (1 + startdate.getMonth()).toString().padStart(2, '0');
-            let day = startdate.getDate().toString().padStart(2, '0');
-            element.validityStartDate = month + '/' + day + '/' + year;
-          } else {
-            element.validityStartDate = '-';
-          }
-          if (enddate.getFullYear()) {
-            let year = enddate.getFullYear();
-            let month = (1 + enddate.getMonth()).toString().padStart(2, '0');
-            let day = enddate.getDate().toString().padStart(2, '0');
-            element.validityEndDate = month + '/' + day + '/' + year;
-          } else {
-            element.validityEndDate = '-';
-          }
-        });
-        this.dataSource.data = data;
-        this.totalCount = (res && res.list && res.list.length) ? res.totalCount : res.length;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.cdref.detectChanges();
-        this.process = false;
+        if (enddate.getFullYear()) {
+          let year = enddate.getFullYear();
+          let month = (1 + enddate.getMonth()).toString().padStart(2, '0');
+          let day = enddate.getDate().toString().padStart(2, '0');
+          element.validityEndDate = month + '/' + day + '/' + year;
+        } else {
+          element.validityEndDate = '-';
+        }
       });
+      this.dataSource.data = data;
+      this.totalCount =
+        res && res.list && res.list.length ? res.totalCount : res.length;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.cdref.detectChanges();
+      this.process = false;
+    });
   }
 
   SortArray(a: Tenant, b: Tenant) {
@@ -287,6 +304,7 @@ export class PromoCodeComponent implements OnInit {
   }
 
   deletePromocode(promoCodeID: any) {
+    debugger;
     this.dialogRef = this.dialog.open(MatDeleteDialogComponent, {
       width: '450px',
       panelClass: 'confirm-dialog-container',
@@ -297,7 +315,7 @@ export class PromoCodeComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.httpDataService
-          .put(AppConstants.APIUrlPromocodeDelete + promoCodeID, {
+          .put(AppConstants.APIUrlPromocodeDelete + promoCodeID.promoCodeID, {
             isDeleted: true,
           })
           .subscribe((res) => {

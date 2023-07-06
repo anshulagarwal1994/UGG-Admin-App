@@ -75,7 +75,7 @@
                     <div class="row charger-btn-outer">
                         <div class="col-lg-12">
                             <a (click)="openPopup()" class="btn edit">Edit</a>
-                            <a href="#" class="btn deactivate">Deactivate</a>
+                            <a (click)="logout();" class="btn deactivate" >Deactivate</a>
                         </div>
                     </div>
                 </div>
@@ -202,79 +202,79 @@
                                     </mat-form-field>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <!-- <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Commissioning Date</mat-label>
                                         <input matInput placeholder="Commissioning Date"
                                             formControlName="dateofCommissioning" [readonly]="true">
-                                    </mat-form-field>
-                                </div>
+                                    </mat-form-field> -->
+                                <!-- </div> -->
 
-                                <div class="form-group col-md-3">
+                                <!-- <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Transaction Fees</mat-label>
                                         <input matInput placeholder="Transaction Fees" ThreeDigitDecimalNumber
                                             formControlName="transactionfees" [readonly]="!canUpdateFees">
                                     </mat-form-field>
-                                </div>
+                                </div> -->
 
-                                <div class="form-group col-md-3">
+                                <!-- <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Utility Fees</mat-label>
                                         <input matInput placeholder="Utility Fees" ThreeDigitDecimalNumber
                                             formControlName="utilityFees" [readonly]="!canUpdateFees">
                                     </mat-form-field>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Cloud Service Fee Per Day</mat-label>
                                         <input matInput placeholder="Cloud Service Fees" ThreeDigitDecimalNumber
                                             formControlName="cloudServiceFees" [readonly]="!canUpdateFees">
                                     </mat-form-field>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Revenue Share</mat-label>
                                         <input matInput placeholder="Revenue Share" ThreeDigitDecimalNumber
                                             formControlName="revenueShare" [readonly]="!canUpdateFees">
                                     </mat-form-field>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Customer ID</mat-label>
                                         <input matInput placeholder="Customer ID" formControlName="customerId"
                                             [readonly]="!canUpdateFees">
                                     </mat-form-field>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input" appearance="outline">
+                                    <!-- <mat-form-field class="w-100 ucg-input" appearance="outline">
                                         <mat-label>Vendor ID</mat-label>
                                         <input matInput placeholder="Vendor ID" formControlName="vendorId"
                                             [readonly]="!canUpdateFees">
                                     </mat-form-field>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-3"> -->
                                     <!-- [ngClass]="{'has-error' : name && isSubmitClicked}" -->
-                                    <mat-form-field class="w-100 ucg-input no-line" floatLabel="always">
+                                    <!-- <mat-form-field class="w-100 ucg-input no-line" floatLabel="always">
                                         <mat-label>Utility Fees Owned By Site Owner</mat-label>
                                         <mat-slide-toggle [color]="'primary'"
                                             formControlName="utilityfeesownedbysiteowner">
                                         </mat-slide-toggle>
                                         <input matInput hidden />
                                     </mat-form-field>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

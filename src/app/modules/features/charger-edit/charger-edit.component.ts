@@ -307,6 +307,13 @@ export class ChargerEditComponent implements OnInit {
     });
   }
 
+  logout() {
+    this.indexedDBService.deleteDatabase('PermissionDB');
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/']);
+  }
+
   openPopup() {
     // this.displayStyle = "block";
     document.getElementById('ShowDetails').style.display = 'none';

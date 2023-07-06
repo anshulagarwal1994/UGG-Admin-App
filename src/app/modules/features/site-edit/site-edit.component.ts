@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -33,7 +39,6 @@ import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dial
   styleUrls: ['./site-edit.component.css'],
 })
 export class SiteEditComponent implements OnInit {
-
   siteForm: FormGroup;
   tenantId: Guid;
   siteId: Guid;
@@ -50,16 +55,16 @@ export class SiteEditComponent implements OnInit {
   canModifyMarkupCharge = false;
   deletedRecords = false;
   process = true;
-  Presname : any;
-  Presstreet : any;
-  Presstate : any;
-  Prescity : any;
-  Prescountry : any;
-  PreszipCode : any;
-  Presphone : any;
-  PresutilityProvider : any;
-  Presutilitytdu : any;
-  Presstatus : any;
+  Presname: any;
+  Presstreet: any;
+  Presstate: any;
+  Prescity: any;
+  Prescountry: any;
+  PreszipCode: any;
+  Presphone: any;
+  PresutilityProvider: any;
+  Presutilitytdu: any;
+  Presstatus: any;
 
   // countryList : any  = (Country  as  any).default;
   dialogRef: MatDialogRef<any>;
@@ -109,15 +114,15 @@ export class SiteEditComponent implements OnInit {
     'connectortype2',
     'action',
   ];
-  @ViewChild(MatPaginator, {static: true})
+  @ViewChild(MatPaginator, { static: true })
   set paginator(value: MatPaginator) {
-    if (this.dataSource){
+    if (this.dataSource) {
       this.dataSource.paginator = value;
     }
   }
-  @ViewChild(MatSort, {static: false})
+  @ViewChild(MatSort, { static: false })
   set sort(value: MatSort) {
-    if (this.dataSource){
+    if (this.dataSource) {
       this.dataSource.sort = value;
     }
   }
@@ -359,7 +364,9 @@ export class SiteEditComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  back() {
+    this.router.navigate(['/tenant-edit']);
+  }
   ngOnInit(): void {
     this.indexedDBService
       .getRecordData('PermissionDB', 'permission', 'Site Management')
@@ -404,7 +411,9 @@ export class SiteEditComponent implements OnInit {
     this.buildSiteForm();
     setTimeout(() => {
       this.tenantName = localStorage.getItem('tenantName');
-      this.siteName = this.routerExtService.getRouteValue(AppConstants.siteName);
+      this.siteName = this.routerExtService.getRouteValue(
+        AppConstants.siteName
+      );
     }, 1000);
     if (localStorage.getItem('parentSiteRequest')) {
       this.parentSiteRequest =
@@ -445,7 +454,10 @@ export class SiteEditComponent implements OnInit {
             localStorage.setItem('sitetransferred', 'false');
           }
           this.setSite(result);
-          this.routerExtService.setRouteValue(AppConstants.siteName, result.name.toString());
+          this.routerExtService.setRouteValue(
+            AppConstants.siteName,
+            result.name.toString()
+          );
           this.getChargePoints(this.siteById);
           this.imageSource = result.utilityBillUrl;
           // console.table(result);
@@ -576,17 +588,16 @@ export class SiteEditComponent implements OnInit {
   }
 
   setSite(site: Site) {
-
     this.Presname = site.name;
-      this.Presstreet = site.address.street
-      this.Presstate = site.address.state
-      this.Prescity = site.address.city
-      this.Prescountry = site.address.country
-      this.PreszipCode = site.address.zipcode
-      this.Presphone = site.phone
-      this.PresutilityProvider = site.utilityProvider
-      this.Presutilitytdu = site.utilitytdu
-      this.Presstatus = site.status
+    this.Presstreet = site.address.street;
+    this.Presstate = site.address.state;
+    this.Prescity = site.address.city;
+    this.Prescountry = site.address.country;
+    this.PreszipCode = site.address.zipcode;
+    this.Presphone = site.phone;
+    this.PresutilityProvider = site.utilityProvider;
+    this.Presutilitytdu = site.utilitytdu;
+    this.Presstatus = site.status;
 
     this.siteForm.patchValue({
       name: site.name,
@@ -607,23 +618,23 @@ export class SiteEditComponent implements OnInit {
       markupPercentForDC: site.markupPercentForDC ? site.markupPercentForDC : 0,
     });
 
-      
-      
     this.siteForm.patchValue({
       level2Rate: site.level2Rate,
       dcFastRate: site.dcFastRate,
     });
 
-    this.fileName = site.utilityBillUrl ? site.utilityBillUrl
-      .split('?')[0]
-      .substr(site.utilityBillUrl.split('?')[0].lastIndexOf('/') + 1) : '';
+    this.fileName = site.utilityBillUrl
+      ? site.utilityBillUrl
+          .split('?')[0]
+          .substr(site.utilityBillUrl.split('?')[0].lastIndexOf('/') + 1)
+      : '';
   }
 
   validateMarkupThreshold(event: any) {
     let value = parseFloat(event.target.value);
     if (value > this.markupThreshold) {
       this.markupError = true;
-      this.siteForm.controls['markupCharge'].setErrors({'error': true});
+      this.siteForm.controls['markupCharge'].setErrors({ error: true });
     } else {
       this.markupError = false;
       this.siteForm.controls['markupCharge'].updateValueAndValidity();
@@ -634,7 +645,7 @@ export class SiteEditComponent implements OnInit {
     let value = parseFloat(event.target.value);
     if (value > this.markupThreshold) {
       this.markupDCError = true;
-      this.siteForm.controls['markupPercentForDC'].setErrors({'error': true});
+      this.siteForm.controls['markupPercentForDC'].setErrors({ error: true });
     } else {
       this.markupDCError = false;
       this.siteForm.controls['markupPercentForDC'].updateValueAndValidity();
@@ -653,8 +664,8 @@ export class SiteEditComponent implements OnInit {
             AppConstants.Success,
             AppConstants.Success
           );
-          document.getElementById("Description").style.display = "block";
-          document.getElementById("EditForm").style.display = "none";
+          document.getElementById('Description').style.display = 'block';
+          document.getElementById('EditForm').style.display = 'none';
         },
         (error) => {
           if (!Helper.isNullOrWhitespace(error)) {
@@ -760,9 +771,16 @@ export class SiteEditComponent implements OnInit {
       this.site.city = this.siteForm.get('city')?.value;
       this.site.country = this.siteForm.get('country')?.value;
       this.site.zipCode = this.siteForm.get('zipCode')?.value;
-      this.site.preAuthAmount = this.siteForm.get('preAuthAmount')?.value ? this.siteForm.get('preAuthAmount')?.value : 0;
-      this.site.markupCharge = this.siteForm.get('markupCharge')?.value ? this.siteForm.get('markupCharge')?.value : 0;
-      this.site.markupPercentForDC = this.siteForm.get('markupPercentForDC')?.value ? this.siteForm.get('markupPercentForDC')?.value : 0;
+      this.site.preAuthAmount = this.siteForm.get('preAuthAmount')?.value
+        ? this.siteForm.get('preAuthAmount')?.value
+        : 0;
+      this.site.markupCharge = this.siteForm.get('markupCharge')?.value
+        ? this.siteForm.get('markupCharge')?.value
+        : 0;
+      this.site.markupPercentForDC = this.siteForm.get('markupPercentForDC')
+        ?.value
+        ? this.siteForm.get('markupPercentForDC')?.value
+        : 0;
 
       return true;
     } else {
@@ -837,7 +855,16 @@ export class SiteEditComponent implements OnInit {
     this.process = true;
     this.dataSource.data = [];
     this.httpDataService
-      .get(AppConstants.APIUrlChargePointsById + ids + '/' + this.deletedRecords + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize)
+      .get(
+        AppConstants.APIUrlChargePointsById +
+          ids +
+          '/' +
+          this.deletedRecords +
+          '/' +
+          Number(this.pageNumber + 1) +
+          '/' +
+          this.pageSize
+      )
       .subscribe(
         (res) => {
           let data: any = [];
@@ -847,7 +874,8 @@ export class SiteEditComponent implements OnInit {
             data = res;
           }
           this.dataSource.data = data;
-          this.totalCount = (res && res.list && res.list.length) ? res.totalCount : res.length;
+          this.totalCount =
+            res && res.list && res.list.length ? res.totalCount : res.length;
           if (this.totalCount) {
             this.getChargePointIdAutoComplete();
             this.getChargeTypeAutoComplete();
@@ -875,8 +903,8 @@ export class SiteEditComponent implements OnInit {
     //   this.tenantId.toString()
     // );
     // this.router.navigate([AppConstants.TenantDetailPage]);
-    document.getElementById("Description").style.display = "block";
-    document.getElementById("EditForm").style.display = "none";
+    document.getElementById('Description').style.display = 'block';
+    document.getElementById('EditForm').style.display = 'none';
   }
 
   deleteChargePoint(chargePoint: any) {
@@ -907,9 +935,9 @@ export class SiteEditComponent implements OnInit {
     });
   }
 
-  showEditForm(){
-    document.getElementById("Description").style.display = "none";
-    document.getElementById("EditForm").style.display = "block";
+  showEditForm() {
+    document.getElementById('Description').style.display = 'none';
+    document.getElementById('EditForm').style.display = 'block';
   }
 
   unDeleteChargePoint(chargePoint: any) {
