@@ -94,9 +94,9 @@
                     </ng-container>
           
                     <ng-container matColumnDef="sitescount" >
-                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number wd-100"> {{'table.header.sites' | translate}}
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number"> {{'table.header.sites' | translate}}
                       </mat-header-cell>
-                      <mat-cell *matCellDef="let element" class="alignCenter Col-number wd-100"> 
+                      <mat-cell *matCellDef="let element" class="alignCenter Col-number"> 
                         <div>
                           <b>{{element.sitescount}}</b><span *ngIf="deletedRecords && element.siteList.length"> - {{ element.siteList.join(', ') }}</span>
                         </div>
@@ -104,9 +104,9 @@
                     </ng-container>
           
                     <ng-container matColumnDef="chargepointscount">
-                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number wd-100"> {{'table.header.chargePoints' |
+                      <mat-header-cell *matHeaderCellDef mat-sort-header class="alignCenter Col-number"> {{'table.header.chargePoints' |
                         translate}} </mat-header-cell>
-                      <mat-cell *matCellDef="let element" class="alignCenter Col-number wd-100"> 
+                      <mat-cell *matCellDef="let element" class="alignCenter Col-number"> 
                         <div>
                           <b>{{element.chargepointscount}}</b><span *ngIf="deletedRecords && element.chargePointList.length"> - {{ element.chargePointList.join(', ') }}</span>
                         </div>
