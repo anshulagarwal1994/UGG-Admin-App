@@ -177,6 +177,7 @@ export class UsersComponent implements OnInit {
   }
 
   resetFilters() {
+    this.showDeleted = false;
     this.userControl.setValue('');
     this.userRoleControl.setValue('');
   }

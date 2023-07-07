@@ -230,6 +230,7 @@ export class PromoCodeComponent implements OnInit {
   }
 
   getPromoCodes() {
+    debugger;
     this.process = true;
     this.dataSource.data = [];
     let URL = '';
@@ -306,6 +307,8 @@ export class PromoCodeComponent implements OnInit {
   }
 
   resetFilters() {
+    this.showDeleted = false;
+    this.getPromoCodes();
     this.promoCodeControl.setValue('');
   }
 
