@@ -6,13 +6,18 @@
     <div class="card mat-elevation-z mb-3">
         <div class="card-body">
             <h2 class="h2"><span>Site Edit</span></h2> 
-            <h2 class="h2"><span>
-                {{'allTypeContent.tenant' |
-                translate}}
-              
-                :</span> {{'singleBinding.tenantName' | translate : {tenantName:tenantName} }}
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                Site: {{siteName}}</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <h2 class="h2">
+                        <span>{{'allTypeContent.tenant' | translate}}:</span> {{'singleBinding.tenantName' | translate : {tenantName:tenantName} }}
+                    </h2>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h2 class="h2">
+                        <span>Site:</span> {{siteName}}
+                    </h2>
+                </div>
+            </div>
             <div id="Description">
                 <div class="row">
                     <div class="col-lg-4 col-md-4">

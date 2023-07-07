@@ -152,13 +152,15 @@
                             <!-- <img matTooltip="Chargepoint Details" src="/assets/zoom-in.svg"
                                 (click)="chargeEdit(element);" /> -->
                             <div class="table-action">
-                                <a  href="javascript:;" mat-mini-fab color="success"
+                                <a  href="javascript:;" mat-mini-fab color="primary"
                                 matTooltip="Chargepoint Details" (click)="chargeEdit(element)"
                                 class="table-action-btn">
-                                    <span class="material-symbols-outlined"routerLink="['/charger-edit']" (click)="chargerEdit(element)">undo</span>
+                                    <span class="material-symbols-outlined"routerLink="['/charger-edit']" (click)="chargerEdit(element)">info</span>
                                 </a>
-                                <a *ngIf="showTransfer" matTooltip="Transfer Chargepoint" mat-mini-fab color="primary" href="javascript:;" (click)="transferChargepoint(element);" class="table-action-btn">
-                                    <span class="material-symbols-outlined">info</span>
+                                <a *ngIf="showTransfer" matTooltip="Transfer Chargepoint" mat-mini-fab color="success" href="javascript:;" (click)="transferChargepoint(element);" class="table-action-btn">
+                                    <span class="material-symbols-outlined">
+                                    swap_horiz
+                                    </span>
                                 </a>
                                 <a *ngIf="!element.isrequestraised" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteChargePoint(element)" class="table-action-btn">
                                 <span class="material-symbols-outlined">delete</span>
