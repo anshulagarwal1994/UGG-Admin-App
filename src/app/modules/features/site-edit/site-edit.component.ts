@@ -65,7 +65,7 @@ export class SiteEditComponent implements OnInit {
   PresutilityProvider: any;
   Presutilitytdu: any;
   Presstatus: any;
-
+  chnageicon = 'keyboard_arrow_right';
   // countryList : any  = (Country  as  any).default;
   dialogRef: MatDialogRef<any>;
   invalidFileSize: boolean = false;
@@ -283,7 +283,12 @@ export class SiteEditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
+  togglechnage() {
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
   buildSiteForm() {
     this.siteForm = this.formBuilder.group({
       name: [
@@ -588,6 +593,7 @@ export class SiteEditComponent implements OnInit {
   }
 
   setSite(site: Site) {
+    debugger;
     this.Presname = site.name;
     this.Presstreet = site.address.street;
     this.Presstate = site.address.state;
@@ -653,6 +659,7 @@ export class SiteEditComponent implements OnInit {
   }
 
   updateSite() {
+    debugger;
     this.mapSite();
     if (this.siteForm.dirty && this.siteForm.valid && this.siteForm.touched) {
       this.modifySite(this.site, this.tenantId, this.siteId).subscribe(

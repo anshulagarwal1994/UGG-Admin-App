@@ -25,7 +25,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-
   process = false;
   showDeleted = false;
   userForm: FormGroup;
@@ -41,19 +40,20 @@ export class UsersComponent implements OnInit {
   pageNumber: number = 0;
   pageSize: number = 10;
   totalCount: number = 0;
+  chnageicon = 'keyboard_arrow_right';
   @ViewChild(MatPaginator, { static: true })
   set paginator(value: MatPaginator) {
     if (this.dataSource) {
       this.dataSource.paginator = value;
     }
-  };
+  }
 
   @ViewChild(MatSort, { static: false })
   set sort(value: MatSort) {
     if (this.dataSource) {
       this.dataSource.sort = value;
     }
-  };
+  }
   filterName = '';
   filterRole = '';
 
@@ -87,7 +87,12 @@ export class UsersComponent implements OnInit {
     this.dataService.changeMessage({ ...object, action: action });
     this.router.navigate(['/user-details']);
   }
-
+  togglechnage() {
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
   buildUserForm() {
     this.userForm = this.formBuilder.group({
       name: [null, [Validators.required]],
@@ -96,11 +101,11 @@ export class UsersComponent implements OnInit {
       status: [false, []],
     });
     this.errors = [];
-    this.userControl.valueChanges.subscribe(value => {
+    this.userControl.valueChanges.subscribe((value) => {
       this.filterName = value;
       this.getUsers();
     });
-    this.userRoleControl.valueChanges.subscribe(value => {
+    this.userRoleControl.valueChanges.subscribe((value) => {
       this.filterRole = value;
       this.getUsers();
     });
@@ -129,31 +134,46 @@ export class UsersComponent implements OnInit {
     this.dataSource.data = [];
     let URL = '';
     if (this.filterName || this.filterRole) {
-      URL = AppConstants.APIUrlGetAllUsers + this.showDeleted + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize + '?name=' + this.filterName + '&role=' + this.filterRole
+      URL =
+        AppConstants.APIUrlGetAllUsers +
+        this.showDeleted +
+        '/' +
+        Number(this.pageNumber + 1) +
+        '/' +
+        this.pageSize +
+        '?name=' +
+        this.filterName +
+        '&role=' +
+        this.filterRole;
     } else {
-      URL = AppConstants.APIUrlGetAllUsers + this.showDeleted + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize
+      URL =
+        AppConstants.APIUrlGetAllUsers +
+        this.showDeleted +
+        '/' +
+        Number(this.pageNumber + 1) +
+        '/' +
+        this.pageSize;
     }
-    this.httpDataService
-      .get(URL)
-      .subscribe(
-        (res: any) => {
-          let data: any = [];
-          if (res && res.list && res.list.length + 1) {
-            data = res.list;
-          } else {
-            data = res;
-          }
-          this.dataSource.data = data;
-          this.totalCount = (res && res.list && res.list.length) ? res.totalCount : res.length;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.cdref.detectChanges();
-          this.process = false;
-        },
-        (err) => {
-          console.log(err);
+    this.httpDataService.get(URL).subscribe(
+      (res: any) => {
+        let data: any = [];
+        if (res && res.list && res.list.length + 1) {
+          data = res.list;
+        } else {
+          data = res;
         }
-      );
+        this.dataSource.data = data;
+        this.totalCount =
+          res && res.list && res.list.length ? res.totalCount : res.length;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.cdref.detectChanges();
+        this.process = false;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   resetFilters() {

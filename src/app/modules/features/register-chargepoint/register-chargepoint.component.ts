@@ -22,7 +22,6 @@ import { MatTransferDialogComponent } from '@app/mat-transfer-dialog/mat-transfe
   styleUrls: ['./register-chargepoint.component.css'],
 })
 export class RegisterChargePointComponent implements OnInit {
-
   tenants: Tenant[];
   sites: Site[];
   selectedTenant: any = '';
@@ -60,6 +59,7 @@ export class RegisterChargePointComponent implements OnInit {
   pageNumber: number = 0;
   pageSize: number = 5;
   totalCount: number = 0;
+  chnageicon = 'keyboard_arrow_right';
   @ViewChild(MatPaginator, { static: true })
   set paginator(value: MatPaginator) {
     if (this.dataSource) {
@@ -129,7 +129,12 @@ export class RegisterChargePointComponent implements OnInit {
         }
       });
   }
-
+  togglechnage() {
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
   tenantSelection(tenant: any) {
     localStorage.setItem('tenantName', tenant.name);
     this.httpDataService
@@ -163,55 +168,74 @@ export class RegisterChargePointComponent implements OnInit {
     this.dataSource.data = [];
     localStorage.setItem('siteName', this.selectedSite.name);
     let URL = '';
-    if (this.filterChargePointId || this.filterChargerType || this.filterStatus) {
-      URL = AppConstants.APIUrlGetTransferingChargePoints +
-      this.selectedTenant.tenantId +
-      '/' +
-      this.selectedSite.siteId +
-      '/' +
-      this.deletedRecords + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize + '?chargePointId=' + this.filterChargePointId + '&chargerType=' + this.filterChargerType + '&availabilityStatus=' + this.filterStatus
+    if (
+      this.filterChargePointId ||
+      this.filterChargerType ||
+      this.filterStatus
+    ) {
+      URL =
+        AppConstants.APIUrlGetTransferingChargePoints +
+        this.selectedTenant.tenantId +
+        '/' +
+        this.selectedSite.siteId +
+        '/' +
+        this.deletedRecords +
+        '/' +
+        Number(this.pageNumber + 1) +
+        '/' +
+        this.pageSize +
+        '?chargePointId=' +
+        this.filterChargePointId +
+        '&chargerType=' +
+        this.filterChargerType +
+        '&availabilityStatus=' +
+        this.filterStatus;
     } else {
-      URL = AppConstants.APIUrlGetTransferingChargePoints +
-      this.selectedTenant.tenantId +
-      '/' +
-      this.selectedSite.siteId +
-      '/' +
-      this.deletedRecords + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize;
+      URL =
+        AppConstants.APIUrlGetTransferingChargePoints +
+        this.selectedTenant.tenantId +
+        '/' +
+        this.selectedSite.siteId +
+        '/' +
+        this.deletedRecords +
+        '/' +
+        Number(this.pageNumber + 1) +
+        '/' +
+        this.pageSize;
     }
-    this.httpDataService
-      .get(URL)
-      .subscribe(
-        (res) => {
-          let data: any = [];
-          if (res && res.list && res.list.length + 1) {
-            data = res.list;
-          } else {
-            data = res;
-          }
-          this.dataSource.data = data;
-          this.totalCount = (res && res.list && res.list.length) ? res.totalCount : res.length;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.dataSource.filterPredicate = this.filterService.createFilter();
-          const siteName: string = this.selectedSite.name;
-          if (siteName.includes('Inactive')) {
-            this.showTransfer = false;
-          } else {
-            this.showTransfer = true;
-          }
-          this.cdref.detectChanges();
-          this.process = false;
-        },
-        (error) => {
-          this.popUpData = this.serverErrorMsgResponse(error.error);
-          this.popUpService.showMsg(
-            this.popUpData,
-            AppConstants.EmptyUrl,
-            AppConstants.Error,
-            AppConstants.Error
-          );
+    this.httpDataService.get(URL).subscribe(
+      (res) => {
+        let data: any = [];
+        if (res && res.list && res.list.length + 1) {
+          data = res.list;
+        } else {
+          data = res;
         }
-      );
+        this.dataSource.data = data;
+        this.totalCount =
+          res && res.list && res.list.length ? res.totalCount : res.length;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.filterPredicate = this.filterService.createFilter();
+        const siteName: string = this.selectedSite.name;
+        if (siteName.includes('Inactive')) {
+          this.showTransfer = false;
+        } else {
+          this.showTransfer = true;
+        }
+        this.cdref.detectChanges();
+        this.process = false;
+      },
+      (error) => {
+        this.popUpData = this.serverErrorMsgResponse(error.error);
+        this.popUpService.showMsg(
+          this.popUpData,
+          AppConstants.EmptyUrl,
+          AppConstants.Error,
+          AppConstants.Error
+        );
+      }
+    );
   }
 
   serverErrorMsgResponse(error: any): string {

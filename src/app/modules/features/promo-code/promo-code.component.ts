@@ -40,6 +40,7 @@ export class PromoCodeComponent implements OnInit {
   pageSize: number = 10;
   totalCount: number = 0;
   filterPromocode = '';
+  chnageicon = 'keyboard_arrow_right';
   promoCodeControl = new FormControl();
   tenants: Tenant[];
   sites: Site[];
@@ -109,7 +110,12 @@ export class PromoCodeComponent implements OnInit {
     this.dataService.changeMessage({ ...object, action: action });
     this.router.navigate(['/promo-code-details']);
   }
-
+  togglechnage() {
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
   radioChange(event: any) {
     if (event.value === 'Percentage') {
       this.promocodeForm.controls['flatdiscount'].setValue(0);

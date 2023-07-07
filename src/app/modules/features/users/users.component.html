@@ -16,8 +16,8 @@
                 <div class="col-md-6 lg-6 text-end">
                     <div class="head-right-outer">
                         <a class="btn-border mat-elevation-z icon-right" mat-raised-button
-                        data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Filter<span
-                                class="material-symbols-outlined">keyboard_arrow_down</span></a>
+                        data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" (click)="togglechnage()" aria-controls="multiCollapseExample1">Filter<span
+                                class="material-symbols-outlined">{{this.chnageicon}}</span></a>
                         <a class="btn-border mat-elevation-z" (click)="sendDetails({}, 'new')" mat-raised-button
                             href="javascript:;"><span class="material-symbols-outlined">add</span> {{'button.newUser' |
                             translate }} </a>

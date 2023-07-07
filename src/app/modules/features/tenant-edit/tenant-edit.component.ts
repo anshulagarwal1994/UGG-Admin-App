@@ -50,6 +50,7 @@ export class TenantEditComponent implements OnInit {
   parentTenantRequest = false;
   deletedRecords = false;
   process = true;
+  chnageicon = 'keyboard_arrow_right';
   Prename = '';
   Precompany = '';
   Prestreet = '';
@@ -496,7 +497,13 @@ export class TenantEditComponent implements OnInit {
     });
     this.dataSource.filter = '';
   }
-
+  togglechnage() {
+    debugger;
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
   translator() {
     this.translate.get('singleBinding.itemPage').subscribe((data) => {
       this.paginator._intl.itemsPerPageLabel = data;

@@ -18,32 +18,40 @@ import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dial
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
   tenant: Tenant[];
   createTenant = false;
   canDeleteTenant = false;
   deletedRecords = false;
+  chnageicon = 'keyboard_arrow_right';
   showdiv = '';
   process = true;
   dialogRef: MatDialogRef<any>;
   filterName = '';
   filterLocation = '';
-  
+
   constructor(
-    private httpDataService: HttpDataService, 
-    private router: Router, public filterService:GridFilterService,
+    private httpDataService: HttpDataService,
+    private router: Router,
+    public filterService: GridFilterService,
     private translate: TranslateService,
     public translateConfigService: TranslateConfigService,
     public routerExtService: RouterExtService,
     public dialog: MatDialog,
-    private indexedDBService: IndexedDBService) {
+    private indexedDBService: IndexedDBService
+  ) {
     // this.tenant = new Tenant();
   }
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['name', 'location', 'sitescount', 'chargepointscount', 'status'];
+  displayedColumns: string[] = [
+    'name',
+    'location',
+    'sitescount',
+    'chargepointscount',
+    'status',
+  ];
   pageNumber: number = 0;
   pageSize: number = 10;
   totalCount: number = 0;
@@ -52,54 +60,57 @@ export class DashboardComponent implements OnInit {
     if (this.dataSource) {
       this.dataSource.paginator = value;
     }
-  };
+  }
   @ViewChild(MatSort, { static: false })
   set sort(value: MatSort) {
     if (this.dataSource) {
       this.dataSource.sort = value;
     }
-  };
+  }
   data: Tenant[] = [];
-  options:any[] = [];
+  options: any[] = [];
   nameControl = new FormControl();
   locationControl = new FormControl();
 
   ngOnInit(): void {
     localStorage.removeItem('parentTenantRequest');
     localStorage.removeItem('parentSiteRequest');
-    this.indexedDBService.getRecordData('PermissionDB', 'permission', 'Tenant Management').then((data: any) => {
-      data.previlleges.forEach((pp: any) => {
-        if (pp.key === 'Register Tenant') {
-          this.createTenant = pp.value;
-        }
-        if (pp.key === 'Delete Tenant') {
-          this.canDeleteTenant = pp.value;
-        }
+    this.indexedDBService
+      .getRecordData('PermissionDB', 'permission', 'Tenant Management')
+      .then((data: any) => {
+        data.previlleges.forEach((pp: any) => {
+          if (pp.key === 'Register Tenant') {
+            this.createTenant = pp.value;
+          }
+          if (pp.key === 'Delete Tenant') {
+            this.canDeleteTenant = pp.value;
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    }).catch(error => {
-      console.error(error);
-    });
     localStorage.removeItem('sitetransferred');
-    this.translateConfigService.localEvent.subscribe(data =>{
+    this.translateConfigService.localEvent.subscribe((data) => {
       this.translator();
     });
-    
-      this.getTenants();
-    
+
+    this.getTenants();
+
     // Overrride default filter behaviour of Material Datatable
     this.dataSource.filterPredicate = this.filterService.createFilter();
-    this.nameControl.valueChanges.subscribe(value => {
+    this.nameControl.valueChanges.subscribe((value) => {
       this.filterName = value;
       this.getTenants();
     });
-    this.locationControl.valueChanges.subscribe(value => {
+    this.locationControl.valueChanges.subscribe((value) => {
       this.filterLocation = value;
       this.getTenants();
     });
   }
 
-  translator(){
-    this.translate.get('singleBinding.itemPage').subscribe(data=>{
+  translator() {
+    this.translate.get('singleBinding.itemPage').subscribe((data) => {
       this.paginator._intl.itemsPerPageLabel = data;
       this.paginator._intl.changes.next();
       // this.paginator.ngOnInit();
@@ -109,28 +120,30 @@ export class DashboardComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort; 
+    this.dataSource.sort = this.sort;
   }
 
   toggleDeletedRecords() {
     this.deletedRecords = !this.deletedRecords;
     this.getTenants();
   }
+  togglechnage() {
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
 
-  showhidediv(){
-    let showdiv = document.getElementById("ShowFilter");
-    if(showdiv != null){
-      console.log("show = ",showdiv.style.display);
-      if (showdiv.style.display === "none") {
-        showdiv.style.display = "block";
+  showhidediv() {
+    let showdiv = document.getElementById('ShowFilter');
+    if (showdiv != null) {
+      console.log('show = ', showdiv.style.display);
+      if (showdiv.style.display === 'none') {
+        showdiv.style.display = 'block';
       } else {
-        showdiv.style.display = "none";
+        showdiv.style.display = 'none';
       }
     }
-    
-    
-
-    
   }
 
   pageChanged(event: PageEvent) {
@@ -144,9 +157,25 @@ export class DashboardComponent implements OnInit {
     this.dataSource.data = [];
     let URL = '';
     if (this.filterName || this.filterLocation) {
-      URL = AppConstants.APIUrlDashboardTenantList + this.deletedRecords + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize + '?name=' + this.filterName + '&city=' + this.filterLocation
+      URL =
+        AppConstants.APIUrlDashboardTenantList +
+        this.deletedRecords +
+        '/' +
+        Number(this.pageNumber + 1) +
+        '/' +
+        this.pageSize +
+        '?name=' +
+        this.filterName +
+        '&city=' +
+        this.filterLocation;
     } else {
-      URL = AppConstants.APIUrlDashboardTenantList + this.deletedRecords + '/' + Number(this.pageNumber + 1) + '/' + this.pageSize
+      URL =
+        AppConstants.APIUrlDashboardTenantList +
+        this.deletedRecords +
+        '/' +
+        Number(this.pageNumber + 1) +
+        '/' +
+        this.pageSize;
     }
     return this.httpDataService.get(URL).subscribe((res) => {
       let data: any = [];
@@ -156,11 +185,17 @@ export class DashboardComponent implements OnInit {
         data = res;
       }
       data.forEach((currentObj: any, currentObjIndex: any) => {
-        currentObj.location = currentObj.address.city + ', ' + currentObj.address.state + ', ' + currentObj.address.country;
+        currentObj.location =
+          currentObj.address.city +
+          ', ' +
+          currentObj.address.state +
+          ', ' +
+          currentObj.address.country;
       });
       this.dataSource.data = data;
       this.tenant = data;
-      this.totalCount = (res && res.list && res.list.length) ? res.totalCount : res.length;
+      this.totalCount =
+        res && res.list && res.list.length ? res.totalCount : res.length;
       this.process = false;
     });
   }
@@ -176,10 +211,12 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('tenantName', tenant.name);
     localStorage.setItem('tenantId', tenant.tenantId);
     this.routerExtService.clearRouteValue();
-    this.routerExtService.setRouteValue(AppConstants.TenantID, tenant.tenantId.toString());
+    this.routerExtService.setRouteValue(
+      AppConstants.TenantID,
+      tenant.tenantId.toString()
+    );
     this.router.navigate([AppConstants.TenantDetailPage]);
   }
-
 
   navigateTenant() {
     this.router.navigate([AppConstants.TenantCreationPage]);
@@ -198,7 +235,7 @@ export class DashboardComponent implements OnInit {
         this.httpDataService
           .post(AppConstants.APIUrlCreateDeleteRequest, {
             tenantId: tenant.tenantId,
-            tenantName: tenant.name
+            tenantName: tenant.name,
           })
           .subscribe((res) => {
             this.getTenants();
@@ -212,7 +249,8 @@ export class DashboardComponent implements OnInit {
       width: '600px',
       panelClass: 'confirm-dialog-container',
       data: {
-        title: 'Are you sure, you want to cancel the request for deleting the tenant ?',
+        title:
+          'Are you sure, you want to cancel the request for deleting the tenant ?',
       },
     });
     this.dialogRef.afterClosed().subscribe((result) => {

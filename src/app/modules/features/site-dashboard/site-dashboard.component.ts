@@ -70,7 +70,7 @@ export class SiteDashboardComponent implements OnInit {
   deletedRecords = false;
   process = false;
   public selectedVal: string;
-
+  chnageicon = 'keyboard_arrow_right';
   //Grid columns
   filterSelectObj = [
     {
@@ -256,7 +256,12 @@ export class SiteDashboardComponent implements OnInit {
       map((value) => this._filter(value, this.locationValues))
     );
   }
-
+  togglechnage() {
+    this.chnageicon =
+      this.chnageicon == 'keyboard_arrow_right'
+        ? 'keyboard_arrow_down'
+        : 'keyboard_arrow_right';
+  }
   getChargePointAutoComplete() {
     this.chargePointValues = this.filterService.getFilterObject(
       this.dataSource.data,
