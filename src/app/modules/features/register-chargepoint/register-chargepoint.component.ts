@@ -263,6 +263,9 @@ export class RegisterChargePointComponent implements OnInit {
 
   // Reset table filters
   resetFilters() {
+    this.dataSource.data = [];
+    this.deletedRecords = false;
+    this.getChargePoints();
     this.chargePointIdControl.setValue('');
     this.chargeTypeControl.setValue('');
     this.statusControl.setValue('');
@@ -270,7 +273,7 @@ export class RegisterChargePointComponent implements OnInit {
 
   toggleDeletedRecords() {
     this.dataSource.data = [];
-    this.deletedRecords = !this.deletedRecords;
+    //  this.deletedRecords = !this.deletedRecords;
     this.getChargePoints();
   }
 
