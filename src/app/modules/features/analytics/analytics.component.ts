@@ -216,6 +216,7 @@ export class AnalyticsComponent implements OnInit {
               this.connectorsAvailableCount = data.Connectors_Available;
               this.connectorsInUseCount = data.Connectors_InUse;
               this.connectorsOfflineCount = data.Connectors_Offline;
+              this.connectorsUnavailableCount = data.Connectors_Offline;
               this.connectorFinishingCount = data.connectors_Finishing;
               this.connectorFaultedCount = data.connectors_Faulted;
               this.connectorAuthorizeCount = data.connectors_Authorize;
@@ -280,7 +281,8 @@ export class AnalyticsComponent implements OnInit {
 
   getCardCount(tenantId: any) {
     this.httpDataService
-      .get(AppConstants.APIUrlDashboardCard + '?tenantId=' + tenantId)
+      // .get(AppConstants.APIUrlDashboardCard + '?tenantId=' + tenantId)
+      .get(AppConstants.APIUrlDashboardCard + '/' + tenantId)
       .subscribe((res) => {
         console.log('res kruti', res);
 
@@ -290,6 +292,7 @@ export class AnalyticsComponent implements OnInit {
         this.connectorsAvailableCount = res.connectors_Available;
         this.connectorsInUseCount = res.connectors_InUse;
         this.connectorsOfflineCount = res.connectors_Offline;
+        this.connectorsUnavailableCount = res.connectors_Offline;
         this.connectorFinishingCount = res.connectors_Finishing;
         this.connectorFaultedCount = res.connectors_Faulted;
         this.connectorAuthorizeCount = res.connectors_Authorize;
@@ -334,11 +337,11 @@ export class AnalyticsComponent implements OnInit {
           'Authorized',
         ];
       });
-    this.httpDataService
-      .get(AppConstants.APIUrlGetUnavailableChargers)
-      .subscribe((res) => {
-        this.connectorsUnavailableCount = res.connectors;
-      });
+    // this.httpDataService
+    //   .get(AppConstants.APIUrlGetUnavailableChargers)
+    //   .subscribe((res) => {
+    //     this.connectorsUnavailableCount = res.connectors;
+    //   });
   }
 
   SortArray(a: Tenant, b: Tenant) {
