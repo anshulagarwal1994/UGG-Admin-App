@@ -413,7 +413,7 @@ export class SiteDashboardComponent implements OnInit {
   }
 
   toggleDeletedRecords() {
-    this.deletedRecords = !this.deletedRecords;
+    //this.deletedRecords = !this.deletedRecords;
     this.getSites(this.tenantId);
   }
 
@@ -705,6 +705,8 @@ export class SiteDashboardComponent implements OnInit {
 
   // Reset table filters
   resetFilters() {
+    this.deletedRecords = false;
+    this.getSites(this.tenantId);
     this.siteNameControl.setValue('');
     this.locationControl.setValue('');
     this.chargePointControl.setValue('');
