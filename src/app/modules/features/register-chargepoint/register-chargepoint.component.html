@@ -155,7 +155,7 @@
                                 <a  href="javascript:;" mat-mini-fab color="success"
                                 matTooltip="Chargepoint Details" (click)="chargeEdit(element)"
                                 class="table-action-btn">
-                                    <span class="material-symbols-outlined">undo</span>
+                                    <span class="material-symbols-outlined"routerLink="['/charger-edit']" (click)="chargerEdit(element)">undo</span>
                                 </a>
                                 <a *ngIf="showTransfer" matTooltip="Transfer Chargepoint" mat-mini-fab color="primary" href="javascript:;" (click)="transferChargepoint(element);" class="table-action-btn">
                                     <span class="material-symbols-outlined">info</span>

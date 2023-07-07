@@ -129,6 +129,19 @@ export class RegisterChargePointComponent implements OnInit {
         }
       });
   }
+  chargerEdit(chargerData: any) {
+    localStorage.setItem('siteName', chargerData.name);
+    this.routerExtService.setRouteValue(
+      AppConstants.SiteID,
+      chargerData.siteId.toString()
+    );
+    this.routerExtService.setRouteValue(
+      AppConstants.ChargePointID,
+      chargerData.chargePointId.toString()
+    );
+    this.router.navigate([AppConstants.ChargerEditUrl]);
+  }
+
   togglechnage() {
     this.chnageicon =
       this.chnageicon == 'keyboard_arrow_right'
