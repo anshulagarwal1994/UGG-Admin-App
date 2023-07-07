@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 lg-6">
-                    <h2 class="h2">Charger Details : {{chargePointId}}</h2>
+                    <h2 class="h2"><span>Charger Details :</span> {{chargePointId}}</h2>
                 </div>
                 <div class="col-md-6 lg-6 text-end">
                     <div class="head-right-outer">                     
@@ -281,7 +281,7 @@
 
                     <div class="btn-group d-grid gap-2 d-md-flex justify-content-md-end">
                         <button *ngIf="canUpdateChargepoint" mat-raised-button color="secondary" class="mat-elevation-z btn-danger" (click)="deactivate();" [ngClass]="{'my-disable': isTransferred}">
-                            <span class="material-symbols-outlined">close</span> {{'button.deactivate' | translate }}
+                            <span class="material-symbols-outlined">block</span> {{'button.deactivate' | translate }}
                         </button>
                         <button *ngIf="canUpdateChargepoint" mat-raised-button color="primary"
                             class="mat-elevation-z btn-icon" (click)="updateCharge();"

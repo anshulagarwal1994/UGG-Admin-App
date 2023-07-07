@@ -2,9 +2,9 @@
     <div class="dialog-header-primary">
         <h4 style="margin: 0;">Transfer ChargePoint</h4>
     </div>
-    <div class="container-fluid">
-        <div class="content-container">
-            <div class="container m-20">
+    
+       
+            
                 <div class="form-row">
                     <mat-radio-group [(ngModel)]="chargerType" (change)="radioChange($event)">
                         <mat-radio-button [color]="'primary'" value="1">New Charger</mat-radio-button>
@@ -96,14 +96,14 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-            </div>
-            <div class="flex">
-                <button mat-raised-button color="primary" class="btn-primary btn-popup"
+            
+            <div class="btn-group d-grid gap-2 d-md-flex justify-content-md-end m-20">
+                <button mat-raised-button color="primary" class="btn-primary btn-popup mat-elevation-z"
                     [disabled]="(!selectedSite && !selectedChargepoint) || !revenueSharePercentage || !transactionFees || !utilityFees || !cloudServicesFees || !customerId || !vendorId"
-                    (click)="transfer()">Transfer</button>
-                <button mat-raised-button color="secondary" class="btn-secondary btn-popup"
-                    [mat-dialog-close]="false">Cancel</button>
+                    (click)="transfer()"><span class="material-symbols-outlined">check</span> Transfer</button>
+                <button mat-raised-button color="secondary" class="btn-secondary btn-popup mat-elevation-z"
+                    [mat-dialog-close]="false"><span class="material-symbols-outlined">close</span> Cancel</button>
             </div>
-        </div>
-    </div>
+       
+   
 </div>
