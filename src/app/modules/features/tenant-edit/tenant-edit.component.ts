@@ -345,7 +345,9 @@ export class TenantEditComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  back() {
+    this.router.navigate(['/tenants']);
+  }
   sorting() {
     const sortState: Sort = { active: 'name', direction: 'desc' };
     this.sort.active = sortState.active;
