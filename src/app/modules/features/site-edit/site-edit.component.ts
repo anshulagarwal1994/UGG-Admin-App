@@ -575,6 +575,8 @@ export class SiteEditComponent implements OnInit {
 
   // Reset table filters
   resetFilters() {
+    this.deletedRecords = false;
+    this.getChargePoints(this.siteById);
     this.chargePointIdControl.setValue('');
     this.chargeTypeControl.setValue('');
     this.statusControl.setValue('');
@@ -848,7 +850,7 @@ export class SiteEditComponent implements OnInit {
   }
 
   toggleDeletedRecords() {
-    this.deletedRecords = !this.deletedRecords;
+    // this.deletedRecords = !this.deletedRecords;
     this.getChargePoints(this.siteById);
   }
 

@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-md-3 lg-3">
                         <div class="form-check form-switch">
-                            <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
+                            <mat-slide-toggle [color]="'primary'" [(ngModel)]="deletedRecords" (change)="toggleDeletedRecords()">Show
                                 Deleted Records</mat-slide-toggle>
                             <!-- <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox"
                                 id="flexSwitchCheckDefault" checked="">

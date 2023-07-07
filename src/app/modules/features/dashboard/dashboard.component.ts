@@ -124,7 +124,7 @@ export class DashboardComponent implements OnInit {
   }
 
   toggleDeletedRecords() {
-    this.deletedRecords = !this.deletedRecords;
+    // this.deletedRecords = !this.deletedRecords;
     this.getTenants();
   }
   togglechnage() {
@@ -202,6 +202,8 @@ export class DashboardComponent implements OnInit {
 
   // Reset table filters
   resetFilters() {
+    this.deletedRecords = false;
+    this.getTenants();
     this.nameControl.setValue('');
     this.locationControl.setValue('');
   }

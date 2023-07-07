@@ -5,7 +5,7 @@
 
     <div class="card mat-elevation-z mb-3">
         <div class="card-body">
-            <h2 class="h2"><span>Site Edit</span></h2> 
+            
             <div class="row">
                 <div class="col-lg-4 col-md-6">
                     <h2 class="h2">
@@ -437,9 +437,9 @@
 
                                 <div class="form-group col-md-6 ucg-input">
                                     <mat-form-field class="w-100" appearance="outline">
-                                        <!-- <mat-label>{{'formFields.utilityBill' | translate}}</mat-label> -->
+                                        <mat-label>{{'formFields.utilityBill' | translate}}</mat-label>
                                         <br />
-                                        <div style="margin-top: -30px;">
+                                        <div style="margin-top: -30px;">       
                                             <input hidden="true" matInput class="w-100 ucg-input" appearance="outline"
                                                 formControlName="utilityBill" />
                                             <input type="file" id="fileUpload" tabindex="8" name="utilityBill"
@@ -599,7 +599,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-check form-switch">
-                            <mat-slide-toggle [color]="'primary'" (change)="toggleDeletedRecords()">Show
+                            <mat-slide-toggle [(ngModel)]="deletedRecords" [color]="'primary'" (change)="toggleDeletedRecords()">Show
                                 Deleted Records</mat-slide-toggle>
                             <!-- <input class="form-check-input" (change)="toggleDeletedRecords()" type="checkbox"
                                 id="flexSwitchCheckDefault" checked="">

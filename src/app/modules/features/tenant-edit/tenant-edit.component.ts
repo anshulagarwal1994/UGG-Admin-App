@@ -489,6 +489,8 @@ export class TenantEditComponent implements OnInit {
 
   // Reset table filters
   resetFilters() {
+    this.deletedRecords = false;
+    this.getSites(this.tenantId);
     this.siteNameControl.setValue('');
     this.locationControl.setValue('');
     this.filterValues = {};
@@ -618,7 +620,7 @@ export class TenantEditComponent implements OnInit {
   }
 
   toggleDeletedRecords() {
-    this.deletedRecords = !this.deletedRecords;
+    // this.deletedRecords = !this.deletedRecords;
     this.getSites(this.tenantId);
   }
 
