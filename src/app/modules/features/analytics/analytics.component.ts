@@ -104,12 +104,75 @@ export class AnalyticsComponent implements OnInit {
     },
   ];
   chartPlugins: any = [];
+  //register user
+  registerchartData: ChartDataSets[] = [];
+  registerchartLabel: Label[] = [];
+  registerchartLegend = true;
+  registerchartOptions: ChartOptions = {
+    responsive: true,
+  };
+  registerchartColors: Color[] = [
+    {
+      // Orange
+      backgroundColor: 'rgba(255, 159, 64, 0.4)',
+      borderColor: 'rgba(255, 159, 64, 1)',
+    },
+    {
+      // Blue
+      backgroundColor: 'rgba(54, 162, 235, 0.4)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+    },
+    {
+      // Purple
+      backgroundColor: 'rgba(153, 102, 255, 0.4)',
+      borderColor: 'rgba(153, 102, 255, 1)',
+    },
+    {
+      // Green
+      backgroundColor: 'rgba(75, 192, 192, 0.4)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+    },
+    {
+      // Yellow
+      backgroundColor: 'rgba(255, 206, 86, 0.4)',
+      borderColor: 'rgba(255, 206, 86, 1)',
+    },
+  ];
+  registerchartPlugins: any = [];
+  //unit consumed
+  unitchartData: ChartDataSets[] = [
+    { data: [10, 20, 30, 15, 25], label: 'Series A' },
+  ];
+  unitchartLegend = true;
+  unitchartOptions: ChartOptions = {
+    responsive: true,
+  };
+  unitchartColors: Color[] = [
+    {
+      // Purple
+      backgroundColor: 'rgba(153, 102, 255, 0.4)',
+      borderColor: 'rgba(153, 102, 255, 1)',
+    },
+  ];
+  unitchartPlugins: any = [];
+
   //financial
   finacialchartData: ChartDataSets[] = [];
   finacialchartLabel: Label[] = [];
   finacialchartLegend = true;
   finacialchartOptions: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            min: 0,
+            max: 10,
+          },
+        },
+      ],
+    },
   };
   finacialchartColors: Color[] = [
     {
@@ -448,7 +511,6 @@ export class AnalyticsComponent implements OnInit {
 
   getfinancialStatistics() {
     if (this.startDate && this.endDate) {
-      this.finacialchartData = [];
       this.finacialchartLabel = [];
       this.httpDataService
         .get(
@@ -461,6 +523,8 @@ export class AnalyticsComponent implements OnInit {
         )
         .subscribe(
           (res) => {
+            console.log('ressssss', res);
+            debugger;
             this.failedTransactionCount = res?.data?.failedTransactionCount
               ? res?.data?.failedTransactionCount
               : 0;
@@ -504,40 +568,60 @@ export class AnalyticsComponent implements OnInit {
         )
         .subscribe(
           (res) => {
+            console.log('with starttime', res);
             let totalAmountData: any = [];
             let totalTransactionsData: any = [];
             let newUserData: any = [];
             let newGuestUserData: any = [];
+            console.log('tras....', totalTransactionsData);
+            //   this.finacialchartData = [{ data: [2, 2, 6], label: 'Series A' }];
             res?.data.forEach((element: any, index: number) => {
               this.finacialchartLabel.push(element.transactionDate);
+              //this.finacialchartData = [{ data: [2, 2, 6], label: 'Series A' }];
               totalAmountData.push(parseFloat(element.totalAmount).toFixed(2));
               totalTransactionsData.push(element.totalTransactions);
               newUserData.push(element.newUser);
               newGuestUserData.push(element.newGuestUser);
+              console.log('tras....', totalTransactionsData);
+              console.log('register....', newUserData);
+
+              debugger;
               if (res.data.length - 1 === index) {
                 if (this.isMasterAdmin) {
                   this.finacialchartData = [
                     {
-                      label: 'FTotal Revenue',
-                      data: totalAmountData,
-                      borderWidth: 1,
-                    },
-                    {
-                      label: 'FTransactions',
+                      label: 'Transactions',
                       data: totalTransactionsData,
                       borderWidth: 1,
                     },
+                  ];
+
+                  this.registerchartData = [
                     {
-                      label: 'FRegistered User',
+                      label: 'Registered User',
                       data: newUserData,
                       borderWidth: 1,
                     },
-                    {
-                      label: 'FGuest User',
-                      data: newGuestUserData,
-                      borderWidth: 1,
-                    },
                   ];
+
+                  // this.finacialchartLabel = ['FTransaction'];
+                  // this.finacialchartData = [
+                  //   {
+                  //     label: 'FTransactions',
+                  //     data: totalTransactionsData,
+                  //     borderWidth: 1,
+                  //   },
+                  //   // {
+                  //   //   label: 'FRegistered User',
+                  //   //   data: newUserData,
+                  //   //   borderWidth: 1,
+                  //   // },
+                  //   // {
+                  //   //   label: 'FGuest User',
+                  //   //   data: newGuestUserData,
+                  //   //   borderWidth: 1,
+                  //   // },
+                  // ];
                 } else {
                   this.chartData = [
                     {

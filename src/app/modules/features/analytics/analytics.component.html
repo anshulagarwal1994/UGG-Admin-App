@@ -163,25 +163,21 @@
             <div class="col-lg-6 box-2-2">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
-                  <div class="border-radius-lg">   
-                          
-                    <div class="chart">
-                     
+                  <div class="border-radius-lg">          
+                    <div class="chart"> 
                       <div *ngIf="piechartData.length" class="chartjs-container">
                         <canvas id="ChartJs" baseChart [datasets]="piechartData" 
-                        
                             [options]="piechartOptions" [colors]="piechartColors"
                             [labels]="piechartLabel"
                             [legend]="piechartLegend"
-                            [chartType]="'pie'" [plugins]="piechartPlugins">
-                          
+                            [chartType]="'pie'" [plugins]="piechartPlugins">      
                         </canvas>
                     </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div>         
             <div class="col-lg-6 box-2-2">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
@@ -199,6 +195,42 @@
                 </div>
               </div>
             </div>
+            <div class="row mt-5 box-2">
+            <div class="col-lg-6 box-2-2">
+              <div class="card z-index-2">
+                <div class="card-body pt-0">
+                  <div class="border-radius-lg">                  
+                    <div class="chart">
+                      <div *ngIf="registerchartData.length" class="chartjs-container">
+                        <canvas id="ChartJs" baseChart [datasets]="registerchartData" [labels]="finacialchartLabel"
+                            [options]="registerchartOptions" [colors]="registerchartColors" [legend]="registerchartLegend"
+                            [chartType]="'bar'" [plugins]="registerchartPlugins">
+                          
+                        </canvas>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-6 box-2-2">
+              <div class="card z-index-2">
+                <div class="card-body pt-0">
+                  <div class="border-radius-lg">          
+                    <div class="chart"> 
+                      <div *ngIf="unitchartData.length" class="chartjs-container">
+                        <canvas id="ChartJs" baseChart [datasets]="unitchartData" 
+                            [options]="unitchartOptions" [colors]="unitchartColors"
+                            [labels]="finacialchartLabel"
+                            [legend]="unitchartLegend"
+                            [chartType]="'line'" [plugins]="unitchartPlugins">      
+                        </canvas>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>  -->
           </div>
          
 
