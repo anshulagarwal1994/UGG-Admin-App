@@ -141,12 +141,25 @@ export class AnalyticsComponent implements OnInit {
   ];
   registerchartPlugins: any = [];
   //unit consumed
+  unitchartLabel: Label[] = [];
   unitchartData: ChartDataSets[] = [
-    { data: [10, 20, 30, 15, 25], label: 'Series A' },
+    // { data: [10, 20, 30, 15, 25], label: 'Series A' },
   ];
   unitchartLegend = true;
+
   unitchartOptions: ChartOptions = {
     responsive: true,
+    //maintainAspectRatio: false,
+    // scales: {
+    //   yAxes: [
+    //     {
+    //       ticks: {
+    //         min: 0,
+    //         max: 10,
+    //       },
+    //     },
+    //   ],
+    // },
   };
   unitchartColors: Color[] = [
     {
@@ -467,7 +480,7 @@ export class AnalyticsComponent implements OnInit {
             this.endDate.getTime() - 90 * 24 * 60 * 60 * 1000
           );
           this.getStatistics();
-          this.getfinancialStatistics();
+          //this.getfinancialStatistics();
         },
         (error) => {
           console.log(error);
@@ -576,69 +589,107 @@ export class AnalyticsComponent implements OnInit {
             let newUserData: any = [];
             let newGuestUserData: any = [];
             console.log('tras....', totalTransactionsData);
+            debugger;
             //   this.finacialchartData = [{ data: [2, 2, 6], label: 'Series A' }];
-            res?.data.forEach((element: any, index: number) => {
-              this.finacialchartLabel.push(element.transactionDate);
-              //this.finacialchartData = [{ data: [2, 2, 6], label: 'Series A' }];
-              totalAmountData.push(parseFloat(element.totalAmount).toFixed(2));
-              totalTransactionsData.push(element.totalTransactions);
-              newUserData.push(element.newUser);
-              newGuestUserData.push(element.newGuestUser);
-              console.log('tras....', totalTransactionsData);
-              console.log('register....', newUserData);
+            res?.data.revenueTraficResponse.forEach(
+              (element: any, index: number) => {
+                this.finacialchartLabel.push(element.transactionDate);
+                //this.finacialchartData = [{ data: [2, 2, 6], label: 'Series A' }];
+                totalAmountData.push(
+                  parseFloat(element.totalAmount).toFixed(2)
+                );
+                totalTransactionsData.push(element.totalTransactions);
+                newUserData.push(element.newUser);
+                newGuestUserData.push(element.newGuestUser);
+                console.log('tras....', totalTransactionsData);
+                console.log('register....', newUserData);
 
-              if (res.data.length - 1 === index) {
-                if (this.isMasterAdmin) {
-                  this.finacialchartData = [
-                    {
-                      label: 'Transactions',
-                      data: totalTransactionsData,
-                      borderWidth: 1,
-                    },
-                  ];
+                if ((res.data.revenueTraficResponse, length - 1 === index)) {
+                  if (this.isMasterAdmin) {
+                    this.finacialchartData = [
+                      {
+                        label: 'Transactions',
+                        data: totalTransactionsData,
+                        borderWidth: 1,
+                      },
+                    ];
 
-                  this.registerchartData = [
-                    {
-                      label: 'Registered User',
-                      data: newUserData,
-                      borderWidth: 1,
-                    },
-                  ];
+                    this.registerchartData = [
+                      {
+                        label: 'Registered User',
+                        data: newUserData,
+                        borderWidth: 1,
+                      },
+                    ];
 
-                  // this.finacialchartLabel = ['FTransaction'];
-                  // this.finacialchartData = [
-                  //   {
-                  //     label: 'FTransactions',
-                  //     data: totalTransactionsData,
-                  //     borderWidth: 1,
-                  //   },
-                  //   // {
-                  //   //   label: 'FRegistered User',
-                  //   //   data: newUserData,
-                  //   //   borderWidth: 1,
-                  //   // },
-                  //   // {
-                  //   //   label: 'FGuest User',
-                  //   //   data: newGuestUserData,
-                  //   //   borderWidth: 1,
-                  //   // },
-                  // ];
-                } else {
-                  this.chartData = [
-                    {
-                      label: 'FTotal Revenue',
-                      data: totalAmountData,
-                      borderWidth: 1,
-                    },
-                    {
-                      label: 'FTransactions',
-                      data: totalTransactionsData,
-                      borderWidth: 1,
-                    },
-                  ];
+                    // this.finacialchartLabel = ['FTransaction'];
+                    // this.finacialchartData = [
+                    //   {
+                    //     label: 'FTransactions',
+                    //     data: totalTransactionsData,
+                    //     borderWidth: 1,
+                    //   },
+                    //   // {
+                    //   //   label: 'FRegistered User',
+                    //   //   data: newUserData,
+                    //   //   borderWidth: 1,
+                    //   // },
+                    //   // {
+                    //   //   label: 'FGuest User',
+                    //   //   data: newGuestUserData,
+                    //   //   borderWidth: 1,
+                    //   // },
+                    // ];
+                  } else {
+                    this.chartData = [
+                      {
+                        label: 'FTotal Revenue',
+                        data: totalAmountData,
+                        borderWidth: 1,
+                      },
+                      {
+                        label: 'FTransactions',
+                        data: totalTransactionsData,
+                        borderWidth: 1,
+                      },
+                    ];
+                  }
                 }
               }
-            });
+            );
+
+            res?.data.unitsConsumeResponse.forEach(
+              (element: any, index: number) => {
+                var totalUnitsConsumed = [];
+                this.unitchartLabel.push(element.transactionDate);
+                //this.finacialchartData = [{ data: [2, 2, 6], label: 'Series A' }];
+                totalUnitsConsumed.push(element.totalUnitsConsumed);
+                if (res.data.unitsConsumeResponse.length - 1 === index) {
+                  if (this.isMasterAdmin) {
+                    this.unitchartData = [
+                      {
+                        label: 'Unit Consume',
+                        data: totalUnitsConsumed,
+                        borderWidth: 1,
+                      },
+                    ];
+                  } else {
+                    // this.chartData = [
+                    //   {
+                    //     label: 'FTotal Revenue',
+                    //     data: totalAmountData,
+                    //     borderWidth: 1,
+                    //   },
+                    //   {
+                    //     label: 'FTransactions',
+                    //     data: totalTransactionsData,
+                    //     borderWidth: 1,
+                    //   },
+                    // ];
+                  }
+                }
+              }
+            );
           },
           (error) => {
             console.log(error);
@@ -709,52 +760,107 @@ export class AnalyticsComponent implements OnInit {
             let totalTransactionsData: any = [];
             let newUserData: any = [];
             let newGuestUserData: any = [];
-            res?.data.forEach((element: any, index: number) => {
-              this.chartLabel.push(element.transactionDate);
-              totalAmountData.push(parseFloat(element.totalAmount).toFixed(2));
-              totalTransactionsData.push(element.totalTransactions);
-              newUserData.push(element.newUser);
-              newGuestUserData.push(element.newGuestUser);
-              if (res.data.length - 1 === index) {
-                if (this.isMasterAdmin) {
-                  this.chartData = [
-                    {
-                      label: 'Total Revenue',
-                      data: totalAmountData,
-                      borderWidth: 1,
-                    },
-                    {
-                      label: 'Transactions',
-                      data: totalTransactionsData,
-                      borderWidth: 1,
-                    },
-                    {
-                      label: 'Registered User',
-                      data: newUserData,
-                      borderWidth: 1,
-                    },
-                    {
-                      label: 'Guest User',
-                      data: newGuestUserData,
-                      borderWidth: 1,
-                    },
-                  ];
-                } else {
-                  this.chartData = [
-                    {
-                      label: 'Total Revenue',
-                      data: totalAmountData,
-                      borderWidth: 1,
-                    },
-                    {
-                      label: 'Transactions',
-                      data: totalTransactionsData,
-                      borderWidth: 1,
-                    },
-                  ];
+            res?.data.revenueTraficResponse.forEach(
+              (element: any, index: number) => {
+                this.chartLabel.push(element.transactionDate);
+                this.finacialchartLabel.push(element.transactionDate);
+                this.registerchartLabel.push(element.transactionDate);
+
+                totalAmountData.push(
+                  parseFloat(element.totalAmount).toFixed(2)
+                );
+                totalTransactionsData.push(element.totalTransactions);
+                newUserData.push(element.newUser);
+                newGuestUserData.push(element.newGuestUser);
+                debugger;
+                if (res.data.revenueTraficResponse.length - 1 === index) {
+                  if (this.isMasterAdmin) {
+                    this.chartData = [
+                      {
+                        label: 'Total Revenue',
+                        data: totalAmountData,
+                        borderWidth: 1,
+                      },
+                      {
+                        label: 'Transactions',
+                        data: totalTransactionsData,
+                        borderWidth: 1,
+                      },
+                      {
+                        label: 'Registered User',
+                        data: newUserData,
+                        borderWidth: 1,
+                      },
+                      {
+                        label: 'Guest User',
+                        data: newGuestUserData,
+                        borderWidth: 1,
+                      },
+                    ];
+                    this.registerchartData = [
+                      {
+                        label: 'Registered User',
+                        data: newUserData,
+                        borderWidth: 1,
+                      },
+                    ];
+                    this.finacialchartData = [
+                      {
+                        label: 'Transactions',
+                        data: totalTransactionsData,
+                        borderWidth: 1,
+                      },
+                    ];
+                  } else {
+                    this.chartData = [
+                      {
+                        label: 'Total Revenue',
+                        data: totalAmountData,
+                        borderWidth: 1,
+                      },
+                      {
+                        label: 'Transactions',
+                        data: totalTransactionsData,
+                        borderWidth: 1,
+                      },
+                    ];
+                  }
                 }
               }
-            });
+            );
+            res?.data.unitsConsumeResponse.forEach(
+              (element: any, index: number) => {
+                var unitsConsumeResponse = [];
+                this.unitchartLabel.push(element.transactionDate);
+
+                unitsConsumeResponse.push(element.unitsConsumeResponse);
+                debugger;
+                if (res.data.unitsConsumeResponse.length - 1 === index) {
+                  if (this.isMasterAdmin) {
+                    this.unitchartData = [
+                      {
+                        label: 'Unit consume',
+                        data: unitsConsumeResponse,
+                        borderWidth: 1,
+                      },
+                    ];
+                  } else {
+                    this.chartData = [
+                      {
+                        label: 'Total Revenue',
+                        data: totalAmountData,
+                        borderWidth: 1,
+                      },
+                      {
+                        label: 'Transactions',
+                        data: totalTransactionsData,
+                        borderWidth: 1,
+                      },
+                    ];
+                  }
+                }
+              }
+            );
           },
           (error) => {
             console.log(error);

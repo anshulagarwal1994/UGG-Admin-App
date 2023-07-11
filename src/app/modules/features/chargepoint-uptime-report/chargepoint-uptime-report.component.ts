@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Toast } from 'ngx-toastr';
+import { Tenant } from '@app/models/tenant.model';
 
 @Component({
   selector: 'app-chargepoint-uptime-report',
@@ -14,6 +15,8 @@ import { Toast } from 'ngx-toastr';
 })
 export class ChargePointUptimeReportComponent {
   process = false;
+  tenants: Tenant[];
+  selectedTenant: any = '';
   maxDate = new Date();
   startDate: any = '';
   endDate: any = '';
@@ -42,7 +45,41 @@ export class ChargePointUptimeReportComponent {
     private httpDataService: HttpDataService,
     private cdref: ChangeDetectorRef
   ) {}
+  ngOnInit(): void {
+    // let table = new DataTable('#myTable');
+    this.getTenantNames();
+  }
 
+  SortArray(a: Tenant, b: Tenant) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  getTenantNames() {
+    return this.httpDataService
+      .get(AppConstants.APIUrlTenantNameListtUrl)
+      .subscribe((res: Tenant[]) => {
+        this.tenants = res.sort(this.SortArray);
+        if (this.tenants.length) {
+          localStorage.setItem(
+            'selectedTenantId',
+            this.tenants[0].tenantId.toString()
+          );
+          this.tenantSelection(this.tenants[0]);
+        }
+      });
+  }
+
+  tenantSelection(tenant: any) {
+    console.log('Here In this');
+    this.selectedTenant = tenant;
+  }
   getReport() {
     if (this.startDate && this.endDate) {
       this.process = true;
@@ -50,6 +87,7 @@ export class ChargePointUptimeReportComponent {
       this.httpDataService
         .get(
           AppConstants.APIUrlGetChargePointUptime +
+            this.selectedTenant +
             Helper.getFormattedDate(this.startDate) +
             '/' +
             Helper.getFormattedDate(this.endDate)
