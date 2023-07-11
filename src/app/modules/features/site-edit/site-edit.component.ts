@@ -673,6 +673,9 @@ export class SiteEditComponent implements OnInit {
             AppConstants.Success,
             AppConstants.Success
           );
+          this.siteById = `${this.tenantId}/${this.siteId}`;
+          this.getSiteById();
+          this.onChanges();
           document.getElementById('Description').style.display = 'block';
           document.getElementById('EditForm').style.display = 'none';
         },
@@ -945,6 +948,7 @@ export class SiteEditComponent implements OnInit {
   }
 
   showEditForm() {
+    // this.router.navigate([AppConstants.SiteEditUrl]);
     document.getElementById('Description').style.display = 'none';
     document.getElementById('EditForm').style.display = 'block';
   }

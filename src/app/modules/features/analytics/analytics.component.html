@@ -46,7 +46,7 @@
                   <div class="box-icon-outer text-center">
                     <img src="./assets/img/total-charge-points.svg" />
                   </div>
-                  <div class="header-text-outer mt-2" routerLink="/connectors/All">
+                  <div class="header-text-outer mt-2" routerLink="/connectors/AllChargepoints">
                     <h4>{{'cards.chargePoints' | translate }}</h4>
                     <p>{{chargePointsCount}}</p>
                   </div>
@@ -117,6 +117,11 @@
                   <div class="cn-status-inner">
                     <h3>Connectors</h3>
                     <div class="connectors-footer-contect">
+                      <label class="available" routerLink="/connectors/AllChargers">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        <p>{{ connectors }}</p>
+                        Total
+                      </label>
                       <label class="available" routerLink="/connectors/Online">
                         <span class="material-symbols-outlined">check_circle</span>
                         <p>{{connectorsAvailableCount}}</p>

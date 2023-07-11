@@ -41,6 +41,7 @@ export class AnalyticsComponent implements OnInit {
   connectorAuthorizeCount: number = 0;
   connectorPreparingCount: number = 0;
   connectorsAvailableCount: number = 0;
+  connectors: number = 0;
   connectorsInUseCount: number = 0;
   displayStyle = 'none';
   connectorsOfflineCount: number = 0;
@@ -276,6 +277,7 @@ export class AnalyticsComponent implements OnInit {
               console.log('tenantCount = ', this.tenantCount);
               // this.sitesCount = data.Sites;
               // this.chargePointsCount = data.ChargePoints;
+              this.connectors = data.Connectors;
               this.connectorsAvailableCount = data.Connectors_Available;
               this.connectorsInUseCount = data.Connectors_InUse;
               this.connectorsOfflineCount = data.Connectors_Offline;
@@ -352,6 +354,7 @@ export class AnalyticsComponent implements OnInit {
         this.tenantCount = res.tenants;
         this.sitesCount = res.sites;
         this.chargePointsCount = res.chargePoints;
+        this.connectors = res.connectors;
         this.connectorsAvailableCount = res.connectors_Available;
         this.connectorsInUseCount = res.connectors_InUse;
         this.connectorsOfflineCount = res.connectors_Offline;
