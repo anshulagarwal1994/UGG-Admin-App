@@ -70,7 +70,6 @@ export class ChargePointUptimeReportComponent {
   }
 
   downloadReport() {
-    debugger;
     if (this.dataSource.data.length > 0) {
       let csvData = this.ConvertToCSV(this.dataSource.data, [
         'chargePointId',

@@ -500,7 +500,6 @@ export class TenantEditComponent implements OnInit {
     this.dataSource.filter = '';
   }
   togglechnage() {
-    debugger;
     this.chnageicon =
       this.chnageicon == 'keyboard_arrow_right'
         ? 'keyboard_arrow_down'

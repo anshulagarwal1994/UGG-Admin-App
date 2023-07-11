@@ -527,7 +527,6 @@ export class AnalyticsComponent implements OnInit {
         .subscribe(
           (res) => {
             console.log('ressssss', res);
-            debugger;
             this.failedTransactionCount = res?.data?.failedTransactionCount
               ? res?.data?.failedTransactionCount
               : 0;
@@ -588,7 +587,6 @@ export class AnalyticsComponent implements OnInit {
               console.log('tras....', totalTransactionsData);
               console.log('register....', newUserData);
 
-              debugger;
               if (res.data.length - 1 === index) {
                 if (this.isMasterAdmin) {
                   this.finacialchartData = [

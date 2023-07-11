@@ -29,4 +29,12 @@ export class Site {
 	markupCharge: string;
 	markupPercentForDC: string;
 	preAuthAmount: string;
+	dateofCommissioning: string;
+	transactionfees: number;
+	utilityFees: number;
+	cloudServiceFees: number;
+	revenueShare: number;
+	utilityfeesownedbysiteowner: boolean;
+	customerId: string;
+	vendorId: string;
 }

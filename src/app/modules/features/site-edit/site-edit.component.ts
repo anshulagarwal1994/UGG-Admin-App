@@ -39,6 +39,7 @@ import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dial
   styleUrls: ['./site-edit.component.css'],
 })
 export class SiteEditComponent implements OnInit {
+
   siteForm: FormGroup;
   tenantId: Guid;
   siteId: Guid;
@@ -53,6 +54,7 @@ export class SiteEditComponent implements OnInit {
   canDeleteChargepoint = false;
   canModifyPreAuth = false;
   canModifyMarkupCharge = false;
+  canUpdateFees = false;
   deletedRecords = false;
   process = true;
   Presname: any;
@@ -359,6 +361,14 @@ export class SiteEditComponent implements OnInit {
       markupCharge: [0, []],
       markupPercentForDC: [0, []],
       status: [null],
+      dateofCommissioning: [null, []],
+      transactionfees: [null, []],
+      utilityFees: [null, []],
+      cloudServiceFees: [null, []],
+      revenueShare: [null, []],
+      utilityfeesownedbysiteowner: [null, []],
+      customerId: [null, []],
+      vendorId: [null, []],
     });
   }
 
@@ -403,6 +413,9 @@ export class SiteEditComponent implements OnInit {
           }
           if (pp.key === 'Delete Chargepoint') {
             this.canDeleteChargepoint = pp.value;
+          }
+          if (pp.key === 'Update Fees') {
+            this.canUpdateFees = pp.value;
           }
         });
       })
@@ -595,7 +608,12 @@ export class SiteEditComponent implements OnInit {
   }
 
   setSite(site: Site) {
-    debugger;
+    let dateofCommissioning: any = site?.dateofCommissioning ? new Date(site.dateofCommissioning) : null;
+    if (dateofCommissioning && dateofCommissioning.getFullYear()) {
+      dateofCommissioning = dateofCommissioning.toLocaleString('en-US', {timeZone: 'CST'});
+    } else {
+      dateofCommissioning = '-';
+    }
     this.Presname = site.name;
     this.Presstreet = site.address.street;
     this.Presstate = site.address.state;
@@ -624,6 +642,14 @@ export class SiteEditComponent implements OnInit {
       preAuthAmount: site.preAuthAmount ? site.preAuthAmount : 0,
       markupCharge: site.markupCharge ? site.markupCharge : 0,
       markupPercentForDC: site.markupPercentForDC ? site.markupPercentForDC : 0,
+      dateofCommissioning: site.dateofCommissioning ? dateofCommissioning : null,
+      transactionfees: site.transactionfees ? site.transactionfees : 0,
+      utilityFees: site.utilityFees ? site.utilityFees : 0,
+      cloudServiceFees: site.cloudServiceFees ? site.cloudServiceFees : 0,
+      revenueShare: site.revenueShare ? site.revenueShare : 0,
+      utilityfeesownedbysiteowner: site.utilityfeesownedbysiteowner ? site.utilityfeesownedbysiteowner : false,
+      customerId: site.customerId ? site.customerId : null,
+      vendorId: site.vendorId ? site.vendorId : null
     });
 
     this.siteForm.patchValue({
@@ -661,7 +687,6 @@ export class SiteEditComponent implements OnInit {
   }
 
   updateSite() {
-    debugger;
     this.mapSite();
     if (this.siteForm.dirty && this.siteForm.valid && this.siteForm.touched) {
       this.modifySite(this.site, this.tenantId, this.siteId).subscribe(
@@ -793,7 +818,13 @@ export class SiteEditComponent implements OnInit {
         ?.value
         ? this.siteForm.get('markupPercentForDC')?.value
         : 0;
-
+        this.site.transactionfees = this.siteForm.get('transactionfees')?.value;
+        this.site.utilityFees = this.siteForm.get('utilityFees')?.value;
+        this.site.cloudServiceFees = this.siteForm.get('cloudServiceFees')?.value;
+        this.site.revenueShare = this.siteForm.get('revenueShare')?.value;
+        this.site.utilityfeesownedbysiteowner = this.siteForm.get('utilityfeesownedbysiteowner')?.value;
+        this.site.customerId = this.siteForm.get('customerId')?.value;
+        this.site.vendorId = this.siteForm.get('vendorId')?.value;
       return true;
     } else {
       return false;
