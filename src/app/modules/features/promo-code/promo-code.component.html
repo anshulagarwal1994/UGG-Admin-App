@@ -114,8 +114,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
-                  <mat-header-cell *matHeaderCellDef class="actions "> Action </mat-header-cell>
-                  <mat-cell *matCellDef="let element" class="">
+                  <mat-header-cell *matHeaderCellDef class="action-column"> Action </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="action-column">
                     <div class="table-action promo-action">
                       <a *ngIf="!showDeleted && (element.used === 0)" matTooltip="Edit Promo Code Details" mat-mini-fab color="primary" href="javascript:;" (click)="sendDetails(element,'edit');" class="table-action-btn">
                         <span class="material-symbols-outlined">info</span>

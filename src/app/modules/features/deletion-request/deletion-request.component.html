@@ -104,8 +104,8 @@
                         </ng-container>
     
                         <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
-                            <mat-header-cell *matHeaderCellDef class="spc-even"> Action </mat-header-cell>
-                            <mat-cell *matCellDef="let element" class="spc-even">
+                            <mat-header-cell *matHeaderCellDef class="wd-200 action-column"> Action </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="wd-200 action-column">
                                 <div *ngIf="element.status === 'New'" class="md-chip md-chip-approve" (click)="deleteResource(element)">Approve</div>
                                 &nbsp; &nbsp;
                                 <div *ngIf="element.status === 'New'" class="md-chip md-chip-reject" (click)="rejectRequest(element)">Reject</div>

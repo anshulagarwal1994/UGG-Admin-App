@@ -19,7 +19,6 @@ import { RouterExtService } from '@app/shared/services/routerExt.service';
   styleUrls: ['./connectors.component.css'],
 })
 export class ConnectorsComponent implements OnInit {
-
   status: string;
   tenantId: string;
   filteredByUser: Observable<string[]>;
@@ -63,7 +62,7 @@ export class ConnectorsComponent implements OnInit {
     'status',
     'numberOfConnectors',
     'connectorStatus1',
-    'connectorStatus2'
+    'connectorStatus2',
   ];
   @ViewChild(MatPaginator, { static: false })
   set paginator(value: MatPaginator) {
@@ -111,42 +110,55 @@ export class ConnectorsComponent implements OnInit {
   getConnectorDetails() {
     if (this.status === 'Unavailable') {
       this.httpDataService
-      .get(AppConstants.APIUrlOfflineConnectorDetails)
-      .subscribe((res) => {
-        res.forEach((element: any, index: number) => {
-          element.idx = index+1;
+        .get(
+          AppConstants.APIUrlOfflineConnectorDetails +
+            '?status=' +
+            this.status +
+            '&tenantId=' +
+            this.tenantId
+        )
+
+        .subscribe((res) => {
+          res.forEach((element: any, index: number) => {
+            element.idx = index + 1;
+          });
+          this.dataSource.data = res;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.cdref.detectChanges();
         });
-        this.dataSource.data = res;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.cdref.detectChanges();
-      });
     } else if (this.status === 'All') {
       this.httpDataService
-      .get(AppConstants.APIUrlConnectorDetails + '?tenantId=' + this.tenantId)
-      .subscribe((res) => {
-        res.forEach((element: any, index: number) => {
-          element.idx = index+1;
+        .get(AppConstants.APIUrlConnectorDetails + '?tenantId=' + this.tenantId)
+        .subscribe((res) => {
+          res.forEach((element: any, index: number) => {
+            element.idx = index + 1;
+          });
+          this.dataSource.data = res;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.cdref.detectChanges();
         });
-        this.dataSource.data = res;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.cdref.detectChanges();
-      });
     } else {
       this.httpDataService
-      .get(AppConstants.APIUrlConnectorDetails + '?status=' + this.status + '&tenantId=' + this.tenantId)
-      .subscribe((res) => {
-        res.forEach((element: any, index: number) => {
-          element.idx = index+1;
+        .get(
+          AppConstants.APIUrlConnectorDetails +
+            '?status=' +
+            this.status +
+            '&tenantId=' +
+            this.tenantId
+        )
+        .subscribe((res) => {
+          res.forEach((element: any, index: number) => {
+            element.idx = index + 1;
+          });
+          this.dataSource.data = res;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          // this.getUserAutoComplete();
+          // this.getUserStatusAutoComplete();
+          this.cdref.detectChanges();
         });
-        this.dataSource.data = res;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        // this.getUserAutoComplete();
-        // this.getUserStatusAutoComplete();
-        this.cdref.detectChanges();
-      });
     }
   }
 
@@ -225,9 +237,14 @@ export class ConnectorsComponent implements OnInit {
 
   goToCharger(chargerData: any) {
     localStorage.setItem('siteName', chargerData.name);
-    this.routerExtService.setRouteValue(AppConstants.SiteID, chargerData.siteId.toString());
-    this.routerExtService.setRouteValue(AppConstants.ChargePointID, chargerData.chargePointId.toString());
+    this.routerExtService.setRouteValue(
+      AppConstants.SiteID,
+      chargerData.siteId.toString()
+    );
+    this.routerExtService.setRouteValue(
+      AppConstants.ChargePointID,
+      chargerData.chargePointId.toString()
+    );
     this.router.navigate([AppConstants.ChargerEditUrl]);
   }
-
 }

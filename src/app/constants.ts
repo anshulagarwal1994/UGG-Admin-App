@@ -93,7 +93,8 @@ export class AppConstants {
   public static APIUrlTenantTransfer = 'api/v1/site/TransferSite/';
   public static APIUrlConnectorDetails = 'api/v1/Dashboard/ConnectorDetails';
   public static APIUrlOfflineConnectorDetails =
-    'api/v1/Dashboard/OfflineConnectorDetails';
+    // 'api/v1/Dashboard/OfflineConnectorDetails';
+    'api/v1/Dashboard/ConnectorDetails';
 
   public static APIUrlTenantUpdate = 'api/v1/tenant/update/';
   public static APIUrlTenantCreate = 'api/v1/tenant/register/';

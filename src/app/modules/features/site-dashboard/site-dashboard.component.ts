@@ -356,6 +356,7 @@ export class SiteDashboardComponent implements OnInit {
           this.siteCards.chargePoints = res.chargePoints;
           this.siteCards.connectors_Available = res.connectors_Available;
           this.siteCards.connectors_InUse = res.connectors_InUse;
+          this.siteCards.connectors = res.connectors;
           this.siteCards.connectors_Offline = res.connectors_Offline;
           this.siteCards.connectors_Authorize = res.connectors_Authorize;
           this.siteCards.connectors_Faulted = res.connectors_Faulted;
