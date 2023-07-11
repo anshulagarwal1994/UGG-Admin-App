@@ -39223,11 +39223,17 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
   width: auto;
 }
 
+.table-action.promo-action {
+  min-width: 70px;
+}
+
 .table-action .mat-mini-fab {
   width: 30px;
   height: 30px;
   line-height: 24px;
   padding: 0;
+  margin-right: 0 !important;
+  margin-left: 5px !important;
 }
 
 .table-action .mat-mini-fab .mat-button-wrapper {

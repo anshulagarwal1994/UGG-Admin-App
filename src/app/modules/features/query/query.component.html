@@ -97,8 +97,8 @@
                         </ng-container>
     
                         <ng-container matColumnDef="action" style="cursor: default;cursor:pointer;">
-                            <mat-header-cell *matHeaderCellDef class="spc-even"> Action </mat-header-cell>
-                            <mat-cell *matCellDef="let element" class="spc-even">
+                            <mat-header-cell *matHeaderCellDef class="wd-200 action-column"> Action </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="wd-200 action-column">
                               <a  href="javascript:;" mat-mini-fab color="success"
                               matTooltip="Reply Query" (click)="sendQueryDetails(element, 'edit')"
                               class="table-action-btn" *ngIf="isMasterAdmin || element?.reply?.length">
