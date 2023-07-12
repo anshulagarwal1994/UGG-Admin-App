@@ -73,6 +73,7 @@ export class DriverRegistrationReportComponent {
     console.log('Here In this');
     this.selectedTenant = tenant;
   }
+  //check
   getReport() {
     if (this.startDate && this.endDate) {
       this.process = true;
