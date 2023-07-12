@@ -76,7 +76,7 @@
         "header": {
             "tenantId": "Identifiant du locataire",
             "siteId": "ID du site",
-            "chargePointId":"Charge Point Id",
+            "chargePointId":"ChargePoint Id",
             "name": "Nom",
             "email": "E-mail",
             "location": "Emplacement",

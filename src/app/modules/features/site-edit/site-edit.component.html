@@ -749,7 +749,7 @@
                                         [ngClass]="{'disable-link hide': deletedRecords}"> Action </mat-header-cell>
                                         <mat-cell *matCellDef="let element" class="wd-200 action-column" [ngClass]="{'disable-link hide': deletedRecords}">
                                             <div class="table-action">
-                                              <a matTooltip="chargepoint Details" mat-mini-fab color="primary" href="javascript:;"  (click)="chargeEdit(element);" class="table-action-btn">
+                                              <a matTooltip="ChargePoint Details" mat-mini-fab color="primary" href="javascript:;"  (click)="chargeEdit(element);" class="table-action-btn">
                                                 <span class="material-symbols-outlined">info</span>
                                               </a>
                                               <a href="javascript:;" mat-mini-fab color="warn" matTooltip="chargepoint Delete " *ngIf="!element.isrequestraised && !isTransferred && canDeleteChargepoint"  (click)="deleteChargePoint(element)"  class="table-action-btn">

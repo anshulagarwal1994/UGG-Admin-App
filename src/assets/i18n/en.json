@@ -48,7 +48,7 @@
     "cards": {
         "tenant": "Organizations",
         "sites": "Sites",
-        "chargePoints": "Charge Points",
+        "chargePoints": "ChargePoints",
         "connectorsAvailable": "Connectors Available",
         "connectorsOccupied": "Connectors Occupied",
         "connectorsOffline": "Connectors Offline",
@@ -156,7 +156,7 @@
         "noRecordFound": "No records found",
         "header": {
             "siteId": "siteId",
-            "chargePointId":"Charge Point Id",
+            "chargePointId":"ChargePoint Id",
             "name": "Name",
             "location": "Location",
             "tenantId": "tenantId",

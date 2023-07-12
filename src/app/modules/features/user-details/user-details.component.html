@@ -123,7 +123,7 @@
                                 </div>
                                 <div *ngIf="showChargePointSelection" class="form-group col-md-6">
                                     <mat-form-field class="w-100 ucg-input" appearance="outline">
-                                        <mat-label>Select Charge Points</mat-label>
+                                        <mat-label>Select ChargePoints</mat-label>
                                         <mat-select formControlName="chargePoints" multiple tabindex="1"
                                             (selectionChange)="chargePointSelection($event.value)">
                                             <mat-option *ngFor="let chargePoint of chargePoints"
@@ -133,7 +133,7 @@
                                         </mat-select>
                                         <mat-error>
                                             <span *ngIf="!userForm.get('chargePoints')?.valid">
-                                                Charge points are required.</span>
+                                                ChargePoints are required.</span>
                                         </mat-error>
                                     </mat-form-field>
                                 </div>

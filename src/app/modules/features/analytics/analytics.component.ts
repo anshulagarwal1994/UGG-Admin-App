@@ -74,24 +74,24 @@ export class AnalyticsComponent implements OnInit {
   };
   chartColors: Color[] = [
     {
-      // Red
-      backgroundColor: 'rgba(255, 99, 132, 0.4)',
-      borderColor: 'rgba(255, 99, 132, 1)',
+      // Red - Total Revenue
+      backgroundColor: '#52BA6C',
+      borderColor: '#52BA6C',
     },
     {
-      // Orange
-      backgroundColor: 'rgba(255, 159, 64, 0.4)',
-      borderColor: 'rgba(255, 159, 64, 1)',
+      // Orange - Transactions
+      backgroundColor: '#184EA2',
+      borderColor: '#184EA2',
     },
     {
-      // Blue
-      backgroundColor: 'rgba(54, 162, 235, 0.4)',
-      borderColor: 'rgba(54, 162, 235, 1)',
+      // Blue - Registered Users
+      backgroundColor: '#FFAA29',
+      borderColor: '#FFAA29',
     },
     {
-      // Purple
-      backgroundColor: 'rgba(153, 102, 255, 0.4)',
-      borderColor: 'rgba(153, 102, 255, 1)',
+      // Purple - Guest Users
+      backgroundColor: '#29A5FF',
+      borderColor: '#29A5FF',
     },
     {
       // Green
@@ -115,8 +115,8 @@ export class AnalyticsComponent implements OnInit {
   registerchartColors: Color[] = [
     {
       // Orange
-      backgroundColor: 'rgba(255, 159, 64, 0.4)',
-      borderColor: 'rgba(255, 159, 64, 1)',
+      backgroundColor: '#FFAA29',
+      borderColor: '#FFAA29',
     },
     {
       // Blue
@@ -164,8 +164,8 @@ export class AnalyticsComponent implements OnInit {
   unitchartColors: Color[] = [
     {
       // Purple
-      backgroundColor: 'rgba(153, 102, 255, 0.4)',
-      borderColor: 'rgba(153, 102, 255, 1)',
+      backgroundColor: '#29A5FF',
+      borderColor: '#29A5FF',
     },
   ];
   unitchartPlugins: any = [];
@@ -176,23 +176,23 @@ export class AnalyticsComponent implements OnInit {
   finacialchartLegend = true;
   finacialchartOptions: ChartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            min: 0,
-            max: 10,
-          },
-        },
-      ],
-    },
+    // maintainAspectRatio: false,
+    // scales: {
+    //   yAxes: [
+    //     {
+    //       ticks: {
+    //         min: 0,
+    //         max: 10,
+    //       },
+    //     },
+    //   ],
+    // },
   };
   finacialchartColors: Color[] = [
     {
       // Red
-      backgroundColor: 'rgba(255, 99, 132, 0.4)',
-      borderColor: 'rgba(255, 99, 132, 1)',
+      backgroundColor: '#184EA2',
+      borderColor: '#184EA2',
     },
     {
       // Orange
@@ -201,8 +201,8 @@ export class AnalyticsComponent implements OnInit {
     },
     {
       // Blue
-      backgroundColor: 'rgba(54, 162, 235, 0.4)',
-      borderColor: 'rgba(54, 162, 235, 1)',
+      backgroundColor: '#184EA2',
+      borderColor: '#184EA2',
     },
     {
       // Purple

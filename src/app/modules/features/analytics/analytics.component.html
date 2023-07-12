@@ -31,12 +31,12 @@
                     <p>{{sitesCount}}</p>
                   </div>
                 </div>
-                <hr class="dark horizontal my-0">
+                <!-- <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                  <!-- <p class="mb-0"><img src="./assets/img/trending_up.svg">
+                  <p class="mb-0"><img src="./assets/img/trending_up.svg">
                     <span
-                      class="text-success text-sm font-weight-bolder">5%</span>Increase</p> -->
-                </div>
+                      class="text-success text-sm font-weight-bolder">5%</span>Increase</p>
+                </div> -->
               </div>
             </div>
             
@@ -51,11 +51,11 @@
                     <p>{{chargePointsCount}}</p>
                   </div>
                 </div>
-                <hr class="dark horizontal my-0">
+                <!-- <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                  <!-- <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                      class="text-success font-weight-bolder">5%</span>Increase</p> -->
-                </div>
+                  <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
+                      class="text-success font-weight-bolder">5%</span>Increase</p>
+                </div> -->
               </div>
             </div>
             <div class="col-lg-4 col-sm-4 mt-sm-0 mt-4">
@@ -65,15 +65,15 @@
                     <img src="./assets/img/offline-charge-points.svg" />
                   </div>
                   <div class="header-text-outer mt-2" routerLink="/connectors/Offline">
-                    <h4>Off. Charge Points</h4>
+                    <h4>Off. ChargePoints</h4>
                     <p>{{connectorsOfflineCount}}</p>
                   </div>
                 </div>
-                <hr class="dark horizontal my-0">
+                <!-- <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                  <!-- <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
-                  class="text-success font-weight-bolder">5%</span>Increase</p> -->
-                </div>
+                  <p class="mb-0"><img src="./assets/img/trending_up.svg"><span
+                  class="text-success font-weight-bolder">5%</span>Increase</p>
+                </div> -->
               </div>
             </div>
           </div>
@@ -82,16 +82,18 @@
               <div class="card z-index-2">
                 <div class="card-body pt-0">
                   <div class="border-radius-lg">
-                    
-                    <div class="chart">
-                      <div *ngIf="chartData.length" class="chartjs-container">
-                        <canvas id="ChartJs" baseChart [datasets]="chartData" [labels]="chartLabel"
-                            [options]="chartOptions" [colors]="chartColors" [legend]="chartLegend"
-                            [chartType]="'bar'" [plugins]="chartPlugins">
-                            <!-- (chartHover)="chartHovered($event)" 
-                            (chartClick)="chartClicked($event)" -->
-                        </canvas>
-                    </div>
+                    <div class="dashboard-graph">
+                      <h3>Statistics</h3>
+                      <div class="chart">
+                        <div *ngIf="chartData.length" class="chartjs-container">
+                          <canvas id="ChartJs" baseChart [datasets]="chartData" [labels]="chartLabel"
+                              [options]="chartOptions" [colors]="chartColors" [legend]="chartLegend"
+                              [chartType]="'bar'" [plugins]="chartPlugins">
+                              <!-- (chartHover)="chartHovered($event)" 
+                              (chartClick)="chartClicked($event)" -->
+                          </canvas>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -164,73 +166,85 @@
             </div>
           </div>
 
-          <div class="row mt-5 box-2">
-            <div class="col-lg-6 box-2-2">
+          <div class="row mt-5 box-2" >
+            <div class="col-lg-6 box-2-2" *ngIf="piechartData.length" >
               <div class="card z-index-2">
                 <div class="card-body pt-0">
-                  <div class="border-radius-lg">          
-                    <div class="chart"> 
-                      <div *ngIf="piechartData.length" class="chartjs-container">
-                        <canvas id="ChartJs" baseChart [datasets]="piechartData" 
-                            [options]="piechartOptions" [colors]="piechartColors"
-                            [labels]="piechartLabel"
-                            [legend]="piechartLegend"
-                            [chartType]="'pie'" [plugins]="piechartPlugins">      
-                        </canvas>
-                    </div>
+                  <div class="border-radius-lg">  
+                    <div class="dashboard-graph">
+                      <h3>Connectors</h3>        
+                      <div class="chart"> 
+                        <div *ngIf="piechartData.length" class="chartjs-container">
+                          <canvas id="ChartJs" baseChart [datasets]="piechartData" 
+                              [options]="piechartOptions" [colors]="piechartColors"
+                              [labels]="piechartLabel"
+                              [legend]="piechartLegend"
+                              [chartType]="'pie'" [plugins]="piechartPlugins">      
+                          </canvas>
+                      </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>         
-            <div class="col-lg-6 box-2-2">
+            <div class="col-lg-6 box-2-2" *ngIf="finacialchartData.length">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
-                  <div class="border-radius-lg">                  
-                    <div class="chart">
-                      <div *ngIf="finacialchartData.length" class="chartjs-container">
-                        <canvas id="ChartJs" baseChart [datasets]="finacialchartData" [labels]="finacialchartLabel"
-                            [options]="finacialchartOptions" [colors]="finacialchartColors" [legend]="finacialchartLegend"
-                            [chartType]="'bar'" [plugins]="finacialchartPlugins">
-                          
-                        </canvas>
-                    </div>
+                  <div class="border-radius-lg">  
+                    <div class="dashboard-graph">
+                      <h3>Transactions</h3>                  
+                      <div class="chart">
+                        <div *ngIf="finacialchartData.length" class="chartjs-container">
+                          <canvas id="ChartJs" baseChart [datasets]="finacialchartData" [labels]="finacialchartLabel"
+                              [options]="finacialchartOptions" [colors]="finacialchartColors" [legend]="finacialchartLegend"
+                              [chartType]="'bar'" [plugins]="finacialchartPlugins">
+                            
+                          </canvas>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row mt-5 box-2">
-            <div class="col-lg-6 box-2-2">
+            <div class="col-lg-6 box-2-2" *ngIf="registerchartData.length">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
-                  <div class="border-radius-lg">                  
-                    <div class="chart">
-                      <div *ngIf="registerchartData.length" class="chartjs-container">
-                        <canvas id="ChartJs" baseChart [datasets]="registerchartData" [labels]="registerchartLabel"
-                            [options]="registerchartOptions" [colors]="registerchartColors" [legend]="registerchartLegend"
-                            [chartType]="'bar'" [plugins]="registerchartPlugins">
-                          
-                        </canvas>
-                    </div>
+                  <div class="border-radius-lg">      
+                    <div class="dashboard-graph">
+                      <h3>Registered Users</h3>               
+                      <div class="chart">
+                        <div *ngIf="registerchartData.length" class="chartjs-container">
+                          <canvas id="ChartJs" baseChart [datasets]="registerchartData" [labels]="registerchartLabel"
+                              [options]="registerchartOptions" [colors]="registerchartColors" [legend]="registerchartLegend"
+                              [chartType]="'bar'" [plugins]="registerchartPlugins">
+                            
+                          </canvas>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-             <div class="col-lg-6 box-2-2">
+             <div class="col-lg-6 box-2-2" *ngIf="unitchartData.length">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
-                  <div class="border-radius-lg">          
-                    <div class="chart"> 
-                      <div *ngIf="unitchartData.length" class="chartjs-container">
-                        <canvas id="ChartJs" baseChart [datasets]="unitchartData" 
-                            [options]="unitchartOptions" [colors]="unitchartColors"
-                            [labels]="finacialchartLabel"
-                            [legend]="unitchartLegend"
-                            [chartType]="'line'" [plugins]="unitchartPlugins">      
-                        </canvas>
-                    </div>
+                  <div class="border-radius-lg">     
+                    <div class="dashboard-graph">
+                      <h3>Unit Consumed</h3>      
+                      <div class="chart"> 
+                        <div *ngIf="unitchartData.length" class="chartjs-container">
+                          <canvas id="ChartJs" baseChart [datasets]="unitchartData" 
+                              [options]="unitchartOptions" [colors]="unitchartColors"
+                              [labels]="finacialchartLabel"
+                              [legend]="unitchartLegend"
+                              [chartType]="'line'" [plugins]="unitchartPlugins">      
+                          </canvas>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
