@@ -230,7 +230,6 @@ export class PromoCodeComponent implements OnInit {
   }
 
   getPromoCodes() {
-    debugger;
     this.process = true;
     this.dataSource.data = [];
     let URL = '';
@@ -313,7 +312,6 @@ export class PromoCodeComponent implements OnInit {
   }
 
   deletePromocode(promoCodeID: any) {
-    debugger;
     this.dialogRef = this.dialog.open(MatDeleteDialogComponent, {
       width: '450px',
       panelClass: 'confirm-dialog-container',

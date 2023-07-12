@@ -162,10 +162,10 @@
                                     swap_horiz
                                     </span>
                                 </a>
-                                <a *ngIf="!element.isrequestraised" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteChargePoint(element)" class="table-action-btn">
+                                <a *ngIf="!element.isRequestRaised" href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Chargepoint" (click)="deleteChargePoint(element)" class="table-action-btn">
                                 <span class="material-symbols-outlined">delete</span>
                                 </a>
-                                <a  href="javascript:;" mat-mini-fab color="success"  *ngIf="element.isrequestraised && !deletedRecords"
+                                <a  href="javascript:;" mat-mini-fab color="success"  *ngIf="element.isRequestRaised && !deletedRecords"
                                 matTooltip="Undo Delete Chargepoint" (click)="unDeleteChargePoint(element)"
                                 class="table-action-btn">
                                     <span class="material-symbols-outlined">undo</span>

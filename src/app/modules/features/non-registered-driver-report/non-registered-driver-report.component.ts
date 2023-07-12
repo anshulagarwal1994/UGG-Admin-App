@@ -5,7 +5,7 @@ import { HttpDataService } from '@app/shared/services/http-data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
+import { Tenant } from '@app/models/tenant.model';
 @Component({
   selector: 'app-non-registered-driver-report',
   templateUrl: './non-registered-driver-report.component.html',
@@ -13,6 +13,8 @@ import { MatSort } from '@angular/material/sort';
 })
 export class NonRegisteredDriverReportComponent {
   process = false;
+  tenants: Tenant[];
+  selectedTenant: any = '';
   maxDate = new Date();
   startDate: any = '';
   endDate: any = '';
@@ -35,13 +37,48 @@ export class NonRegisteredDriverReportComponent {
     private httpDataService: HttpDataService,
     private cdref: ChangeDetectorRef
   ) {}
+  ngOnInit(): void {
+    // let table = new DataTable('#myTable');
+    this.getTenantNames();
+  }
 
+  SortArray(a: Tenant, b: Tenant) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  getTenantNames() {
+    return this.httpDataService
+      .get(AppConstants.APIUrlTenantNameListtUrl)
+      .subscribe((res: Tenant[]) => {
+        this.tenants = res.sort(this.SortArray);
+        if (this.tenants.length) {
+          localStorage.setItem(
+            'selectedTenantId',
+            this.tenants[0].tenantId.toString()
+          );
+          this.tenantSelection(this.tenants[0]);
+        }
+      });
+  }
+
+  tenantSelection(tenant: any) {
+    console.log('Here In this');
+    this.selectedTenant = tenant;
+  }
   getReport() {
     if (this.startDate && this.endDate) {
       this.process = true;
       this.dataSource.data = [];
       this.httpDataService
         .post(AppConstants.APIUrlGetNonRegisteredDriver, {
+          id: this.selectedTenant,
           startDate: Helper.getFormattedDate(this.startDate),
           endDate: Helper.getFormattedDate(this.endDate),
         })

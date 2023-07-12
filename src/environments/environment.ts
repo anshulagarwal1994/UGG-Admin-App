@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://beta-evcms-api.azurewebsites.net/',
-  pushHostURL:'https://beta-evcmspushtrigger.azurewebsites.net',
-  signalRCountURL: 'https://chargepointfn.azurewebsites.net/api'
+  apiBaseUrl: 'https://beta-evcms-api.azurewebsites.net/', //prod
+  //  apiBaseUrl: 'https://stag-evcms-api.azurewebsites.net/', //staging webmantra
+  pushHostURL: 'https://beta-evcmspushtrigger.azurewebsites.net',
+  signalRCountURL: 'https://chargepointfn.azurewebsites.net/api',
 };
 
 /*

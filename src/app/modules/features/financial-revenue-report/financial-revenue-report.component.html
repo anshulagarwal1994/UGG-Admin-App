@@ -16,6 +16,17 @@
             </div>
             <div class="filter-outer">
                 <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-7">
+                        <mat-form-field class="w-100" appearance="outline">
+                          <mat-label>Organization</mat-label>
+                          <mat-select (selectionChange)="tenantSelection($event.value)" [(ngModel)]="selectedTenant"
+                              tabindex="1">
+                              <mat-option *ngFor="let tenant of tenants" [value]="tenant">
+                                  {{tenant.name}}
+                              </mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                      </div> 
                     <div class="col-md-3 lg-3">
 
                         <mat-form-field class="w-100 ucg-input" appearance="outline">

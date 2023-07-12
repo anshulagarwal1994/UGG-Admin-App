@@ -37,3 +37,6 @@
 ::ng-deep .mat-expansion-panel-header {
   padding-left: 15px !important;
 }
+::ng-deep .no-line .mat-form-field-underline {
+  display: none;
+}

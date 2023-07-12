@@ -46,7 +46,7 @@
                   <div class="box-icon-outer text-center">
                     <img src="./assets/img/total-charge-points.svg" />
                   </div>
-                  <div class="header-text-outer mt-2" routerLink="/connectors/AllChargepoints">
+                  <div class="header-text-outer mt-2" routerLink="/connectors/All">
                     <h4>{{'cards.chargePoints' | translate }}</h4>
                     <p>{{chargePointsCount}}</p>
                   </div>
@@ -207,7 +207,7 @@
                   <div class="border-radius-lg">                  
                     <div class="chart">
                       <div *ngIf="registerchartData.length" class="chartjs-container">
-                        <canvas id="ChartJs" baseChart [datasets]="registerchartData" [labels]="finacialchartLabel"
+                        <canvas id="ChartJs" baseChart [datasets]="registerchartData" [labels]="registerchartLabel"
                             [options]="registerchartOptions" [colors]="registerchartColors" [legend]="registerchartLegend"
                             [chartType]="'bar'" [plugins]="registerchartPlugins">
                           
@@ -218,7 +218,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 box-2-2">
+             <div class="col-lg-6 box-2-2">
               <div class="card z-index-2">
                 <div class="card-body pt-0">
                   <div class="border-radius-lg">          
@@ -235,7 +235,7 @@
                   </div>
                 </div>
               </div>
-            </div> 
+            </div>
           </div>
          
 

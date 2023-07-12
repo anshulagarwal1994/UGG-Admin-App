@@ -50,7 +50,6 @@ export class ChargerEditComponent implements OnInit {
   canUpdateConfiguration = false;
   canViewOperation = false;
   canViewMessages = false;
-  canUpdateFees = false;
   isTransferred = false;
   popUpData: string;
 
@@ -140,14 +139,6 @@ export class ChargerEditComponent implements OnInit {
       connector2Meter: [null],
       connectorType1: [null, []],
       connectorType2: [null, []],
-      dateofCommissioning: [null, []],
-      transactionfees: [null, []],
-      utilityFees: [null, []],
-      cloudServiceFees: [null, []],
-      revenueShare: [null, []],
-      utilityfeesownedbysiteowner: [null, []],
-      customerId: [null, []],
-      vendorId: [null, []],
     });
 
     (this.firmwareForm = this.formBuilder.group({
@@ -170,9 +161,6 @@ export class ChargerEditComponent implements OnInit {
       .getRecordData('PermissionDB', 'permission', 'Charger Management')
       .then((data: any) => {
         data.previlleges.forEach((pp: any) => {
-          if (pp.key === 'Update Fees') {
-            this.canUpdateFees = pp.value;
-          }
           if (pp.key === 'Update Chargepoint') {
             this.canUpdateChargepoint = pp.value;
           }
@@ -307,13 +295,6 @@ export class ChargerEditComponent implements OnInit {
     });
   }
 
-  logout() {
-    this.indexedDBService.deleteDatabase('PermissionDB');
-    localStorage.clear();
-    sessionStorage.clear();
-    this.router.navigate(['/']);
-  }
-
   openPopup() {
     // this.displayStyle = "block";
     document.getElementById('ShowDetails').style.display = 'none';
@@ -431,23 +412,6 @@ export class ChargerEditComponent implements OnInit {
           this.chargerPoint.info = chargePoint.info;
           this.chargerPoint.connectorType1 = chargePoint.connectorType1;
           this.chargerPoint.connectorType2 = chargePoint.connectorType2;
-          let dateofCommissioning = chargePoint?.dateofCommissioning
-            ? new Date(chargePoint.dateofCommissioning)
-            : null;
-          if (dateofCommissioning && dateofCommissioning.getFullYear()) {
-            this.chargerPoint.dateofCommissioning =
-              dateofCommissioning.toLocaleString('en-US', { timeZone: 'CST' });
-          } else {
-            this.chargerPoint.dateofCommissioning = '-';
-          }
-          this.chargerPoint.transactionfees = chargePoint.transactionfees;
-          this.chargerPoint.utilityFees = chargePoint.utilityFees;
-          this.chargerPoint.cloudServiceFees = chargePoint.cloudServiceFees;
-          this.chargerPoint.revenueShare = chargePoint.revenueShare;
-          this.chargerPoint.utilityfeesownedbysiteowner =
-            chargePoint.utilityfeesownedbysiteowner;
-          this.chargerPoint.customerId = chargePoint.customerId;
-          this.chargerPoint.vendorId = chargePoint.vendorId;
           chargePoint?.connectors.forEach(
             (currentConnector: Connectors, currentConnectorIndex: number) => {
               if (currentConnectorIndex == 1) {
@@ -543,22 +507,6 @@ export class ChargerEditComponent implements OnInit {
         chargePoint.connectorType1 != null ? chargePoint.connectorType1 : null,
       connectorType2:
         chargePoint.connectorType2 != null ? chargePoint.connectorType2 : null,
-      dateofCommissioning: chargePoint.dateofCommissioning
-        ? chargePoint.dateofCommissioning
-        : null,
-      transactionfees: chargePoint.transactionfees
-        ? chargePoint.transactionfees
-        : 0,
-      utilityFees: chargePoint.utilityFees ? chargePoint.utilityFees : 0,
-      cloudServiceFees: chargePoint.cloudServiceFees
-        ? chargePoint.cloudServiceFees
-        : 0,
-      revenueShare: chargePoint.revenueShare ? chargePoint.revenueShare : 0,
-      utilityfeesownedbysiteowner: chargePoint.utilityfeesownedbysiteowner
-        ? chargePoint.utilityfeesownedbysiteowner
-        : false,
-      customerId: chargePoint.customerId ? chargePoint.customerId : null,
-      vendorId: chargePoint.vendorId ? chargePoint.vendorId : null,
     });
   }
 
@@ -651,19 +599,6 @@ export class ChargerEditComponent implements OnInit {
         this.chargerForm.get('connectorType1')?.value;
       this.chargerPoint.connectorType2 =
         this.chargerForm.get('connectorType2')?.value;
-      this.chargerPoint.transactionfees =
-        this.chargerForm.get('transactionfees')?.value;
-      this.chargerPoint.utilityFees =
-        this.chargerForm.get('utilityFees')?.value;
-      this.chargerPoint.cloudServiceFees =
-        this.chargerForm.get('cloudServiceFees')?.value;
-      this.chargerPoint.revenueShare =
-        this.chargerForm.get('revenueShare')?.value;
-      this.chargerPoint.utilityfeesownedbysiteowner = this.chargerForm.get(
-        'utilityfeesownedbysiteowner'
-      )?.value;
-      this.chargerPoint.customerId = this.chargerForm.get('customerId')?.value;
-      this.chargerPoint.vendorId = this.chargerForm.get('vendorId')?.value;
     }
   }
 

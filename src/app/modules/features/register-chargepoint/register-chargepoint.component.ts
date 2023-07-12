@@ -327,7 +327,7 @@ export class RegisterChargePointComponent implements OnInit {
       if (result) {
         this.httpDataService
           .put(AppConstants.APIUrlUpdateDeleteRequest, {
-            id: chargePoint.deleterequestid,
+            id: chargePoint.deleteRequestId,
             status: 'Cancel',
           })
           .subscribe((res) => {

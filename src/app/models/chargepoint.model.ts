@@ -17,14 +17,6 @@ export class ChargePoint {
     chargerType:string;
 	connectorType1:string;
 	connectorType2:string;
-	dateofCommissioning: string;
-	transactionfees: number;
-	utilityFees: number;
-	cloudServiceFees: number;
-	revenueShare: number;
-	utilityfeesownedbysiteowner: boolean;
-	customerId: string;
-	vendorId: string;
 	connector1Id:number;
     connector1Name:string;
     connector1LastStatusTime:string;

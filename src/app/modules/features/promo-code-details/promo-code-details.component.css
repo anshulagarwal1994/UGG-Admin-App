@@ -2,6 +2,10 @@
   display: none;
 }
 
+::ng-deep .mat-radio-label-content {
+  width: 100%;
+}
+
 .radio-group {
   display: flex;
   flex-direction: row;
