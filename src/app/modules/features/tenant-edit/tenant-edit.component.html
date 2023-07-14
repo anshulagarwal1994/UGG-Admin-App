@@ -454,7 +454,8 @@
 
 
                             <div class="table-action">
-                                <a *ngIf="!element.isRequestRaised && canDeleteSite" matTooltip="Site Details" mat-mini-fab color="primary" href="javascript:;" (click)="siteEdit(element)" class="table-action-btn">
+                                <!-- *ngIf="!element.isRequestRaised && canDeleteSite" -->
+                                <a  matTooltip="Site Details" mat-mini-fab color="primary" href="javascript:;" (click)="siteEdit(element)" class="table-action-btn">
                                   <span class="material-symbols-outlined">info</span>
                                 </a>
                                 <a href="javascript:;" mat-mini-fab color="warn" matTooltip="Delete Site" *ngIf="!element.isRequestRaised && canDeleteSite" (click)="deleteSite(element)" class="table-action-btn">

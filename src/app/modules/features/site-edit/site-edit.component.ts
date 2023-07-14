@@ -39,7 +39,6 @@ import { MatDeleteDialogComponent } from '@app/mat-delete-dialog/mat-delete-dial
   styleUrls: ['./site-edit.component.css'],
 })
 export class SiteEditComponent implements OnInit {
-
   siteForm: FormGroup;
   tenantId: Guid;
   siteId: Guid;
@@ -450,7 +449,7 @@ export class SiteEditComponent implements OnInit {
     this.siteById = `${this.tenantId}/${this.siteId}`;
     this.getSiteById();
     this.onChanges();
-    // this.getChargePoints(this.siteById);
+    //  this.getChargePoints(this.siteById);
   }
 
   getSiteById() {
@@ -608,9 +607,13 @@ export class SiteEditComponent implements OnInit {
   }
 
   setSite(site: Site) {
-    let dateofCommissioning: any = site?.dateofCommissioning ? new Date(site.dateofCommissioning) : null;
+    let dateofCommissioning: any = site?.dateofCommissioning
+      ? new Date(site.dateofCommissioning)
+      : null;
     if (dateofCommissioning && dateofCommissioning.getFullYear()) {
-      dateofCommissioning = dateofCommissioning.toLocaleString('en-US', {timeZone: 'CST'});
+      dateofCommissioning = dateofCommissioning.toLocaleString('en-US', {
+        timeZone: 'CST',
+      });
     } else {
       dateofCommissioning = '-';
     }
@@ -642,14 +645,18 @@ export class SiteEditComponent implements OnInit {
       preAuthAmount: site.preAuthAmount ? site.preAuthAmount : 0,
       markupCharge: site.markupCharge ? site.markupCharge : 0,
       markupPercentForDC: site.markupPercentForDC ? site.markupPercentForDC : 0,
-      dateofCommissioning: site.dateofCommissioning ? dateofCommissioning : null,
+      dateofCommissioning: site.dateofCommissioning
+        ? dateofCommissioning
+        : null,
       transactionfees: site.transactionfees ? site.transactionfees : 0,
       utilityFees: site.utilityFees ? site.utilityFees : 0,
       cloudServiceFees: site.cloudServiceFees ? site.cloudServiceFees : 0,
       revenueShare: site.revenueShare ? site.revenueShare : 0,
-      utilityfeesownedbysiteowner: site.utilityfeesownedbysiteowner ? site.utilityfeesownedbysiteowner : false,
+      utilityfeesownedbysiteowner: site.utilityfeesownedbysiteowner
+        ? site.utilityfeesownedbysiteowner
+        : false,
       customerId: site.customerId ? site.customerId : null,
-      vendorId: site.vendorId ? site.vendorId : null
+      vendorId: site.vendorId ? site.vendorId : null,
     });
 
     this.siteForm.patchValue({
@@ -818,13 +825,15 @@ export class SiteEditComponent implements OnInit {
         ?.value
         ? this.siteForm.get('markupPercentForDC')?.value
         : 0;
-        this.site.transactionfees = this.siteForm.get('transactionfees')?.value;
-        this.site.utilityFees = this.siteForm.get('utilityFees')?.value;
-        this.site.cloudServiceFees = this.siteForm.get('cloudServiceFees')?.value;
-        this.site.revenueShare = this.siteForm.get('revenueShare')?.value;
-        this.site.utilityfeesownedbysiteowner = this.siteForm.get('utilityfeesownedbysiteowner')?.value;
-        this.site.customerId = this.siteForm.get('customerId')?.value;
-        this.site.vendorId = this.siteForm.get('vendorId')?.value;
+      this.site.transactionfees = this.siteForm.get('transactionfees')?.value;
+      this.site.utilityFees = this.siteForm.get('utilityFees')?.value;
+      this.site.cloudServiceFees = this.siteForm.get('cloudServiceFees')?.value;
+      this.site.revenueShare = this.siteForm.get('revenueShare')?.value;
+      this.site.utilityfeesownedbysiteowner = this.siteForm.get(
+        'utilityfeesownedbysiteowner'
+      )?.value;
+      this.site.customerId = this.siteForm.get('customerId')?.value;
+      this.site.vendorId = this.siteForm.get('vendorId')?.value;
       return true;
     } else {
       return false;

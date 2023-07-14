@@ -517,7 +517,7 @@ export class PromoCodeDetailsComponent implements OnInit {
           });
       }
     } else {
-      if (this.promocodeObj.discountPercentage === 0 || this.promocodeObj.flatDiscount === 0) {
+      if (this.promocodeObj.discountPercentage === 0 && this.promocodeObj.flatDiscount === 0) {
         this.popUpService.showMsg(
           'Discount Percentage or Flat Discount can\'t be 0',
           AppConstants.EmptyUrl,

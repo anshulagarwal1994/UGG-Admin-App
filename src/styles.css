@@ -38561,7 +38561,7 @@ text,
   align-items: center;
   margin-right: 0;
   margin-bottom: 10px;
-  min-width: 180px;
+  min-width: 33.33%;
   padding-right: 10px;
   cursor: pointer
 }
@@ -39606,7 +39606,7 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
 .dashboard-graph {
     padding: 30px;
     width: 100%;
-    min-height: 490px;
+    min-height: 351px;
 }
 
 .dashboard-graph h3 {
@@ -39617,4 +39617,20 @@ mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-typ
 
 .dashboard-graph .chartjs-container {
     padding-top: 15px;
+}
+
+.Connectors-img-outer {
+  min-height: 191px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.Connectors-img-outer img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: auto;
 }

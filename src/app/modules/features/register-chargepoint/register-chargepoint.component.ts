@@ -338,6 +338,10 @@ export class RegisterChargePointComponent implements OnInit {
   }
 
   navigateCharger() {
+    debugger;
+    // const ids: any = `${AppConstants.TenantID}/${AppConstants.SiteID}`;
+    // this.router.navigate([AppConstants.ChargerCreationUrl]);
+
     localStorage.setItem('tenantName', this.selectedTenant.name);
     localStorage.setItem('siteName', this.selectedSite.name);
     localStorage.setItem('fromRegister', 'true');

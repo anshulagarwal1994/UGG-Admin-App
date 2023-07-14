@@ -294,7 +294,7 @@ export class AnalyticsComponent implements OnInit {
               this.connectorsAvailableCount = data.Connectors_Available;
               this.connectorsInUseCount = data.Connectors_InUse;
               this.connectorsOfflineCount = data.Connectors_Offline;
-              this.connectorsUnavailableCount = data.Connectors_Offline;
+              // this.connectorsUnavailableCount = data.Connectors_Offline;
               this.connectorFinishingCount = data.connectors_Finishing;
               this.connectorFaultedCount = data.connectors_Faulted;
               this.connectorAuthorizeCount = data.connectors_Authorize;
@@ -313,6 +313,7 @@ export class AnalyticsComponent implements OnInit {
                   ],
                 },
               ];
+              console.log('pieeeee', this.piechartData);
               this.piechartColors = [
                 {
                   backgroundColor: [
@@ -349,6 +350,9 @@ export class AnalyticsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  // checkAllZeros(arr){
+  //   return arr.every((value) => {  return value === 0;});
+  // }
 
   openPopup() {
     this.displayStyle = 'block';
@@ -392,6 +396,9 @@ export class AnalyticsComponent implements OnInit {
             ],
           },
         ];
+        // var myArray = this.piechartData;
+        // var result = this.checkAllZeros(myArray);
+
         this.piechartColors = [
           {
             backgroundColor: [

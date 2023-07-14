@@ -78,27 +78,6 @@
             </div>
           </div>
           <div class="row mt-5 box-2">
-            <div class="col-lg-6 box-2-2">
-              <div class="card z-index-2">
-                <div class="card-body pt-0">
-                  <div class="border-radius-lg">
-                    <div class="dashboard-graph">
-                      <h3>Statistics</h3>
-                      <div class="chart">
-                        <div *ngIf="chartData.length" class="chartjs-container">
-                          <canvas id="ChartJs" baseChart [datasets]="chartData" [labels]="chartLabel"
-                              [options]="chartOptions" [colors]="chartColors" [legend]="chartLegend"
-                              [chartType]="'bar'" [plugins]="chartPlugins">
-                              <!-- (chartHover)="chartHovered($event)" 
-                              (chartClick)="chartClicked($event)" -->
-                          </canvas>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="col-lg-6">
               <div class="card">
                 <div class="text-center mt-n3 mx-3 Connectors-img-outer">
@@ -164,17 +143,41 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 box-2-2">
+              <div class="card z-index-2">
+                <div class="card-body pt-0">
+                  <div class="border-radius-lg">
+                    <div class="dashboard-graph">
+                      <h3>Statistics</h3>
+                      <div class="chart">
+                        <!-- *ngIf="chartData.length" -->
+                        <div  class="chartjs-container">
+                          <canvas id="ChartJs" baseChart [datasets]="chartData" [labels]="chartLabel"
+                              [options]="chartOptions" [colors]="chartColors" [legend]="chartLegend"
+                              [chartType]="'bar'" [plugins]="chartPlugins">
+                              <!-- (chartHover)="chartHovered($event)" 
+                              (chartClick)="chartClicked($event)" -->
+                          </canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="row mt-5 box-2" >
-            <div class="col-lg-6 box-2-2" *ngIf="piechartData.length" >
-              <div class="card z-index-2">
-                <div class="card-body pt-0">
-                  <div class="border-radius-lg">  
-                    <div class="dashboard-graph">
+            <!-- *ngIf="connectors != 0" -->
+            <div class="col-lg-6 box-2-2"  >
+              <div class="card z-index-2" >
+                <div class="card-body pt-0" >
+                  <div class="border-radius-lg" >  
+                    <div class="dashboard-graph" >
                       <h3>Connectors</h3>        
                       <div class="chart"> 
-                        <div *ngIf="piechartData.length" class="chartjs-container">
+                        <!-- *ngIf="piechartData.length" -->
+                        <div  class="chartjs-container">
                           <canvas id="ChartJs" baseChart [datasets]="piechartData" 
                               [options]="piechartOptions" [colors]="piechartColors"
                               [labels]="piechartLabel"
@@ -188,14 +191,15 @@
                 </div>
               </div>
             </div>         
-            <div class="col-lg-6 box-2-2" *ngIf="finacialchartData.length">
+            <div class="col-lg-6 box-2-2" >
               <div class="card z-index-2">
                 <div class="card-body pt-0">
                   <div class="border-radius-lg">  
                     <div class="dashboard-graph">
                       <h3>Transactions</h3>                  
                       <div class="chart">
-                        <div *ngIf="finacialchartData.length" class="chartjs-container">
+                        <!-- *ngIf="finacialchartData.length" -->
+                        <div class="chartjs-container">
                           <canvas id="ChartJs" baseChart [datasets]="finacialchartData" [labels]="finacialchartLabel"
                               [options]="finacialchartOptions" [colors]="finacialchartColors" [legend]="finacialchartLegend"
                               [chartType]="'bar'" [plugins]="finacialchartPlugins">
@@ -209,14 +213,15 @@
               </div>
             </div>
             <div class="row mt-5 box-2">
-            <div class="col-lg-6 box-2-2" *ngIf="registerchartData.length">
+            <div class="col-lg-6 box-2-2" >
               <div class="card z-index-2">
                 <div class="card-body pt-0">
                   <div class="border-radius-lg">      
                     <div class="dashboard-graph">
                       <h3>Registered Users</h3>               
                       <div class="chart">
-                        <div *ngIf="registerchartData.length" class="chartjs-container">
+                        <!-- *ngIf="registerchartData.length" -->
+                        <div  class="chartjs-container">
                           <canvas id="ChartJs" baseChart [datasets]="registerchartData" [labels]="registerchartLabel"
                               [options]="registerchartOptions" [colors]="registerchartColors" [legend]="registerchartLegend"
                               [chartType]="'bar'" [plugins]="registerchartPlugins">
@@ -229,14 +234,15 @@
                 </div>
               </div>
             </div>
-             <div class="col-lg-6 box-2-2" *ngIf="unitchartData.length">
+             <div class="col-lg-6 box-2-2" >
               <div class="card z-index-2">
                 <div class="card-body pt-0">
                   <div class="border-radius-lg">     
                     <div class="dashboard-graph">
                       <h3>Unit Consumed</h3>      
                       <div class="chart"> 
-                        <div *ngIf="unitchartData.length" class="chartjs-container">
+                        <!-- *ngIf="unitchartData.length" -->
+                        <div  class="chartjs-container">
                           <canvas id="ChartJs" baseChart [datasets]="unitchartData" 
                               [options]="unitchartOptions" [colors]="unitchartColors"
                               [labels]="finacialchartLabel"

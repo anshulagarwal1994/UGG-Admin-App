@@ -316,7 +316,7 @@ export class PromoCodeComponent implements OnInit {
       width: '450px',
       panelClass: 'confirm-dialog-container',
       data: {
-        title: 'Are you sure, you want to delete the promocode ?',
+        title: 'Are you sure, you want to delete the PromoCode ?',
       },
     });
     this.dialogRef.afterClosed().subscribe((result) => {

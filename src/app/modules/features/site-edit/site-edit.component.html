@@ -388,8 +388,8 @@
                                         <mat-label>{{'formFields.utilityProvider' | translate}}</mat-label>
                                         <input matInput autocomplete="off"
                                             placeholder="{{'formFields.utilityProvider' | translate}}" tabindex="7"
-                                            type="text" formControlName="utilityProvider" [readonly]="isTransferred">
-
+                                            type="text" formControlName="utilityProvider" [readonly]="isTransferred"
+                                            autocomplete="off" type="text" maxlength="10" minlength="3">
                                         <mat-error>
                                             <span
                                                 *ngIf="(!siteForm.get('utilityProvider')?.errors?.serverError && !siteForm.get('utilityProvider')?.valid) && !provider">
